@@ -31,27 +31,26 @@
 
 ## 公開方法(GitHub Pages)
 
-1. GitHub にリポジトリを作成し、このリポジトリを push する
+公開URL: **https://wasanemon.github.io/** (ユーザーサイトとして公開。ベースURLは設定済み)
+
+1. GitHub のリポジトリ [wasanemon/miyayu](https://github.com/wasanemon/miyayu) の
+   **Settings → General → Repository name** で `miyayu` → `wasanemon.github.io` にリネームする
+
+2. このリポジトリを push する
 
    ```bash
-   git remote add origin git@github.com:<username>/<repo>.git
+   git remote add origin git@github.com:wasanemon/wasanemon.github.io.git
    git push -u origin feat/official-site
    ```
 
-2. GitHub 上で `feat/official-site` → `main` へマージ(または直接 `main` に push)
+3. GitHub 上で `feat/official-site` → `main` へマージ(または直接 `main` に push)
 
-3. **ベースURLを設定する(重要)**
-   現在、canonical / OGP / sitemap / robots のURLはプレースホルダー(`https://example.com`)です。
-   公開URLが決まったら以下を実行してコミットしてください:
-
-   ```bash
-   ./tools/set-base-url.sh https://<username>.github.io/<repo>
-   ```
-
-4. GitHub のリポジトリ → **Settings → Pages** → 「Build and deployment」で
+4. リポジトリ → **Settings → Pages** → 「Build and deployment」で
    - Source: **Deploy from a branch**
    - Branch: **main** / **/(root)**
-   を選択して保存。数分で `https://<username>.github.io/<repo>/` に公開されます。
+   を選択して保存。数分で https://wasanemon.github.io/ に公開されます。
+
+※ 公開URLを変更する場合(独自ドメイン等)は `./tools/set-base-url.sh <新URL>` で一括置換できます。
 
 ### 独自ドメインを設定する場合(後から可能)
 
@@ -76,7 +75,7 @@ python3 -m http.server 8000
 
 ## 今後のSEO改善点
 
-- [ ] **ベースURLの設定**(上記手順3。canonical と sitemap が正しいURLになるまで検索エンジンに正しく評価されません)
+- [x] **ベースURLの設定** — `https://wasanemon.github.io` を設定済み
 - [ ] **Google Search Console への登録**: サイト所有権を確認し、`sitemap.xml` を送信。「宮﨑祐介」「宮崎祐介」「Yusuke Miyazaki」での掲載状況とクリック率を確認できるようにする
 - [ ] **Bing Webmaster Tools への登録**(Search Console からインポート可能)
 - [ ] **本人写真の掲載**: プロフィール写真とOGP画像を実写に差し替えると、検索結果・SNSシェアでの本人性が大幅に向上(JSON-LD の `image` も更新)
@@ -89,9 +88,7 @@ python3 -m http.server 8000
 
 以下はオーナー(宮﨑さん本人)の確認・提供が必要です:
 
-1. **GitHubのユーザー名 / リポジトリ名**(ベースURL設定に必要)
-2. **個人GitHubアカウントのURL**(現在はプロジェクトの organization `mitou-Kamo` のみ掲載。個人アカウントがあれば外部リンクと JSON-LD の `sameAs` に追加)
-3. **X(Twitter)・LinkedIn などその他SNS**(あれば追加)
-4. **公開する連絡先メールアドレス**(現在 `miyayu@keio.jp` を掲載。変更・非公開にする場合は `index.html` の連絡先セクションと JSON-LD を修正)
-5. **プロフィール写真**(掲載する場合)
-6. **独自ドメインの取得予定**
+1. **X(Twitter)・LinkedIn などその他SNS**(あれば追加。GitHub は [@wasanemon](https://github.com/wasanemon) を掲載済み)
+2. **公開する連絡先メールアドレス**(現在 `miyayu@keio.jp` を掲載。変更・非公開にする場合は `index.html` の連絡先セクションと JSON-LD を修正)
+3. **プロフィール写真**(掲載する場合)
+4. **独自ドメインの取得予定**
