@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e2a47"/>
+      <stop offset="1" stop-color="#0b5fa5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="600" y="285" font-family="Hiragino Sans" font-size="104" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="8">宮﨑祐介</text>
+  <text x="600" y="368" font-family="Hiragino Sans" font-size="42" font-weight="400" fill="#cfe3f5" text-anchor="middle" letter-spacing="4">Yusuke Miyazaki</text>
+  <text x="600" y="460" font-family="Hiragino Sans" font-size="30" font-weight="300" fill="#9fc4e4" text-anchor="middle">Software Engineer · MITOU Super Creator 2025 · Model</text>
+</svg>
