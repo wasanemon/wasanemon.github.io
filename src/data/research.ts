@@ -23,6 +23,7 @@ export interface Publication {
   titleEn?: string;
   venueEn?: string;
   notesEn?: string[];
+  /** 先頭のリンクは、題名からも飛べる(論文や発表のページがあればそれを先頭に置く) */
   links: PublicationLink[];
 }
 
@@ -35,7 +36,7 @@ export const publications: Publication[] = [
     kind: 'POSTER',
     notes: ['第一著者', '2026年11月発表予定'],
     notesEn: ['First author', 'To be presented in November 2026'],
-    links: [],
+    links: [{ label: 'SC26', url: 'https://sc26.supercomputing.org/' }],
   },
   {
     id: 'sc26-helios',
@@ -45,7 +46,7 @@ export const publications: Publication[] = [
     kind: 'POSTER',
     notes: ['Co-first author', '2026年11月発表予定'],
     notesEn: ['Co-first author', 'To be presented in November 2026'],
-    links: [],
+    links: [{ label: 'SC26', url: 'https://sc26.supercomputing.org/' }],
   },
   {
     id: 'acs91-cantata',
@@ -77,8 +78,12 @@ export const publications: Publication[] = [
     titleEn: 'Design of a High-Performance, Fault-Tolerant Database System',
     venueEn: 'ComSys 2025 (Computer System Symposium)',
     kind: 'POSTER',
-    notes: [],
-    links: [],
+    notes: ['第一著者'],
+    notesEn: ['First author'],
+    links: [
+      { label: 'PDF', url: 'https://sigos.ipsj.or.jp/event/comsys2025/posters/ComSys_2025_paper_30.pdf' },
+      { label: 'ComSys 2025', url: 'https://sigos.ipsj.or.jp/event/comsys2025/#poster' },
+    ],
   },
   {
     id: 'ipdpsw2024',

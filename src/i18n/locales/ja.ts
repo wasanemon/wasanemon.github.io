@@ -57,11 +57,14 @@ export const ja = {
     heroLogo: 'yusuke',
     heroName: '宮﨑祐介',
     heroReading: '(みやざき ゆうすけ)',
-    catchCopy: '脳筋、胃袋、シャカリキ、坊主',
     subCopy: ['データベースシステム研究者', '2025年度 未踏ITスーパークリエータ'],
-    affiliations: ['慶應義塾大学', 'model agency friday'],
+    /** 所属のラベル(それぞれの公式サイトへのリンク) */
+    affiliations: [
+      { label: '慶應義塾大学', url: 'https://www.keio.ac.jp/ja/' },
+      { label: 'model agency friday', url: 'https://fridayfarm.net/' },
+    ],
     cta: 'Kamo を見る',
-    avatarLabel: '宮﨑祐介のアバター。坊主頭で細身の長身。足元に白と茶の猫が座っている。矢印で服を着せ替えられる',
+    avatarLabel: '宮﨑祐介のアバター。坊主頭で細身の長身。足元に白と茶の猫が座っている。矢印を押すと、隣の着替え室に入って服を着替えてくる。その横に服の掛かったハンガーラックがある',
     outfitPrev: '前の服に着替える',
     outfitNext: '次の服に着替える',
     outfits: [
@@ -74,15 +77,6 @@ export const ja = {
       'キャップとデニムジャケット',
       '黒のタンクトップ',
     ],
-    card: {
-      windowTitle: 'kamo_bench.exe',
-      heading: 'RESULT',
-      stats: [
-        { value: '18.7×', label: 'TPC-C・144スレッド時の性能向上' },
-        { value: '0s', label: '自動フェイルオーバー時の実質ダウンタイム' },
-      ],
-      foot: 'MySQL互換の高性能・耐故障DBMS',
-    },
     awardLabel: 'AWARD',
     awardWindow: 'award.txt',
     projectWindow: 'kamo.app',

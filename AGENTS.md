@@ -26,7 +26,8 @@ npm run build    # dist/ に出力
 | 配色・フォント・角丸・影 | `src/styles/tokens.css` |
 | 起動オープニング(ターミナル風タイピング) | `src/components/BootOpening.astro`、文言は `ja.ts` の `boot` |
 | すきなもののアイコン(FAVORITES) | `src/components/deco/HobbyIcon.astro`、並びは `ja.ts` の `home.favorites` |
-| アバター(足元に猫) | `src/components/deco/Avatar.astro` |
+| アバター(足元に猫)、着替え室、ハンガーラック | `src/components/deco/Avatar.astro` |
+| TOPの所属ラベル(リンク先は `ja.ts` の `home.affiliations`) | アイコンは `src/components/deco/AffiliationIcon.astro` |
 | 歩き回る猫と、ついて歩くカモ | `src/components/RoamingCat.astro` |
 | 「×」で閉じるウィンドウ、文句のウィンドウ、ごみ箱、スタートメニュー、シャットダウン | `src/components/Desktop.astro`、文言は `ja.ts` の `fun`(文句のウィンドウだけ英語) |
 | SQLで自己紹介(PROFILE) | `src/components/SqlConsole.astro`、文言と表は `ja.ts` の `sql` |

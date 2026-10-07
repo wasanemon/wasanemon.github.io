@@ -7,6 +7,7 @@ import NewsRow from '../components/NewsRow.astro';
 import Window from '../components/Window.astro';
 import HobbyIcon from '../components/deco/HobbyIcon.astro';
 import Avatar from '../components/deco/Avatar.astro';
+import AffiliationIcon from '../components/deco/AffiliationIcon.astro';
 import Floppy from '../components/deco/Floppy.astro';
 import Folder from '../components/deco/Folder.astro';
 import Cursor from '../components/deco/Cursor.astro';
@@ -18,6 +19,8 @@ const locale = Astro.currentLocale ?? defaultLocale;
 const isEn = locale === 'en';
 const t = getDictionary(locale);
 const news = (await getNews(locale)).slice(0, 3);
+/* 所属ラベルのアイコン(辞書の home.affiliations と同じ順番) */
+const affiliationIcons = ['school', 'camera'] as const;
 const hasKeyVisual = assetUrl('keyVisual') !== null;
 
 const jsonLd = {
@@ -76,7 +79,7 @@ const jsonLd = {
   <BootOpening slot="overlay" />
 
   <!-- HERO -->
-  <section class="relative grid items-center gap-8 md:grid-cols-[1.3fr_1fr]">
+  <section class="relative grid items-center gap-8 lg:grid-cols-[1.3fr_1fr]">
     <!-- 装飾レイヤー（情報を持たない） -->
     <Floppy class="absolute -top-2 right-[-1.5rem] hidden h-10 w-10 rotate-12 md:block" />
     <Folder
@@ -84,7 +87,7 @@ const jsonLd = {
     />
 
     <div
-      class="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-x-4 [grid-template-areas:'head_avatar''body_body'] md:[grid-template-areas:'head_avatar''body_avatar']"
+      class="grid grid-cols-1 [grid-template-areas:'head''body']"
     >
       <div class="min-w-0 self-start [grid-area:head]">
         <p class="display-type text-sm text-navy">{t.home.heroRoles}</p>
@@ -99,11 +102,28 @@ const jsonLd = {
 
       </div>
       <div class="min-w-0 [grid-area:body]">
-        <p class="sticker-card mt-6 inline-block rounded-bubble px-5 py-2 text-lg font-bold whitespace-nowrap">
-          {t.home.catchCopy}
-        </p>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {
+            t.home.affiliations.map((item, i) => (
+              <li>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class:list={[
+                    'display-type flex items-center gap-2 rounded-chip border-2 border-ink px-3 py-1 text-base whitespace-nowrap shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-amber',
+                    i % 2 === 0 ? 'bg-sky' : 'bg-lemon',
+                  ]}
+                >
+                  {affiliationIcons[i] && <AffiliationIcon name={affiliationIcons[i]} class="h-5 w-5 shrink-0" />}
+                  {item.label}
+                  <span class="sr-only">({t.a11y.externalLink})</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
         <p class="mt-3 text-sm leading-relaxed text-ink-soft">
-          <span class="block">{t.home.affiliations.join(' ・ ')}</span>
           {t.home.subCopy.map((item) => <span class="block">{item}</span>)}
         </p>
 
@@ -117,10 +137,6 @@ const jsonLd = {
           {t.home.cta}
         </a>
       </div>
-      <Avatar
-        label={t.home.avatarLabel}
-        class="[grid-area:avatar] [&_.avatar-svg]:h-44 sm:[&_.avatar-svg]:h-52 md:[&_.avatar-svg]:h-64"
-      />
     </div>
 
     {
@@ -131,25 +147,13 @@ const jsonLd = {
           class="w-full rounded-sticker border-2 border-ink shadow-sticker-lg"
         />
       ) : (
-        /* キービジュアル未投入のあいだは、ウィンドウ風の数値カードを出す */
-        <Window title={t.home.card.windowTitle} class="shadow-sticker-lg" bodyClass="px-6 pt-5 pb-7">
-          <p class="display-type text-sm text-navy">{t.home.card.heading}</p>
-          <dl class="mt-3 flex flex-col gap-4">
-            {t.home.card.stats.map((stat, i) => (
-              <div
-                class:list={[
-                  'rounded-sticker border-2 border-ink px-4 py-3',
-                  i % 2 === 0 ? 'bg-sky' : 'bg-aqua',
-                ]}
-              >
-                <dt class="sr-only">{stat.label}</dt>
-                <dd class="display-type text-5xl leading-none sm:text-6xl">{stat.value}</dd>
-                <dd class="mt-2 text-sm" aria-hidden="true">{stat.label}</dd>
-              </div>
-            ))}
-          </dl>
-          <p class="mt-4 text-sm text-ink-soft">{t.home.card.foot}</p>
-        </Window>
+        /* キービジュアル未投入のあいだは、アバターと着替え室を出す(ウィンドウでは囲わない) */
+        <div class="flex justify-center lg:-ml-28 lg:justify-start">
+          <Avatar
+            label={t.home.avatarLabel}
+            class="[&_.avatar-svg]:h-48 sm:[&_.avatar-svg]:h-56 lg:[&_.avatar-svg]:h-64"
+          />
+        </div>
       )
     }
   </section>

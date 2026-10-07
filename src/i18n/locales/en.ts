@@ -54,12 +54,14 @@ export const en: Dictionary = {
     heroLogo: 'yusuke',
     heroName: 'Yusuke Miyazaki',
     heroReading: '(宮﨑祐介)',
-    catchCopy: 'Brawn. Belly. Hustle. Buzz cut.',
     subCopy: ['Database systems researcher', 'MITOU Super Creator, FY2025'],
-    affiliations: ['Keio University', 'model agency friday'],
+    affiliations: [
+      { label: 'Keio University', url: 'https://www.keio.ac.jp/en/' },
+      { label: 'model agency friday', url: 'https://fridayfarm.net/' },
+    ],
     cta: 'See Kamo',
     avatarLabel:
-      'Avatar of Yusuke Miyazaki: tall and slim with a buzz cut. A white and ginger cat sits at his feet. Use the arrows to change his outfit',
+      'Avatar of Yusuke Miyazaki: tall and slim with a buzz cut. A white and ginger cat sits at his feet. Press the arrows and he walks into the fitting room next to him to change outfits. A rack of clothes stands beside it',
     outfitPrev: 'Previous outfit',
     outfitNext: 'Next outfit',
     outfits: [
@@ -72,15 +74,6 @@ export const en: Dictionary = {
       'Cap and denim jacket',
       'Black tank top',
     ],
-    card: {
-      windowTitle: 'kamo_bench.exe',
-      heading: 'RESULT',
-      stats: [
-        { value: '18.7×', label: 'Throughput gain on TPC-C at 144 threads' },
-        { value: '0s', label: 'Effective downtime on automatic failover' },
-      ],
-      foot: 'A high-performance, fault-tolerant MySQL-compatible DBMS',
-    },
     awardLabel: 'AWARD',
     awardWindow: 'award.txt',
     projectWindow: 'kamo.app',

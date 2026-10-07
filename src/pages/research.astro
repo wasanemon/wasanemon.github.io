@@ -47,7 +47,22 @@ const kindBg: Record<string, string> = {
             </span>
             <span class="text-sm text-ink-soft">{pub.venue}</span>
           </p>
-          <h2 class="mt-2 text-xl leading-snug font-bold">{pub.title}</h2>
+          <h2 class="mt-2 text-xl leading-snug font-bold">
+            {pub.links.length > 0 ? (
+              <a
+                href={pub.links[0].url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="underline decoration-ink-soft decoration-2 underline-offset-4 hover:text-navy hover:decoration-navy"
+              >
+                {pub.title}
+                <span class="display-type text-base text-navy" aria-hidden="true">↗</span>
+                <span class="sr-only">({t.a11y.externalLink})</span>
+              </a>
+            ) : (
+              pub.title
+            )}
+          </h2>
 
           {pub.notes.length > 0 && (
             <ul class="mt-3 flex flex-wrap gap-2">
