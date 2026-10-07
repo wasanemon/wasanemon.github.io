@@ -137,15 +137,12 @@ const ink = 'var(--color-ink)';
     100% { transform: scaleX(-1) rotate(5deg); }
   }
 
-  /* 動きを減らす設定、印刷時、起動オープニング中は出さない */
+  /* 動きを減らす設定、印刷時は出さない */
   @media (prefers-reduced-motion: reduce) {
     .roaming-cat { display: none; }
   }
   @media print {
     .roaming-cat { display: none; }
-  }
-  html.call-open .roaming-cat {
-    display: none;
   }
 </style>
 

@@ -37,21 +37,6 @@ export const ja = {
     links: 'LINKS',
   },
 
-  /** 起動オープニング(ターミナル風のタイピング演出) */
-  boot: {
-    windowTitle: 'terminal — yusuke@keio',
-    label: 'サイトを起動しています',
-    lines: [
-      { cmd: 'whoami', out: 'yusuke miyazaki / 宮﨑祐介' },
-      { cmd: 'cat role.txt', out: 'データベースシステム研究者' },
-      { cmd: './kamo --bench tpcc', out: '18.7x faster … OK' },
-      { cmd: 'open ./site', out: '' },
-    ],
-    enter: 'ENTER ⏎ サイトをひらく',
-    skip: 'スキップ',
-    hint: 'Enter キーでも開きます',
-  },
-
   home: {
     heroRoles: '> DATABASE RESEARCHER_',
     heroLogo: 'yusuke',
@@ -262,7 +247,6 @@ export const ja = {
     startLabel: 'スタートメニューを開く',
     startBand: 'yusuke 98',
     startTrash: 'ごみ箱を開く',
-    startReplay: 'オープニングをもう一度',
     startShutdown: 'シャットダウン',
     shutdownText: 'おやすみなさい',
     shutdownHint: 'クリックで再起動',

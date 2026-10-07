@@ -35,20 +35,6 @@ export const en: Dictionary = {
     links: 'LINKS',
   },
 
-  boot: {
-    windowTitle: 'terminal — yusuke@keio',
-    label: 'Booting the site',
-    lines: [
-      { cmd: 'whoami', out: 'yusuke miyazaki / 宮﨑祐介' },
-      { cmd: 'cat role.txt', out: 'database systems researcher' },
-      { cmd: './kamo --bench tpcc', out: '18.7x faster … OK' },
-      { cmd: 'open ./site', out: '' },
-    ],
-    enter: 'ENTER ⏎ Open the site',
-    skip: 'Skip',
-    hint: 'You can also press Enter',
-  },
-
   home: {
     heroRoles: '> DATABASE RESEARCHER_',
     heroLogo: 'yusuke',
@@ -255,7 +241,6 @@ export const en: Dictionary = {
     startLabel: 'Open the start menu',
     startBand: 'yusuke 98',
     startTrash: 'Open the trash',
-    startReplay: 'Replay the opening',
     startShutdown: 'Shut down',
     shutdownText: 'Good night',
     shutdownHint: 'Click to restart',

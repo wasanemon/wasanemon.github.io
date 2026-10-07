@@ -4,7 +4,7 @@
  *  - ウィンドウの「×」で本当に閉じる。閉じるたびに文句のウィンドウ(英語)が出て、だんだん増える
  *  - 右下のごみ箱アイコン。開くと冗談のファイルが入っている
  *  - その上のターミナルのアイコン。押すと SQL コンソール(PROFILE)を開く。「×」で閉じたあとも出し直せる
- *  - スタートメニュー(Header.astro のロゴ)から、ごみ箱・オープニング再生・シャットダウン
+ *  - スタートメニュー(Header.astro のロゴ)から、ごみ箱・シャットダウン
  * いずれも装飾で、閉じたウィンドウは再読み込みか「Put them back」で元に戻る。
  */
 import { getDictionary, defaultLocale, localizePath } from '../i18n';
@@ -17,7 +17,6 @@ const ink = 'var(--color-ink)';
 
 <div
   id="fun-root"
-  data-home={localizePath('/', locale)}
   data-profile={localizePath('/profile/', locale)}
   data-warnings={JSON.stringify(t.fun.warnings)}
   data-warning-many={t.fun.warningMany}
@@ -228,14 +227,6 @@ const ink = 'var(--color-ink)';
           if (kind === 'trash') openTrash();
           if (kind === 'terminal') openTerminal();
           if (kind === 'shutdown') shutdown.hidden = false;
-          if (kind === 'replay') {
-            try {
-              localStorage.removeItem('miyazaki:boot-done');
-            } catch (err) {
-              /* 消せない環境では何も起きないだけ */
-            }
-            window.location.href = root.dataset.home || '/';
-          }
           return;
         }
         // メニューの外を押したら閉じる

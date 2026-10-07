@@ -24,7 +24,6 @@ npm run build    # dist/ に出力
 | SNS・関連ページのリンク | `src/data/links.ts` |
 | 画像(TOPのキービジュアル、PROFILEの写真) | `public/assets/official/` に置き、`src/data/assets.ts` の `file` に書く |
 | 配色・フォント・角丸・影 | `src/styles/tokens.css` |
-| 起動オープニング(ターミナル風タイピング) | `src/components/BootOpening.astro`、文言は `ja.ts` の `boot` |
 | すきなもののアイコン(FAVORITES) | `src/components/deco/HobbyIcon.astro`、並びは `ja.ts` の `home.favorites` |
 | アバター(足元に猫)、着替え室、ハンガーラック | `src/components/deco/Avatar.astro` |
 | TOPの所属ラベル(リンク先は `ja.ts` の `home.affiliations`) | アイコンは `src/components/deco/AffiliationIcon.astro` |

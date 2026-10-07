@@ -37,17 +37,6 @@
     outline-offset: 2px;
     border-radius: 4px;
   }
-
-  /* オープニング終了時にプログラムで main へフォーカスを移すため、枠は出さない */
-  main:focus {
-    outline: none;
-  }
-
-  /* 起動オープニング表示中は背面のスクロールを固定 */
-  html.call-open,
-  html.call-open body {
-    overflow: hidden;
-  }
 }
 
 /* ============================================================
@@ -200,10 +189,6 @@
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
-}
-
-@keyframes call-slide-out {
-  to { transform: translateY(-100%); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

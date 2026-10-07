@@ -1,7 +1,6 @@
 ---
 /** TOP — HERO + 受賞・プロジェクト導線 + NEWSプレビュー */
 import Base from '../layouts/Base.astro';
-import BootOpening from '../components/BootOpening.astro';
 import ImageSlot from '../components/ImageSlot.astro';
 import NewsRow from '../components/NewsRow.astro';
 import Window from '../components/Window.astro';
@@ -10,7 +9,6 @@ import Avatar from '../components/deco/Avatar.astro';
 import AffiliationIcon from '../components/deco/AffiliationIcon.astro';
 import Floppy from '../components/deco/Floppy.astro';
 import Folder from '../components/deco/Folder.astro';
-import Cursor from '../components/deco/Cursor.astro';
 import { getDictionary, defaultLocale, localizePath } from '../i18n';
 import { getNews } from '../utils/news';
 import { assetUrl } from '../data/assets';
@@ -77,7 +75,6 @@ const jsonLd = {
 
 <Base active="top">
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
-  <BootOpening slot="overlay" />
 
   <!-- HERO -->
   <section class="relative grid items-center gap-8 lg:grid-cols-[1.3fr_1fr]">
@@ -128,15 +125,6 @@ const jsonLd = {
           {t.home.subCopy.map((item) => <span class="block">{item}</span>)}
         </p>
 
-        <a
-          href={localizePath('/kamo/', locale)}
-          class="group mt-6 inline-flex items-center gap-3 rounded-bubble border-2 border-ink bg-call-green px-6 py-3 font-bold shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
-        >
-          <Cursor
-            class="h-6 w-6 text-call-green-deep motion-safe:group-hover:animate-[icon-wiggle_0.8s_ease-in-out_infinite]"
-          />
-          {t.home.cta}
-        </a>
       </div>
     </div>
 
