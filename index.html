@@ -3,26 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>宮﨑祐介 / Yusuke Miyazaki 公式サイト</title>
-  <meta name="description" content="宮﨑祐介(宮崎祐介 / Yusuke Miyazaki)の公式サイト。2025年度未踏IT人材発掘・育成事業スーパークリエータ。MySQL互換の高性能・耐故障DBMS「Kamo」を開発。慶應義塾大学SFC出身、model agency friday所属モデル。">
+  <title>宮﨑祐介 / Yusuke Miyazaki</title>
+  <meta name="description" content="宮﨑祐介(宮崎祐介 / Yusuke Miyazaki)の公式サイト。データベースシステムの研究者。慶應義塾大学大学院 政策・メディア研究科。2025年度未踏IT人材発掘・育成事業スーパークリエータ。MySQL互換の高性能・耐故障DBMS「Kamo」を開発。">
   <link rel="canonical" href="https://wasanemon.github.io/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+JP:wght@400;500&display=swap">
   <link rel="stylesheet" href="assets/style.css">
+  <meta name="color-scheme" content="light dark">
 
   <!-- OGP -->
   <meta property="og:type" content="profile">
-  <meta property="og:title" content="宮﨑祐介 / Yusuke Miyazaki 公式サイト">
-  <meta property="og:description" content="2025年度未踏IT人材発掘・育成事業スーパークリエータ。MySQL互換の高性能・耐故障DBMS「Kamo」を開発。慶應義塾大学SFC出身、model agency friday所属モデル。">
+  <meta property="og:title" content="宮﨑祐介 / Yusuke Miyazaki">
+  <meta property="og:description" content="データベースシステムの研究者。慶應義塾大学大学院 政策・メディア研究科。2025年度未踏ITスーパークリエータ。MySQL互換DBMS「Kamo」を開発。">
   <meta property="og:url" content="https://wasanemon.github.io/">
   <meta property="og:image" content="https://wasanemon.github.io/assets/ogp.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:site_name" content="宮﨑祐介 / Yusuke Miyazaki 公式サイト">
+  <meta property="og:site_name" content="宮﨑祐介 / Yusuke Miyazaki">
   <meta property="og:locale" content="ja_JP">
   <meta property="og:locale:alternate" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="宮﨑祐介 / Yusuke Miyazaki 公式サイト">
-  <meta name="twitter:description" content="2025年度未踏ITスーパークリエータ。MySQL互換DBMS「Kamo」開発。慶應義塾大学SFC出身、model agency friday所属モデル。">
+  <meta name="twitter:title" content="宮﨑祐介 / Yusuke Miyazaki">
+  <meta name="twitter:description" content="データベースシステムの研究者。2025年度未踏ITスーパークリエータ。MySQL互換DBMS「Kamo」を開発。">
   <meta name="twitter:image" content="https://wasanemon.github.io/assets/ogp.png">
 
   <!-- 構造化データ: ProfilePage / Person -->
@@ -30,7 +34,7 @@
   {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
-    "dateModified": "2026-08-07",
+    "dateModified": "2026-10-07",
     "inLanguage": "ja",
     "mainEntity": {
       "@type": "Person",
@@ -53,165 +57,246 @@
         { "@type": "Organization", "name": "model agency friday", "url": "https://fridayfarm.net/" }
       ],
       "award": [
-        "2025年度 未踏IT人材発掘・育成事業 採択(IPA)",
-        "2025年度 未踏IT人材発掘・育成事業 スーパークリエータ認定(経済産業省・IPA)"
+        "2025年度 未踏IT人材発掘・育成事業 スーパークリエータ認定(経済産業省・IPA)",
+        "2025年度 未踏IT人材発掘・育成事業 採択(IPA)"
       ],
-      "knowsAbout": ["データベースシステム", "MySQL", "トランザクション処理", "ソフトウェアエンジニアリング"],
-      "jobTitle": ["Software Engineer", "Model"],
-      "email": "mailto:miyayu@keio.jp",
+      "knowsAbout": ["データベースシステム", "トランザクション処理", "並行性制御", "MySQL"],
+      "jobTitle": "Researcher",
       "sameAs": [
         "https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html",
+        "https://github.com/wasanemon",
         "https://fridayfarm.net/yusuke-miyazaki/",
-        "https://www.instagram.com/wasanemon/",
-        "https://github.com/wasanemon"
+        "https://www.instagram.com/wasanemon/"
       ]
     }
   }
   </script>
 </head>
 <body>
-  <header class="hero">
-    <p class="hero-kana">みやざき ゆうすけ</p>
-    <h1>宮﨑祐介 <span class="hero-en">Yusuke Miyazaki</span></h1>
-    <p class="hero-lead">
-      ソフトウェアエンジニア / 2025年度 未踏ITスーパークリエータ / モデル<br>
-      <span lang="en" class="en-sub">Software Engineer · MITOU Super Creator 2025 · Model</span>
-    </p>
-    <nav class="hero-nav" aria-label="ページ内リンク">
-      <a href="#profile">プロフィール</a>
-      <a href="#achievements">実績</a>
-      <a href="#projects">プロジェクト</a>
-      <a href="#modeling">モデル活動</a>
-      <a href="#links">リンク</a>
-      <a href="#contact">連絡先</a>
+  <header class="bar grid">
+    <a class="brand" href="#top"><span class="sq" aria-hidden="true"></span>宮﨑祐介</a>
+    <span class="bar-en" lang="en">yusuke miyazaki</span>
+    <nav aria-label="ページ内リンク">
+      <a href="#research">research</a>
+      <a href="#links">links</a>
     </nav>
   </header>
 
-  <main>
-    <section id="profile">
-      <h2>プロフィール <span lang="en" class="en-sub">Profile</span></h2>
-      <p>
-        宮﨑祐介(みやざき ゆうすけ、表記揺れ:宮崎祐介)は、データベースシステムの研究開発に取り組むソフトウェアエンジニア。
-        2025年度、独立行政法人情報処理推進機構(IPA)の未踏IT人材発掘・育成事業に採択され、
-        MySQL互換の高性能・耐故障DBMS「Kamo」を開発。2026年6月、経済産業省・IPAよりスーパークリエータに認定された。
-        あわせて、model agency friday 所属モデルとしても活動している。
-      </p>
-      <p lang="en" class="en-block">
-        Yusuke Miyazaki is a software engineer working on database systems. His project "Kamo," a
-        high-performance, fault-tolerant MySQL-compatible DBMS, was adopted by the MITOU IT Program 2025
-        (IPA, Japan), and he was certified as a MITOU Super Creator in June 2026. He is also a model
-        represented by model agency friday.
-      </p>
-      <h3>略歴 <span lang="en" class="en-sub">Timeline</span></h3>
-      <ul class="timeline">
-        <li><span class="year">2002年</span> 群馬県生まれ</li>
-        <li><span class="year">2021年3月</span> 群馬県立高崎高等学校 卒業</li>
-        <li><span class="year">2021年4月</span> 慶應義塾大学 総合政策学部 入学(湘南藤沢キャンパス / SFC)</li>
-        <li><span class="year">2025年6月</span> 2025年度 未踏IT人材発掘・育成事業 採択(IPA)</li>
-        <li><span class="year">2026年6月</span> 2025年度 未踏IT スーパークリエータ 認定(経済産業省・IPA)</li>
-        <li><span class="year">現在</span> 慶應義塾大学大学院 政策・メディア研究科 在籍</li>
-      </ul>
+  <main id="top">
+    <section class="hero">
+      <p class="statement"><span class="indent">速く、壊れにくい</span><br>データベースをつくる。</p>
+      <div class="grid facts">
+        <div>
+          <h1>宮﨑祐介</h1>
+          <p class="k" lang="en">Yusuke Miyazaki</p>
+        </div>
+        <div>
+          <p class="k">role</p>
+          <p>データベースシステム研究者</p>
+        </div>
+        <div>
+          <p class="k">affiliation</p>
+          <p>慶應義塾大学大学院<br>政策・メディア研究科<br>川島英之研究室</p>
+        </div>
+        <div>
+          <p class="k">honor</p>
+          <p>2025年度 未踏IT<br>スーパークリエータ</p>
+        </div>
+      </div>
     </section>
 
-    <section id="achievements">
-      <h2>実績 <span lang="en" class="en-sub">Achievements</span></h2>
-      <ul class="cards">
-        <li>
-          <h3>2025年度 未踏IT人材発掘・育成事業 採択</h3>
-          <p>
-            プロジェクト「高性能で耐故障なMySQLの開発」がIPA(独立行政法人情報処理推進機構)の
-            2025年度未踏IT人材発掘・育成事業に採択(担当PM:田中邦裕氏)。
-          </p>
-          <p class="card-links">
-            <a href="https://www.ipa.go.jp/jinzai/mitou/it/2025/koubokekka.html" rel="noopener">IPA 公募結果</a> ·
-            <a href="https://www.ipa.go.jp/jinzai/mitou/it/2025/seika.html" rel="noopener">IPA 成果報告</a>
-          </p>
-        </li>
-        <li>
-          <h3>2025年度 未踏IT スーパークリエータ 認定</h3>
-          <p>
-            未踏IT人材発掘・育成事業の成果により、2026年6月、経済産業省・IPAよりスーパークリエータに認定。
-          </p>
-          <p class="card-links">
-            <a href="https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html" rel="noopener">IPA スーパークリエータ紹介ページ</a> ·
-            <a href="https://www.meti.go.jp/press/2026/06/20260604002/20260604002.html" rel="noopener">経済産業省 発表</a>
-          </p>
-        </li>
-        <li>
-          <h3>慶應義塾大学 SFC「教員・学生の受賞」掲載</h3>
-          <p>
-            未踏IT人材発掘・育成事業への採択が、慶應義塾大学 湘南藤沢キャンパス(SFC)の
-            「教員・学生の受賞」(2025年)に掲載。
-          </p>
-          <p class="card-links">
-            <a href="https://www.keio.ac.jp/ja/sfc/activity/award/award2025/" rel="noopener">慶應義塾 SFC 2025年 教員・学生の受賞</a>
-          </p>
-        </li>
-      </ul>
-    </section>
-
-    <section id="projects">
-      <h2>プロジェクト <span lang="en" class="en-sub">Projects</span></h2>
-      <article class="project">
-        <h3>Kamo — MySQL互換の高性能・耐故障DBMS</h3>
+    <section class="grid block" id="about">
+      <h2 class="label">about</h2>
+      <div class="lead">
         <p>
-          MySQLのプラガブルストレージエンジン層に高性能なトランザクションエンジン
+          データベースシステムの研究者です。慶應義塾大学大学院 政策・メディア研究科の川島英之研究室で、トランザクション処理と並行性制御を研究しています。
+        </p>
+        <p>
+          学部3年の春にコンピュータサイエンスをゼロから学び始め、第一著者として書いた論文が国際会議に採択されました。2025年度には未踏IT人材発掘・育成事業に採択され、MySQL互換の高性能・耐故障DBMS「Kamo」の開発を代表として進め、2026年6月にスーパークリエータに認定されました。
+        </p>
+      </div>
+      <p class="en" lang="en">
+        Yusuke Miyazaki is a database systems researcher at the Graduate School of Media and Governance,
+        Keio University, working on transaction processing and concurrency control. He led the development of
+        Kamo, a high-performance, fault-tolerant MySQL-compatible DBMS, under the MITOU IT Program 2025
+        and was certified as a MITOU Super Creator in June 2026.
+      </p>
+    </section>
+
+    <section class="grid block" id="honors">
+      <h2 class="label">受賞 <span lang="en">honors</span></h2>
+      <ol class="table">
+        <li>
+          <div class="t">
+            <p class="title">未踏IT人材発掘・育成事業 スーパークリエータ認定</p>
+            <p class="note">
+              2025年度 ·
+              <a href="https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html" rel="noopener">IPA</a>
+              <a href="https://www.meti.go.jp/press/2026/06/20260604002/20260604002.html" rel="noopener">経済産業省</a>
+              <a href="https://www.keio.ac.jp/ja/sfc-pem/news/20260713/" rel="noopener">慶應義塾</a>
+            </p>
+          </div>
+          <div class="m"><span>経済産業省・IPA</span><span class="y">2026</span></div>
+        </li>
+        <li>
+          <div class="t">
+            <p class="title">未踏IT人材発掘・育成事業 採択</p>
+            <p class="note">
+              「高性能で耐故障なMySQLの開発」代表 · PM 田中邦裕氏 ·
+              <a href="https://www.ipa.go.jp/jinzai/mitou/it/2025/koubokekka.html" rel="noopener">公募結果</a>
+              <a href="https://www.ipa.go.jp/jinzai/mitou/it/2025/seika.html" rel="noopener">成果報告</a>
+            </p>
+          </div>
+          <div class="m"><span>IPA</span><span class="y">2025</span></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="grid block" id="kamo">
+      <h2 class="label">プロジェクト <span lang="en">project</span></h2>
+      <div class="project">
+        <h3 class="project-name">Kamo</h3>
+        <p class="project-desc">
+          MySQL互換の高性能・耐故障DBMS。MySQLのプラガブルストレージエンジン層にトランザクションエンジン
           <a href="https://github.com/LineairDB/LineairDB" rel="noopener">LineairDB</a>
-          を統合し、MySQL互換性を保ちながら性能を大きく向上させたDBMS。
-          TPC-Cワークロードにおいて144スレッド時に18.7倍の性能向上を達成し、
-          自動フェイルオーバー機構により障害時ダウンタイム実質0秒を実現した。
-          2025年度未踏IT人材発掘・育成事業の成果として開発(共同開発:中森辰洋氏、李浩文氏)。
+          を統合し、互換性を保ったままメニーコア環境での性能を引き上げました。
         </p>
-        <p lang="en" class="en-block">
-          Kamo is a MySQL-compatible DBMS that integrates the high-performance transaction engine
-          LineairDB at MySQL's pluggable storage engine layer, achieving up to 18.7x throughput on the
-          TPC-C workload at 144 threads and near-zero downtime failover.
+        <p class="project-links">
+          <a href="https://github.com/mitou-Kamo/LineairDB-storage-engine" rel="noopener">github</a>
+          <a href="https://knowledge.sakura.ad.jp/50280/" rel="noopener">解説記事</a>
         </p>
-        <p class="card-links">
-          <a href="https://github.com/mitou-Kamo/LineairDB-storage-engine" rel="noopener">GitHub: mitou-Kamo/LineairDB-storage-engine</a> ·
-          <a href="https://knowledge.sakura.ad.jp/50280/" rel="noopener">解説記事(さくらのナレッジ)</a>
-        </p>
-      </article>
+        <dl class="figures">
+          <div>
+            <dt>18.7×</dt>
+            <dd>TPC-C · 144スレッド時の性能向上</dd>
+          </div>
+          <div>
+            <dt>0s</dt>
+            <dd>自動フェイルオーバー時の実質ダウンタイム</dd>
+          </div>
+          <div class="credit">
+            <dt>team</dt>
+            <dd>宮﨑祐介(代表)<br>中森辰洋<br>李浩文</dd>
+          </div>
+        </dl>
+      </div>
     </section>
 
-    <section id="modeling">
-      <h2>モデル活動 <span lang="en" class="en-sub">Modeling</span></h2>
-      <p>
-        model agency friday 所属。プロフィール・ポートフォリオは事務所公式サイトに掲載。
-        <span lang="en" class="en-sub">Represented by model agency friday (Tokyo).</span>
-      </p>
-      <p class="card-links">
-        <a href="https://fridayfarm.net/yusuke-miyazaki/" rel="noopener">model agency friday プロフィール</a> ·
-        <a href="https://www.instagram.com/wasanemon/" rel="noopener">Instagram</a>
-      </p>
+    <section class="grid block" id="research">
+      <h2 class="label">研究業績 <span lang="en">research</span></h2>
+      <ol class="table">
+        <li>
+          <div class="t">
+            <p class="title" lang="en">Kamo: Bringing Many-Core Scalability to MySQL</p>
+            <p class="note">第一著者 · 2026年11月発表予定</p>
+          </div>
+          <div class="m"><span>SC26 · poster</span><span class="y">2026</span></div>
+        </li>
+        <li>
+          <div class="t">
+            <p class="title" lang="en">Helios: A Disaggregated MySQL Database That Scales Without Replication</p>
+            <p class="note">Co-first author · 2026年11月発表予定</p>
+          </div>
+          <div class="m"><span>SC26 · poster</span><span class="y">2026</span></div>
+        </li>
+        <li>
+          <div class="t">
+            <p class="title" lang="en">Cantata: Accelerating Aria with Early Dependency Resolution</p>
+            <p class="note">情報処理学会論文誌 コンピューティングシステム 91号 · 採録決定</p>
+          </div>
+          <div class="m"><span>IPSJ Trans. ACS</span><span class="y">2026</span></div>
+        </li>
+        <li>
+          <div class="t">
+            <p class="title">大規模データ処理に向けた高性能で耐故障なMySQL互換DBMSの設計</p>
+            <p class="note">
+              第一著者 ·
+              <a href="https://xsig.ipsj.or.jp/2026/" rel="noopener">xSIG</a>
+            </p>
+          </div>
+          <div class="m"><span>xSIG 2026 · poster</span><span class="y">2026</span></div>
+        </li>
+        <li>
+          <div class="t">
+            <p class="title">高性能かつ耐故障なデータベースシステムの設計</p>
+            <p class="note">コンピュータシステム・シンポジウム</p>
+          </div>
+          <div class="m"><span>ComSys 2025 · poster</span><span class="y">2025</span></div>
+        </li>
+        <li>
+          <div class="t">
+            <p class="title" lang="en">Optimizing Aria Concurrency Control Protocol with Early Dependency Resolution</p>
+            <p class="note">
+              第一著者 · 口頭発表 ·
+              <a href="https://ieeexplore.ieee.org/document/10596429" rel="noopener">IEEE Xplore</a>
+            </p>
+          </div>
+          <div class="m"><span>IPDPS 2024 Workshops</span><span class="y">2024</span></div>
+        </li>
+      </ol>
     </section>
 
-    <section id="links">
-      <h2>外部リンク <span lang="en" class="en-sub">Links</span></h2>
-      <ul class="link-list">
-        <li><a href="https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html" rel="noopener">IPA 未踏スーパークリエータ 宮﨑祐介 紹介ページ</a></li>
-        <li><a href="https://www.keio.ac.jp/ja/sfc/activity/award/award2025/" rel="noopener">慶應義塾 SFC 2025年 教員・学生の受賞</a></li>
-        <li><a href="https://knowledge.sakura.ad.jp/50280/" rel="noopener">さくらのナレッジ「高性能で耐故障なMySQL互換DBMS『Kamo』の開発」</a></li>
-        <li><a href="https://github.com/wasanemon" rel="noopener">GitHub(@wasanemon)</a></li>
-        <li><a href="https://github.com/mitou-Kamo/LineairDB-storage-engine" rel="noopener">GitHub(Kamoプロジェクト)</a></li>
-        <li><a href="https://fridayfarm.net/yusuke-miyazaki/" rel="noopener">model agency friday プロフィール</a></li>
-        <li><a href="https://www.instagram.com/wasanemon/" rel="noopener">Instagram(@wasanemon)</a></li>
-      </ul>
+    <section class="grid block" id="background">
+      <h2 class="label">略歴 <span lang="en">background</span></h2>
+      <ol class="table">
+        <li>
+          <div class="t"><p class="title">慶應義塾大学大学院 政策・メディア研究科 修士課程 入学</p></div>
+          <div class="m"><span></span><span class="y">2026</span></div>
+        </li>
+        <li>
+          <div class="t"><p class="title">慶應義塾大学 総合政策学部 卒業</p></div>
+          <div class="m"><span></span><span class="y">2026</span></div>
+        </li>
+        <li>
+          <div class="t"><p class="title">群馬県立高崎高等学校 卒業</p></div>
+          <div class="m"><span></span><span class="y">2021</span></div>
+        </li>
+        <li>
+          <div class="t"><p class="title">群馬県生まれ</p></div>
+          <div class="m"><span></span><span class="y">2002</span></div>
+        </li>
+      </ol>
     </section>
 
-    <section id="contact">
-      <h2>連絡先 <span lang="en" class="en-sub">Contact</span></h2>
-      <p>
-        お仕事のご依頼・お問い合わせは下記メールアドレスまでお願いします。<br>
-        <span lang="en" class="en-sub">For inquiries, please contact:</span>
-      </p>
-      <p class="contact-email"><a href="mailto:miyayu@keio.jp">miyayu@keio.jp</a></p>
-      <p>モデル活動に関するお問い合わせは <a href="https://fridayfarm.net/contact/" rel="noopener">model agency friday</a> までお願いします。</p>
+    <section class="grid block" id="modeling">
+      <h2 class="label">モデル <span lang="en">modeling</span></h2>
+      <ol class="table">
+        <li>
+          <div class="t">
+            <p class="title">model agency friday に所属し、モデルとしての活動も始めています。</p>
+          </div>
+          <div class="m links">
+            <a href="https://fridayfarm.net/yusuke-miyazaki/" rel="noopener">profile</a>
+            <a href="https://www.instagram.com/wasanemon/" rel="noopener">instagram</a>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="grid block" id="links">
+      <h2 class="label">リンク <span lang="en">links</span></h2>
+      <ol class="table">
+        <li>
+          <div class="t">
+            <p class="note">
+              モデル活動に関するお問い合わせは
+              <a href="https://fridayfarm.net/contact/" rel="noopener">model agency friday</a>
+              までお願いします。
+            </p>
+          </div>
+          <div class="m links">
+            <a href="https://github.com/wasanemon" rel="noopener">github</a>
+            <a href="https://www.instagram.com/wasanemon/" rel="noopener">instagram</a>
+            <a href="https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html" rel="noopener">ipa</a>
+          </div>
+        </li>
+      </ol>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 Yusuke Miyazaki(宮﨑祐介)</p>
+  <footer class="grid">
+    <p>&copy; 2026 宮﨑祐介</p>
+    <p lang="en">yusuke miyazaki</p>
   </footer>
 </body>
 </html>

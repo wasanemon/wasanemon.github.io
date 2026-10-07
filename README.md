@@ -10,7 +10,7 @@
 | ファイル | 内容 |
 |---|---|
 | `index.html` | メインページ(日本語中心・英語併記)。title / meta description / OGP / canonical / JSON-LD(ProfilePage + Person)を設定 |
-| `assets/style.css` | レスポンシブ対応のベーススタイル(ライト/ダークモード対応。デザインは今後調整予定) |
+| `assets/style.css` | 全スタイル(4列の罫線グリッド、白黒+差し色1色。ライト/ダーク対応)。方針は `AGENTS.md` を参照 |
 | `assets/ogp.svg` / `assets/ogp.png` | OGP画像(1200×630)。SVGが元データで、`rsvg-convert -w 1200 -h 630 assets/ogp.svg -o assets/ogp.png` で再生成可能 |
 | `favicon.svg` | ファビコン |
 | `404.html` | 404ページ(noindex) |
@@ -19,13 +19,15 @@
 | `.nojekyll` | GitHub Pages の Jekyll 処理を無効化 |
 | `tools/set-base-url.sh` | ベースURL(canonical / OGP / sitemap / robots)の一括変更スクリプト |
 | `.base-url` | 現在設定されているベースURL(スクリプトが参照) |
+| `AGENTS.md` | 内容・デザインの方針と更新時のチェック項目 |
 
 ### 掲載内容と出典
 
 推測を避けるため、公式に確認できる情報のみを掲載しています。
 
 - **未踏IT**: [IPA スーパークリエータ紹介ページ](https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html) / [経済産業省 発表(2026年6月)](https://www.meti.go.jp/press/2026/06/20260604002/20260604002.html)
-- **SFCでの表彰(受賞掲載)**: [慶應義塾 SFC 2025年 教員・学生の受賞](https://www.keio.ac.jp/ja/sfc/activity/award/award2025/)(2025年6月・未踏採択の掲載)
+- **慶應義塾の掲載**: [SFC生が未踏IT人材発掘・育成事業で活躍(2026年7月13日)](https://www.keio.ac.jp/ja/sfc-pem/news/20260713/)
+- **研究業績**: [IPDPS 2024 Workshops 論文(IEEE Xplore)](https://ieeexplore.ieee.org/document/10596429) / [xSIG 2026](https://xsig.ipsj.or.jp/2026/)。SC26 ポスター2件と情報処理学会論文誌 ACS 91号は採択・採録通知に基づく(公開ページは未掲載)
 - **Kamoプロジェクト**: [さくらのナレッジ 解説記事](https://knowledge.sakura.ad.jp/50280/) / [GitHub: mitou-Kamo/LineairDB-storage-engine](https://github.com/mitou-Kamo/LineairDB-storage-engine)
 - **モデル活動**: [model agency friday プロフィール](https://fridayfarm.net/yusuke-miyazaki/)
 
@@ -81,7 +83,7 @@ python3 -m http.server 8000
 - [ ] **本人写真の掲載**: プロフィール写真とOGP画像を実写に差し替えると、検索結果・SNSシェアでの本人性が大幅に向上(JSON-LD の `image` も更新)
 - [ ] **外部プロフィールからの被リンク**: GitHub個人アカウント・Instagram・X などのプロフィール欄にこのサイトのURLを記載(双方向リンクで同一人物性のシグナルを強化)
 - [ ] **英語ページの分離**: 現在は1ページ内に英語併記。`en/index.html` を作成し `hreflang` を設定すると "Yusuke Miyazaki" での英語圏検索に有利
-- [ ] **コンテンツの追加**: 技術記事・登壇・研究業績などの追加(更新頻度と情報量は評価に寄与)。`sitemap.xml` へのページ追加を忘れずに
+- [x] **研究業績の追加** — 掲載済み。SC26 発表後・ACS 91号掲載後にリンクを追加する
 - [ ] **構造化データの検証**: 公開後に [Google リッチリザルトテスト](https://search.google.com/test/rich-results) で JSON-LD を検証
 
 ## 未確定の情報(要確認)
@@ -89,6 +91,6 @@ python3 -m http.server 8000
 以下はオーナー(宮﨑さん本人)の確認・提供が必要です:
 
 1. **X(Twitter)・LinkedIn などその他SNS**(あれば追加。GitHub は [@wasanemon](https://github.com/wasanemon) を掲載済み)
-2. **公開する連絡先メールアドレス**(現在 `miyayu@keio.jp` を掲載。変更・非公開にする場合は `index.html` の連絡先セクションと JSON-LD を修正)
+2. **連絡先**(メールアドレスは非公開の方針。研究関連の問い合わせ窓口を設ける場合は別途決める)
 3. **プロフィール写真**(掲載する場合)
 4. **独自ドメインの取得予定**
