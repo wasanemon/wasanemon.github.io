@@ -1,0 +1,83 @@
+---
+/** KAMO — プロジェクト紹介(文言は i18n 辞書の kamo) */
+import Base from '../layouts/Base.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import Butterfly from '../components/deco/Butterfly.astro';
+import Strawberry from '../components/deco/Strawberry.astro';
+import { getDictionary, defaultLocale } from '../i18n';
+
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+---
+
+<Base title={t.kamo.title} active="kamo">
+  <SectionTitle title={t.kamo.title} lead={t.kamo.lead} />
+
+  <div class="grid gap-8 md:grid-cols-[1fr_320px] md:gap-10">
+    <div>
+      <p class="display-type text-xs text-ink-soft">{t.kamo.kind}</p>
+      <h2
+        class="display-type mt-2 text-6xl leading-none text-milk sm:text-7xl [-webkit-text-stroke:2.5px_var(--color-ink)] [text-shadow:5px_5px_0_var(--color-soda)]"
+      >
+        {t.kamo.name}
+      </h2>
+
+      <div class="prose-jp mt-6">
+        {t.kamo.body.map((paragraph) => <p class="leading-loose">{paragraph}</p>)}
+      </div>
+
+      <h3 class="display-type mt-8 flex items-center gap-2 text-xl">
+        <Butterfly class="h-5 w-5" />
+        {t.kamo.teamHeading}
+      </h3>
+      <ul class="mt-3 flex flex-wrap gap-2">
+        {
+          t.kamo.team.map((member) => (
+            <li class="rounded-chip border-2 border-ink bg-milk px-4 py-1 text-sm">{member}</li>
+          ))
+        }
+      </ul>
+
+      <h3 class="display-type mt-8 flex items-center gap-2 text-xl">
+        <Strawberry class="h-5 w-5" />
+        {t.kamo.linksHeading}
+      </h3>
+      <ul class="mt-3 flex flex-wrap gap-3">
+        {
+          t.kamo.links.map((link) => (
+            <li>
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="display-type inline-block rounded-chip border-2 border-ink bg-milk px-4 py-1.5 text-sm shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-soda-milk"
+              >
+                {link.label}
+                <span class="sr-only">({t.a11y.externalLink})</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <section aria-labelledby="kamo-stats">
+      <h3 id="kamo-stats" class="display-type text-sm text-ichigo-deep">{t.kamo.statsHeading}</h3>
+      <dl class="mt-3 flex flex-col gap-4">
+        {
+          t.kamo.stats.map((stat, i) => (
+            <div
+              class:list={[
+                'rounded-sticker border-2 border-ink px-5 py-4 shadow-sticker',
+                i % 2 === 0 ? 'bg-ichigo-milk' : 'bg-soda-milk',
+              ]}
+            >
+              <dt class="sr-only">{stat.label}</dt>
+              <dd class="display-type text-6xl leading-none">{stat.value}</dd>
+              <dd class="mt-2 text-sm" aria-hidden="true">{stat.label}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+  </div>
+</Base>

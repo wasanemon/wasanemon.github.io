@@ -1,0 +1,26 @@
+---
+/** 404 */
+import Base from '../layouts/Base.astro';
+import { getDictionary, defaultLocale } from '../i18n';
+
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+---
+
+<Base title={t.notFound.title}>
+  <meta name="robots" content="noindex" slot="head" />
+  <div class="py-16 text-center">
+    <p
+      class="display-type text-7xl leading-none text-milk [-webkit-text-stroke:2.5px_var(--color-ink)] [text-shadow:5px_5px_0_var(--color-ichigo)]"
+    >
+      {t.notFound.title}
+    </p>
+    <p class="mt-6">{t.notFound.message}</p>
+    <p class="mt-6">
+      <a
+        href="/"
+        class="display-type inline-block rounded-bubble border-2 border-ink bg-call-green px-6 py-3 shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
+        >{t.notFound.back}</a
+      >
+    </p>
+  </div>
+</Base>

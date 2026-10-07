@@ -1,0 +1,59 @@
+---
+/**
+ * 共通レイアウト — 全ページはこのレイアウトを使う。
+ */
+import '../styles/global.css';
+import { getDictionary, defaultLocale } from '../i18n';
+import Header, { type NavKey } from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  /** ページ名（siteName に前置される）。省略時は siteName のみ */
+  title?: string;
+  description?: string;
+  /** ナビのアクティブ表示 */
+  active?: NavKey;
+}
+
+const locale = Astro.currentLocale ?? defaultLocale;
+const t = getDictionary(locale);
+const { title, description = t.meta.description, active } = Astro.props;
+const pageTitle = title ? `${title} | ${t.meta.siteName}` : t.meta.siteName;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={t.meta.siteName} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Maru+Gothic:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link display-type">{t.a11y.skipToContent}</a>
+    <slot name="overlay" />
+    <Header active={active} />
+    <main id="main" class="mx-auto max-w-5xl px-gutter pt-8">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

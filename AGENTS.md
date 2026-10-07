@@ -1,44 +1,41 @@
 # AGENTS.md
 
-宮﨑祐介(Yusuke Miyazaki)の公式個人サイト。ビルドなしの静的サイトで、`main` への push がそのまま https://wasanemon.github.io/ に公開される。
+宮﨑祐介(Yusuke Miyazaki)の公式個人サイト。Astro(静的ビルド)+ Tailwind CSS。
+`main` への push で GitHub Actions がビルドし、https://wasanemon.github.io/ に公開される。
 
-## 構成
-
-- `index.html` — 唯一のページ。本文、OGP、JSON-LD(ProfilePage / Person)を含む
-- `assets/style.css` — 全スタイル。404 ページも共用
-- `assets/ogp.svg` → `assets/ogp.png` — OGP 画像。SVG を編集したら PNG を再生成する
-- `tools/set-base-url.sh` — 公開 URL の一括置換(`.base-url` が現在値)
+デザインは別リポジトリ `wasanemon/sasane` のものをそのまま流用している(いちごソーダ配色、ドット文字、ステッカー風カード)。見た目を変えるときは、まず sasane 側の文法に合わせる。
 
 ## コマンド
 
 ```bash
-python3 -m http.server 8000   # プレビュー(.claude/launch.json の site-preview と同じ)
-rsvg-convert -w 1200 -h 630 assets/ogp.svg -o assets/ogp.png
+npm install
+npm run dev      # http://localhost:4321 (.claude/launch.json の dev と同じ)
+npm run build    # dist/ に出力
 ```
+
+## どこに何があるか
+
+| 変えたいもの | 場所 |
+| --- | --- |
+| サイト上の文言すべて | `src/i18n/locales/ja.ts` |
+| 研究業績 | `src/data/research.ts`(先頭 = 最新) |
+| NEWS | `src/content/news/*.md`(category: info / award / paper / media / event) |
+| SNS・関連ページのリンク | `src/data/links.ts` |
+| 画像(TOPのキービジュアル、PROFILEの写真) | `public/assets/official/` に置き、`src/data/assets.ts` の `file` に書く |
+| 配色・フォント・角丸・影 | `src/styles/tokens.css` |
+| 起動オープニング(ターミナル風タイピング) | `src/components/BootOpening.astro`、文言は `ja.ts` の `boot` |
+
+## 決まりごと
+
+- 色・フォント等は必ず `src/styles/tokens.css` のトークン経由(直書き禁止)
+- UI文言は `src/i18n/locales/ja.ts` に集約(ハードコード禁止)
+- 画像は `src/data/assets.ts` のスロット + `ImageSlot` 経由のみ。未投入のスロットはページ側で代替表示か非表示にしている(「COMING SOON」は出さない)
 
 ## 内容の方針
 
-- 第一の肩書きは「データベースシステム研究者」。未踏IT採択とスーパークリエータ認定が最大の業績で、研究業績より上に置く
-- モデル活動は末尾に短く。「これから」のニュアンスで、事務所ページと Instagram へのリンクのみ
+- 第一の肩書きは「データベースシステム研究者」。未踏IT採択とスーパークリエータ認定が最大の業績
+- モデル活動は PROFILE の末尾に短く。「これから」のニュアンスで、事務所ページと Instagram へのリンクのみ
 - 載せるのは公開情報か本人が確認した事実だけ。推測で業績・著者順・発表形態を書かない
-- メールアドレスは載せない(本文にも JSON-LD にも)。生年月日、住所、就職活動、不採録の履歴も載せない
-- 表記は「宮﨑」(﨑)。検索用の別表記「宮崎祐介」は meta description と JSON-LD の `alternateName` にだけ置く
-
-## デザインの方針
-
-4列の罫線グリッドに、大きな一文と等幅の表を載せる。参考は maximiliankaspar.com(グリッドと一文)と artemiilebedev.com(名前 / 分野 / 年の表)。
-
-- 縦の罫線は `body::before` で画面全体に固定。全要素は `.grid`(4列、720px以下は2列)に乗せ、セルの左右余白は `--cell`
-- 各セクションは `.grid.block`。1列目に等幅のラベル(`.label`)、2〜4列目に内容
-- 一覧は `.table`: タイトル(2列)+ 会議名と年(1列、等幅)。補足は `.note`
-- 大きく見せるのは冒頭の一文(`.statement`)、`Kamo`、数値(`.figures dt`)だけ。ほかは 15px 前後
-- 色は白黒と罫線のグレー、差し色 `--accent` は1色のみ(■、選択範囲、フォーカス)。リンクの hover は白黒反転
-- 書体は IBM Plex Sans JP と IBM Plex Mono(Google Fonts)。ラベル・年・数値・英語の補足は等幅
-- カード、角丸、影、アイコン、画像、JavaScript は足さない
-- ライト / ダークの両方と、幅 1440px・375px で確認する
-
-## 更新時のチェック
-
-- 業績を足すとき: `index.html` の該当 `.table` に新しい順で追加
-- 内容を変えたら JSON-LD の `dateModified` と `sitemap.xml` の `lastmod` を更新
-- 肩書きを変えたら title / description / OGP / JSON-LD / `assets/ogp.svg` を揃える
+- メールアドレスは載せない。生年月日、住所、就職活動、不採録の履歴も載せない
+- 表記は「宮﨑」(﨑)。別表記「宮崎祐介」は meta description と JSON-LD の `alternateName` にだけ置く
+- 内容を変えたら `src/pages/index.astro` の JSON-LD `dateModified` と `public/sitemap.xml` の `lastmod` を更新

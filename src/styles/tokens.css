@@ -1,0 +1,54 @@
+/*
+ * デザイントークン — このファイルが唯一の色・フォント・角丸・影・間隔の定義元。
+ * ここの値を書き換えるだけでサイト全体のパレットが差し替わる。
+ *
+ * パレット名は「いちごソーダ」系:
+ *   cream  = 背景（生クリーム）      milk   = カード面（ミルク）
+ *   ink    = 本文・線（チョコインク） ichigo = 🍓ピンク（装飾用）
+ *   soda   = 🦋ソーダブルー（装飾用） lemon  = ハイライト
+ *   *-deep = 明るい面の上に置ける文字色（コントラスト比 4.5:1 以上を確認済み）
+ *   *-milk = 淡い塗り面
+ *
+ * `--color-*: initial` で Tailwind 標準パレットを無効化しているため、
+ * トークン外の色クラス（bg-red-500 等）は生成されず、色のハードコードを防ぐ。
+ */
+@theme {
+  /* ---- 色 ---- */
+  --color-*: initial;
+  --color-cream: #fff8f0;
+  --color-milk: #ffffff;
+  --color-ink: #33202b;
+  --color-ink-soft: #6e5560;
+  --color-ichigo: #ff5e97;
+  --color-ichigo-deep: #c21f5b;
+  --color-ichigo-milk: #ffe3ee;
+  --color-soda: #6fd9ee;
+  --color-soda-deep: #0f7a94;
+  --color-soda-milk: #e1f6fb;
+  --color-lemon: #ffe59a;
+  --color-call-green: #45e07a;
+  --color-call-green-deep: #17803d;
+  --color-call-red: #ff5a5a;
+
+  /* ---- フォント ---- */
+  /* display: ガラケー液晶風ドット文字 / body: 丸ゴシック */
+  --font-display: "DotGothic16", "Hiragino Kaku Gothic ProN", sans-serif;
+  --font-body: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", sans-serif;
+
+  /* ---- 角丸 ---- */
+  --radius-sticker: 14px; /* ステッカー・カード */
+  --radius-bubble: 22px;  /* 吹き出し・ボタン */
+  --radius-chip: 999px;   /* ピル型ナビ */
+
+  /* ---- 影（ハードシャドウ = ステッカー感。ぼかし影は使わない） ---- */
+  --shadow-sticker: 3px 3px 0 0 var(--color-ink);
+  --shadow-sticker-lg: 5px 5px 0 0 var(--color-ink);
+  --shadow-sticker-pink: 3px 3px 0 0 var(--color-ichigo);
+
+  /* ---- 線 ---- */
+  --border-width-sticker: 2px;
+
+  /* ---- スペーシング（Tailwind標準の4pxスケールを継承しつつ、要所を命名） ---- */
+  --spacing-gutter: 1.25rem;   /* ページ左右余白（375px基準） */
+  --spacing-section: 4rem;     /* セクション間 */
+}

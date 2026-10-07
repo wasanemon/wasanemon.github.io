@@ -1,0 +1,76 @@
+---
+/** LINKS — SNS・関連ページへのアイコンリンク(URLは src/data/links.ts で管理) */
+import Base from '../layouts/Base.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import Icon from '../components/deco/Icon.astro';
+import { getDictionary, defaultLocale } from '../i18n';
+import { snsLinks, pageLinks, type ExternalLink } from '../data/links';
+
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+
+const sections: { heading: string; items: ExternalLink[] }[] = [
+  { heading: t.links.snsHeading, items: snsLinks },
+  { heading: t.links.pagesHeading, items: pageLinks },
+];
+---
+
+<Base title={t.links.title} active="links">
+  <SectionTitle title={t.links.title} lead={t.links.lead} />
+
+  {
+    sections.map((section) => (
+      <section class="mb-10">
+        <h2 class="display-type mb-4 text-xl text-ichigo-deep">{section.heading}</h2>
+        <ul class="grid gap-3 sm:grid-cols-2">
+          {section.items.map((link) => (
+            <li>
+              {link.url ? (
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="sticker-card flex items-center gap-4 px-4 py-3 transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-soda-milk"
+                >
+                  <Icon name={link.icon} class="h-10 w-10 shrink-0" />
+                  <span class="min-w-0">
+                    <span class="display-type block">{link.platform}</span>
+                    {link.handle && (
+                      <span class="block truncate text-xs text-ink-soft">{link.handle}</span>
+                    )}
+                  </span>
+                  <span class="display-type ml-auto shrink-0 text-ichigo-deep" aria-hidden="true">
+                    ↗
+                  </span>
+                  <span class="sr-only">（{t.a11y.externalLink}）</span>
+                </a>
+              ) : (
+                <div class="sticker-card flex items-center gap-4 bg-cream px-4 py-3">
+                  <Icon name={link.icon} class="h-10 w-10 shrink-0" />
+                  <span class="min-w-0">
+                    <span class="display-type block">{link.platform}</span>
+                    {link.handle && (
+                      <span class="block truncate text-xs text-ink-soft">{link.handle}</span>
+                    )}
+                  </span>
+                  <span class="display-type ml-auto shrink-0 rounded-chip border border-ink bg-lemon px-2 py-0.5 text-xs">
+                    {t.links.preparing}
+                  </span>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  <p class="sticker-card bg-cream px-4 py-3 text-sm">
+    {t.links.contact}
+    <a
+      href={t.links.contactUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-ichigo-deep underline underline-offset-4 hover:text-ink">{t.links.contactLabel}</a
+    >
+  </p>
+</Base>

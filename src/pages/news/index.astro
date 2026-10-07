@@ -1,0 +1,34 @@
+---
+/** NEWS 一覧 — src/content/news/ の Markdown を日付降順で表示 */
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import NewsRow from '../../components/NewsRow.astro';
+import { getDictionary, defaultLocale } from '../../i18n';
+
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const entries = (await getCollection('news')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<Base title={t.news.title} active="news">
+  <SectionTitle title={t.news.title} lead={t.news.lead} />
+
+  {
+    entries.length === 0 ? (
+      <p class="sticker-card px-4 py-6 text-center text-ink-soft">{t.news.empty}</p>
+    ) : (
+      <div class="flex flex-col gap-3">
+        {entries.map((entry) => (
+          <NewsRow
+            id={entry.id}
+            title={entry.data.title}
+            date={entry.data.date}
+            category={entry.data.category}
+          />
+        ))}
+      </div>
+    )
+  }
+</Base>

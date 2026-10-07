@@ -1,0 +1,41 @@
+---
+/** NEWS 一覧の1行（TOPプレビューとNEWSページで共用） */
+import { getDictionary, defaultLocale } from '../i18n';
+import { formatDate } from '../utils/format';
+
+interface Props {
+  id: string;
+  title: string;
+  date: Date;
+  category: string;
+}
+const { id, title, date, category } = Astro.props;
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+
+/* カテゴリ別チップの塗り（すべてトークン色） */
+const chipBg: Record<string, string> = {
+  info: 'bg-soda-milk',
+  award: 'bg-ichigo-milk',
+  paper: 'bg-soda',
+  media: 'bg-lemon',
+  event: 'bg-call-green',
+};
+---
+
+<a
+  href={`/news/${id}/`}
+  class="sticker-card flex flex-col gap-1 px-4 py-3 transition-transform hover:bg-cream motion-safe:hover:-translate-y-0.5 sm:flex-row sm:items-center sm:gap-4"
+>
+  <span class="flex shrink-0 items-center gap-3">
+    <time datetime={date.toISOString().slice(0, 10)} class="display-type text-sm text-ink-soft"
+      >{formatDate(date)}</time
+    >
+    <span
+      class:list={[
+        'display-type rounded-chip border border-ink px-2 py-0.5 text-xs',
+        chipBg[category] ?? 'bg-soda-milk',
+      ]}>{t.news.categories[category] ?? category}</span
+    >
+  </span>
+  <span class="font-medium">{title}</span>
+</a>

@@ -1,0 +1,28 @@
+---
+/**
+ * 画像スロット — サイト内の画像はすべてこのコンポーネント経由で表示する。
+ * src/data/assets.ts のスロット定義を参照し、
+ *   - file が入っていれば public/assets/official/ の実画像
+ *   - 空ならプレースホルダSVG
+ * を描画する。ページ側は asset キーを渡すだけでよい。
+ */
+import { assets, assetUrl, type AssetKey } from '../data/assets';
+import Placeholder from './Placeholder.astro';
+
+interface Props {
+  asset: AssetKey;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+const { asset, class: className, loading = 'lazy' } = Astro.props;
+const slot = assets[asset];
+const url = assetUrl(asset);
+---
+
+{
+  url ? (
+    <img src={url} alt={slot.alt} class={className} loading={loading} decoding="async" />
+  ) : (
+    <Placeholder variant={slot.placeholder} label={slot.alt} class={className} />
+  )
+}

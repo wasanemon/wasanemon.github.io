@@ -1,0 +1,25 @@
+---
+/** 共通フッター */
+import { getDictionary, defaultLocale } from '../i18n';
+import Strawberry from './deco/Strawberry.astro';
+import Butterfly from './deco/Butterfly.astro';
+import Receiver from './deco/Receiver.astro';
+
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+---
+
+<footer class="mt-section border-t-2 border-ink bg-milk">
+  <div class="mx-auto max-w-5xl px-gutter py-10 text-center">
+    <div class="group flex items-center justify-center gap-4" aria-hidden="true">
+      <Strawberry class="h-6 w-6 motion-safe:group-hover:animate-[ichigo-bounce_0.6s_ease-in-out]" />
+      <Receiver
+        class="h-6 w-6 text-ichigo motion-safe:group-hover:animate-[receiver-ring_0.8s_ease-in-out]"
+      />
+      <Butterfly
+        class="h-6 w-6 motion-safe:group-hover:animate-[butterfly-float_1.2s_ease-in-out]"
+      />
+    </div>
+    <p class="display-type mt-4 text-sm">{t.footer.copyright}</p>
+    {t.footer.staging && <p class="mt-1 text-xs text-ink-soft">{t.footer.staging}</p>}
+  </div>
+</footer>

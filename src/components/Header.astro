@@ -1,0 +1,67 @@
+---
+/**
+ * 共通ヘッダー。ロゴ + ピル型ナビ（モバイルは横スクロール）。
+ * アクティブページは各ページから active プロップで指定する。
+ */
+import { getDictionary, defaultLocale } from '../i18n';
+import Butterfly from './deco/Butterfly.astro';
+
+export type NavKey = 'top' | 'news' | 'research' | 'kamo' | 'profile' | 'links';
+
+interface Props {
+  active?: NavKey;
+}
+const { active } = Astro.props;
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+
+const items: { key: NavKey; href: string; label: string }[] = [
+  { key: 'top', href: '/', label: t.nav.top },
+  { key: 'news', href: '/news/', label: t.nav.news },
+  { key: 'research', href: '/research/', label: t.nav.research },
+  { key: 'kamo', href: '/kamo/', label: t.nav.kamo },
+  { key: 'profile', href: '/profile/', label: t.nav.profile },
+  { key: 'links', href: '/links/', label: t.nav.links },
+];
+---
+
+<header class="sticky top-0 z-40 border-b-2 border-ink bg-cream/95 backdrop-blur-sm">
+  <div class="mx-auto flex max-w-5xl items-end justify-between px-gutter pt-3 pb-2">
+    <a href="/" class="group flex items-end gap-2" aria-label={t.meta.siteName}>
+      <Butterfly
+        class="h-7 w-7 motion-safe:animate-[butterfly-float_3.2s_ease-in-out_infinite]"
+      />
+      <span
+        class="display-type text-2xl leading-none transition-colors group-hover:text-ichigo-deep"
+        >{t.header.logo}</span
+      >
+      <span class="pb-0.5 text-xs leading-none text-ink-soft">{t.header.logoSub}</span>
+    </a>
+    <span class="display-type hidden text-xs text-ink-soft sm:inline" aria-hidden="true"
+      >{t.header.aside}</span
+    >
+  </div>
+
+  <nav aria-label={t.a11y.mainNav}>
+    <ul
+      class="no-scrollbar mx-auto flex max-w-5xl gap-2 overflow-x-auto px-gutter pt-1 pb-3 [-webkit-overflow-scrolling:touch]"
+    >
+      {
+        items.map((item) => (
+          <li class="shrink-0">
+            <a
+              href={item.href}
+              aria-current={active === item.key ? 'page' : undefined}
+              class:list={[
+                'display-type block rounded-chip border-2 border-ink px-4 py-1 text-sm whitespace-nowrap transition-transform',
+                'motion-safe:hover:-translate-y-0.5 hover:bg-lemon',
+                active === item.key ? 'bg-ichigo shadow-sticker' : 'bg-milk',
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>

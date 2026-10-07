@@ -1,0 +1,202 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* ============================================================
+ * ベーススタイル
+ * 色・フォント等の「値」は必ず tokens.css のトークンを参照する
+ * ============================================================ */
+@layer base {
+  html {
+    font-family: var(--font-body);
+    color: var(--color-ink);
+    background-color: var(--color-cream);
+    /* 🍓ドット水玉(装飾レイヤー: ごく淡くして本文の可読性を守る) */
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--color-ichigo) 14%, transparent) 2px,
+      transparent 2.5px
+    );
+    background-size: 26px 26px;
+    line-height: 1.8;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-ichigo-milk);
+    color: var(--color-ichigo-deep);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-soda-deep);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* オープニング終了時にプログラムで main へフォーカスを移すため、枠は出さない */
+  main:focus {
+    outline: none;
+  }
+
+  /* 起動オープニング表示中は背面のスクロールを固定 */
+  html.call-open,
+  html.call-open body {
+    overflow: hidden;
+  }
+}
+
+/* ============================================================
+ * 共通コンポーネントクラス
+ * ============================================================ */
+@layer components {
+  /* ステッカー風カード(白ベタ+インク縁+ハードシャドウ) */
+  .sticker-card {
+    background-color: var(--color-milk);
+    border: var(--border-width-sticker) solid var(--color-ink);
+    border-radius: var(--radius-sticker);
+    box-shadow: var(--shadow-sticker);
+  }
+
+  /* ドット文字見出し */
+  .display-type {
+    font-family: var(--font-display);
+    letter-spacing: 0.04em;
+  }
+
+  /* 本文最大幅(可読レイヤー) */
+  .prose-jp {
+    max-width: 38rem;
+  }
+  .prose-jp p + p {
+    margin-top: 1em;
+  }
+
+  /* ティッカー: 通常は無限スクロール、ホバー中は一時停止、
+     停止ボタン押下時と prefers-reduced-motion 時は折り返して全文表示 */
+  .ticker-track {
+    animation: marquee-scroll 22s linear infinite;
+  }
+  /* 子(本体とクローン)のレイアウトはここで持つ
+     (Tailwindのflexユーティリティを子に付けるとutilitiesレイヤーが勝ち、
+      下の display: none を上書きしてしまうため) */
+  .ticker-track > div {
+    display: flex;
+    flex-shrink: 0;
+  }
+  /* 流れている間は改行しない(停止時に normal へ上書きする。
+     Tailwindのwhitespace-nowrapだとutilitiesレイヤーが勝って上書きできない) */
+  .ticker-track span {
+    white-space: nowrap;
+  }
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
+  }
+  .ticker.is-paused .ticker-track,
+  .ticker.is-paused .ticker-track > div {
+    animation: none;
+    width: auto;
+    max-width: 100%;
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
+  }
+  .ticker.is-paused .ticker-clone {
+    display: none;
+  }
+  /* 停止中は項目内のテキストも折り返してよい(切れて読めないより可読性優先) */
+  .ticker.is-paused .ticker-track span {
+    white-space: normal;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track,
+    .ticker-track > div {
+      animation: none;
+      width: auto;
+      max-width: 100%;
+      flex-wrap: wrap;
+      row-gap: 0.25rem;
+    }
+    .ticker-clone {
+      display: none;
+    }
+    .ticker-track span {
+      white-space: normal;
+    }
+  }
+
+  /* スクロールバーを出さずに横スクロール(ピルナビ用) */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* キーボード操作用スキップリンク(フォーカス時のみ出現) */
+  .skip-link {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 100;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-lemon);
+    border: var(--border-width-sticker) solid var(--color-ink);
+    border-radius: var(--radius-bubble);
+    box-shadow: var(--shadow-sticker);
+    transform: translateY(-200%);
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+ * キーフレーム(マイクロインタラクション用)
+ * prefers-reduced-motion 時は一括停止する
+ * ============================================================ */
+@keyframes ichigo-bounce {
+  0%, 100% { transform: translateY(0); }
+  40%      { transform: translateY(-6px) rotate(-8deg); }
+  70%      { transform: translateY(-2px) rotate(4deg); }
+}
+
+@keyframes receiver-ring {
+  0%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(-14deg); }
+  20% { transform: rotate(12deg); }
+  30% { transform: rotate(-10deg); }
+  40% { transform: rotate(8deg); }
+  50% { transform: rotate(0deg); }
+}
+
+@keyframes butterfly-float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-8px) rotate(5deg); }
+}
+
+@keyframes blink-soft {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes call-slide-out {
+  to { transform: translateY(-100%); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

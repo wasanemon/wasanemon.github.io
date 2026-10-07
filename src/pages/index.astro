@@ -1,0 +1,239 @@
+---
+/** TOP — HERO + 受賞・プロジェクト導線 + NEWSプレビュー */
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import BootOpening from '../components/BootOpening.astro';
+import ImageSlot from '../components/ImageSlot.astro';
+import NewsRow from '../components/NewsRow.astro';
+import Strawberry from '../components/deco/Strawberry.astro';
+import Butterfly from '../components/deco/Butterfly.astro';
+import Receiver from '../components/deco/Receiver.astro';
+import { getDictionary, defaultLocale } from '../i18n';
+import { assetUrl } from '../data/assets';
+
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const news = (await getCollection('news'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+const hasKeyVisual = assetUrl('keyVisual') !== null;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  dateModified: '2026-10-07',
+  inLanguage: 'ja',
+  mainEntity: {
+    '@type': 'Person',
+    '@id': 'https://wasanemon.github.io/#person',
+    name: '宮﨑祐介',
+    alternateName: ['宮崎祐介', 'Yusuke Miyazaki', 'みやざき ゆうすけ'],
+    url: 'https://wasanemon.github.io/',
+    birthPlace: { '@type': 'Place', name: '群馬県' },
+    alumniOf: [
+      { '@type': 'EducationalOrganization', name: '群馬県立高崎高等学校' },
+      { '@type': 'CollegeOrUniversity', name: '慶應義塾大学 総合政策学部' },
+    ],
+    affiliation: [
+      { '@type': 'CollegeOrUniversity', name: '慶應義塾大学大学院 政策・メディア研究科' },
+      { '@type': 'Organization', name: 'model agency friday', url: 'https://fridayfarm.net/' },
+    ],
+    award: [
+      '2025年度 未踏IT人材発掘・育成事業 スーパークリエータ認定(経済産業省・IPA)',
+      '2025年度 未踏IT人材発掘・育成事業 採択(IPA)',
+    ],
+    knowsAbout: ['データベースシステム', 'トランザクション処理', '並行性制御', 'MySQL'],
+    jobTitle: 'Researcher',
+    sameAs: [
+      'https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html',
+      'https://github.com/wasanemon',
+      'https://fridayfarm.net/yusuke-miyazaki/',
+      'https://www.instagram.com/wasanemon/',
+    ],
+  },
+};
+---
+
+<Base active="top">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+  <BootOpening slot="overlay" />
+
+  <!-- HERO -->
+  <section class="relative grid items-center gap-8 md:grid-cols-2">
+    <!-- 装飾レイヤー（情報を持たない） -->
+    <Strawberry class="absolute -top-2 right-0 h-10 w-10 rotate-12 md:right-[-1.5rem]" />
+    <Butterfly
+      class="absolute bottom-[-1.75rem] left-[-0.5rem] hidden h-10 w-10 -rotate-6 md:block"
+    />
+
+    <div>
+      <p class="display-type text-sm text-ichigo-deep">{t.home.heroRoles}</p>
+      <h1
+        class="display-type mt-2 text-6xl leading-none text-milk sm:text-7xl [-webkit-text-stroke:2.5px_var(--color-ink)] [text-shadow:5px_5px_0_var(--color-ichigo)]"
+      >
+        {t.home.heroLogo}
+      </h1>
+      <p class="display-type mt-2 text-xl">
+        {t.home.heroName} <span class="text-sm text-ink-soft">{t.home.heroReading}</span>
+      </p>
+
+      <p class="sticker-card mt-6 inline-block rounded-bubble px-5 py-2 text-lg font-bold">
+        {t.home.catchCopy}
+      </p>
+      <p class="mt-3 text-sm text-ink-soft">{t.home.subCopy}</p>
+
+      <a
+        href="/kamo/"
+        class="group mt-6 inline-flex items-center gap-3 rounded-bubble border-2 border-ink bg-call-green px-6 py-3 font-bold shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
+      >
+        <Receiver
+          class="h-6 w-6 text-call-green-deep motion-safe:group-hover:animate-[receiver-ring_0.8s_ease-in-out_infinite]"
+        />
+        {t.home.cta}
+      </a>
+    </div>
+
+    {
+      hasKeyVisual ? (
+        <ImageSlot
+          asset="keyVisual"
+          loading="eager"
+          class="w-full rounded-sticker border-2 border-ink shadow-sticker-lg"
+        />
+      ) : (
+        /* キービジュアル未投入のあいだは、ガラケー画面風の数値カードを出す */
+        <div class="sticker-card px-6 pt-4 pb-7 shadow-sticker-lg">
+          <p
+            class="display-type flex items-center justify-between border-b-2 border-dotted border-ink-soft pb-2 text-xs text-ink-soft"
+            aria-hidden="true"
+          >
+            <span>▂▄▆█ {t.home.card.statusBar}</span>
+            <span>🔋 {t.home.card.clock}</span>
+          </p>
+          <p class="display-type mt-5 text-sm text-ichigo-deep">{t.home.card.heading}</p>
+          <dl class="mt-3 flex flex-col gap-4">
+            {t.home.card.stats.map((stat, i) => (
+              <div
+                class:list={[
+                  'rounded-sticker border-2 border-ink px-4 py-3',
+                  i % 2 === 0 ? 'bg-ichigo-milk' : 'bg-soda-milk',
+                ]}
+              >
+                <dt class="sr-only">{stat.label}</dt>
+                <dd class="display-type text-5xl leading-none sm:text-6xl">{stat.value}</dd>
+                <dd class="mt-2 text-sm" aria-hidden="true">{stat.label}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="mt-4 text-sm text-ink-soft">{t.home.card.foot}</p>
+        </div>
+      )
+    }
+  </section>
+
+  <!-- ティッカー（一時停止ボタン付き = WCAG 2.2.2。reduced-motion / 停止時は折り返して全文表示） -->
+  <div class="mt-12 flex items-start gap-2" role="group" aria-label={t.home.tickerLabel}>
+    <button
+      type="button"
+      id="ticker-toggle"
+      aria-pressed="false"
+      data-label-pause={t.home.tickerPause}
+      data-label-play={t.home.tickerPlay}
+      class="display-type shrink-0 rounded-chip border-2 border-ink bg-milk px-3 py-2 text-xs shadow-sticker hover:bg-lemon"
+      >{t.home.tickerPause}</button
+    >
+    <div id="ticker" class="ticker min-w-0 flex-1 overflow-hidden rounded-chip border-2 border-ink bg-lemon py-2">
+      <div class="ticker-track flex w-max">
+        {
+          [false, true].map((clone) => (
+            <div class:list={[clone && 'ticker-clone']} aria-hidden={clone ? 'true' : undefined}>
+              {t.home.ticker.map((item) => (
+                <span class="display-type mx-5 flex items-center gap-2 text-sm">
+                  <Strawberry class="h-4 w-4 shrink-0" />
+                  {item}
+                </span>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <script is:inline type="module">
+    // ティッカーの一時停止/再開（停止中は折り返し表示で全項目が読める）
+    const toggle = document.getElementById('ticker-toggle');
+    const ticker = document.getElementById('ticker');
+    if (toggle && ticker) {
+      toggle.addEventListener('click', () => {
+        const paused = ticker.classList.toggle('is-paused');
+        toggle.setAttribute('aria-pressed', String(paused));
+        toggle.textContent = paused ? toggle.dataset.labelPlay : toggle.dataset.labelPause;
+      });
+    }
+  </script>
+
+  <!-- AWARD + LATEST PROJECT -->
+  <div class="mt-14 grid gap-8 md:grid-cols-2">
+    <section aria-labelledby="award-heading">
+      <h2 id="award-heading" class="display-type text-2xl">{t.home.awardLabel}</h2>
+      <a
+        href={t.home.award.href}
+        class="sticker-card mt-4 flex h-[calc(100%-3rem)] items-center gap-5 p-4 transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
+      >
+        <Strawberry class="h-14 w-14 shrink-0" />
+        <span>
+          <span class="display-type block text-2xl leading-snug">{t.home.award.title}</span>
+          <span class="mt-1 block text-sm text-ink-soft">{t.home.award.meta}</span>
+          <span
+            class="display-type mt-3 inline-block rounded-chip border-2 border-ink bg-ichigo px-4 py-1 text-sm"
+            >▶ {t.home.award.more}</span
+          >
+        </span>
+      </a>
+    </section>
+
+    <section aria-labelledby="latest-heading">
+      <h2 id="latest-heading" class="display-type text-2xl">{t.home.projectLabel}</h2>
+      <a
+        href="/kamo/"
+        class="sticker-card mt-4 flex h-[calc(100%-3rem)] items-center gap-5 p-4 transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-ichigo-milk"
+      >
+        <Butterfly class="h-14 w-14 shrink-0" />
+        <span>
+          <span class="display-type block text-3xl">{t.home.project.title}</span>
+          <span class="mt-1 block text-sm text-ink-soft">{t.home.project.meta}</span>
+          <span
+            class="display-type mt-3 inline-block rounded-chip border-2 border-ink bg-soda px-4 py-1 text-sm"
+            >▶ {t.home.cta}</span
+          >
+        </span>
+      </a>
+    </section>
+  </div>
+
+  <!-- NEWS プレビュー -->
+  <section class="mt-14" aria-labelledby="news-heading">
+    <h2 id="news-heading" class="display-type flex items-center gap-2 text-2xl">
+      <Butterfly class="h-6 w-6" />
+      {t.home.newsHeading}
+    </h2>
+    <div class="mt-4 flex flex-col gap-3">
+      {
+        news.map((entry) => (
+          <NewsRow
+            id={entry.id}
+            title={entry.data.title}
+            date={entry.data.date}
+            category={entry.data.category}
+          />
+        ))
+      }
+    </div>
+    <p class="mt-5 text-right">
+      <a
+        href="/news/"
+        class="display-type text-sm text-ichigo-deep underline underline-offset-4 hover:text-ink"
+        >{t.home.newsMore} →</a
+      >
+    </p>
+  </section>
+</Base>
