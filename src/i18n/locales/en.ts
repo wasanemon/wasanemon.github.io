@@ -178,6 +178,7 @@ export const en: Dictionary = {
     reading: '宮﨑祐介',
     roles: 'Database systems researcher',
     facts: [
+      { label: 'Name', value: 'Yusuke Miyazaki / 宮﨑祐介 / 宮崎祐介' },
       { label: 'Born', value: '2002' },
       { label: 'From', value: 'Gunma, Japan' },
       { label: 'Affiliation', value: "Master's program, Graduate School of Media and Governance, Keio University" },

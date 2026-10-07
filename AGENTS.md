@@ -51,5 +51,5 @@ npm run build    # dist/ に出力
 - モデル活動は PROFILE の末尾に短く。「これから」のニュアンスで、事務所ページと Instagram へのリンクのみ
 - 載せるのは公開情報か本人が確認した事実だけ。推測で業績・著者順・発表形態を書かない
 - メールアドレスは載せない。生年月日、住所、就職活動、不採録の履歴も載せない
-- 表記は「宮﨑」(﨑)。別表記「宮崎祐介」は meta description と JSON-LD の `alternateName` にだけ置く
+- 表記は「宮﨑」(﨑)。別表記「宮崎祐介」は、検索で見つかるように PROFILE の「表記」の行、meta description、JSON-LD の `alternateName` に置く(本文のほかの箇所は「宮﨑」で統一)
 - 内容を変えたら `src/pages/index.astro` の JSON-LD `dateModified` と `public/sitemap.xml` の `lastmod` を更新

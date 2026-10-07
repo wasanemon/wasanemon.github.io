@@ -182,6 +182,7 @@ export const ja = {
     reading: 'みやざき ゆうすけ / Yusuke Miyazaki',
     roles: 'データベースシステム研究者',
     facts: [
+      { label: '表記', value: '宮﨑祐介 / 宮崎祐介' },
       { label: '生年', value: '2002年生まれ' },
       { label: '出身', value: '群馬県' },
       { label: '所属', value: '慶應義塾大学大学院 政策・メディア研究科 修士課程' },
