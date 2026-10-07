@@ -224,6 +224,7 @@ const rackX = (i: number) => 129 + i * 8.2;
 ---
 
 <div class:list={['avatar flex shrink-0 flex-col items-center gap-2', className]} data-avatar>
+  <div class="relative">
   <svg
     class="avatar-svg w-auto"
     viewBox="4 8 200 126"
@@ -321,8 +322,28 @@ const rackX = (i: number) => 129 + i * 8.2;
     <rect x="68" y="18" width="2" height="111" fill={ink} />
     <rect x="104" y="18" width="2" height="111" fill={ink} />
 
-    {/* 足元に座る猫(白地に茶のぶち、脚の短いマンチカン)。着替えのあいだも座って待つ */}
-    <rect x="22" y="124.5" width="4.5" height="2.5" fill="var(--color-ginger)" stroke={ink} stroke-width="1" />
+  </svg>
+
+  {/*
+    足元に座る猫(白地に茶のぶち、脚の短いマンチカン)。着替えのあいだも座って待つ。
+    人物が動くあいだ同じ SVG ごと描き直されて輪郭が荒れるので、猫だけ別の SVG に重ねている。
+    しっぽは2コマを切り替えて、いつもゆらゆらさせる。
+  */}
+  <svg
+    class="pointer-events-none absolute inset-0 h-full w-full"
+    viewBox="4 8 200 126"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    shape-rendering="crispEdges"
+  >
+    <g class="cat-tail-a">
+      <rect x="22" y="124.5" width="4.5" height="2.5" fill="var(--color-ginger)" stroke={ink} stroke-width="1" />
+    </g>
+    <g class="cat-tail-b">
+      <rect x="22" y="124.5" width="3.5" height="2.5" fill="var(--color-ginger)" stroke={ink} stroke-width="1" />
+      <rect x="24.5" y="120.5" width="2.5" height="5" fill="var(--color-ginger)" stroke={ink} stroke-width="1" />
+    </g>
     <rect x="9" y="118" width="14" height="11" fill="var(--color-paper)" stroke={ink} stroke-width="1.4" />
     <rect x="9.7" y="118.7" width="5" height="6" fill="var(--color-ginger)" />
     <rect x="18" y="123" width="4.3" height="5.3" fill="var(--color-ginger)" />
@@ -336,6 +357,7 @@ const rackX = (i: number) => 129 + i * 8.2;
     <rect x="18.2" y="113.5" width="1.5" height="2" fill={ink} />
     <rect x="15.3" y="116" width="1.4" height="1" fill="var(--color-call-red)" />
   </svg>
+  </div>
 
   <!-- 着せ替えの操作 -->
   <div class="flex items-center gap-2">
@@ -400,7 +422,21 @@ const rackX = (i: number) => 129 + i * 8.2;
     0% { transform: translateY(0); }
     100% { transform: translateY(-1.5px); }
   }
+  /* 猫のしっぽ: 2コマを交互に出す */
+  .cat-tail-a {
+    animation: cat-tail 1.6s steps(1, end) infinite;
+  }
+  .cat-tail-b {
+    visibility: hidden;
+    animation: cat-tail 1.6s steps(1, end) -0.8s infinite;
+  }
+  @keyframes cat-tail {
+    0% { visibility: visible; }
+    50% { visibility: hidden; }
+    100% { visibility: hidden; }
+  }
   @media (prefers-reduced-motion: reduce) {
+    .cat-tail-a, .cat-tail-b { animation: none; }
     .avatar-walk, .room-curtain { transition: none; }
   }
 </style>
