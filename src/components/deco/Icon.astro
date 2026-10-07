@@ -2,7 +2,7 @@
 /**
  * LINKSページ用の自作アイコン。
  * 商標ロゴの複製は避け、プラットフォームを連想させる汎用モチーフで描く
- * （tiktok=音符 / instagram=カメラ / youtube=再生 / streaming=ヘッドホン / code=コード / page=書類）。
+ * （tiktok=音符 / instagram=カメラ / youtube=再生 / streaming=ヘッドホン / code=コード / page=書類 / person=名刺）。
  * 公式のブランド素材を使う場合は public/assets/official/ 投入後に差し替える。
  */
 import type { IconName } from '../../data/links';
@@ -95,6 +95,17 @@ const { name, class: className } = Astro.props;
         <rect x="5" y="8" width="30" height="24" rx="6" fill="var(--color-aqua)" stroke="var(--color-ink)" stroke-width="2.4" />
         <path d="M16 15l-5 5 5 5M24 15l5 5-5 5" stroke="var(--color-ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M21.5 14l-3 12" stroke="var(--color-amber)" stroke-width="2.6" stroke-linecap="round" />
+      </>
+    )
+  }
+  {
+    name === 'person' && (
+      <>
+        <rect x="5" y="8" width="30" height="24" rx="6" fill="var(--color-sky)" stroke="var(--color-ink)" stroke-width="2.4" />
+        <circle cx="15" cy="17" r="3.5" fill="var(--color-paper)" stroke="var(--color-ink)" stroke-width="2.2" />
+        <path d="M9.5 27c.8-3.4 2.8-5 5.5-5s4.700 1.600 5.500 5" stroke="var(--color-ink)" stroke-width="2.2" stroke-linecap="round" />
+        <path d="M24 16h6M24 21h6" stroke="var(--color-ink)" stroke-width="2.2" stroke-linecap="round" />
+        <path d="M24 26h4" stroke="var(--color-amber)" stroke-width="2.2" stroke-linecap="round" />
       </>
     )
   }

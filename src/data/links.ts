@@ -4,7 +4,7 @@
  */
 
 /** アイコンは src/components/deco/Icon.astro の自作SVG(商標ロゴは使用しない) */
-export type IconName = 'tiktok' | 'instagram' | 'youtube' | 'streaming' | 'code' | 'page';
+export type IconName = 'tiktok' | 'instagram' | 'youtube' | 'streaming' | 'code' | 'page' | 'person';
 
 export interface ExternalLink {
   id: string;
@@ -22,6 +22,7 @@ export interface ExternalLink {
 /** SNS */
 export const snsLinks: ExternalLink[] = [
   { id: 'github', platform: 'GitHub', handle: '@wasanemon', url: 'https://github.com/wasanemon', icon: 'code' },
+  { id: 'linkedin', platform: 'LinkedIn', handle: 'wasanemon', url: 'https://www.linkedin.com/in/wasanemon/', icon: 'person' },
   { id: 'instagram', platform: 'Instagram', handle: '@wasanemon', url: 'https://www.instagram.com/wasanemon/', icon: 'instagram' },
 ];
 
