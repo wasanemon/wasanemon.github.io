@@ -23,29 +23,8 @@ export const snsLinks: ExternalLink[] = [
   { id: 'instagram', platform: 'Instagram', handle: '@wasanemon', url: 'https://www.instagram.com/wasanemon/', icon: 'instagram' },
 ];
 
-/** 関連する公式ページ */
+/** 関連ページ(他媒体での掲載は src/data/media.ts) */
 export const pageLinks: ExternalLink[] = [
-  {
-    id: 'ipa',
-    platform: 'IPA',
-    handle: '未踏スーパークリエータ紹介ページ',
-    url: 'https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html',
-    icon: 'page',
-  },
-  {
-    id: 'keio',
-    platform: '慶應義塾',
-    handle: 'SFC生が未踏IT人材発掘・育成事業で活躍',
-    url: 'https://www.keio.ac.jp/ja/sfc-pem/news/20260713/',
-    icon: 'page',
-  },
-  {
-    id: 'sakura',
-    platform: 'さくらのナレッジ',
-    handle: '「Kamo」の開発 解説記事',
-    url: 'https://knowledge.sakura.ad.jp/50280/',
-    icon: 'page',
-  },
   {
     id: 'kamo-github',
     platform: 'Kamo',

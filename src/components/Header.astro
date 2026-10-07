@@ -1,12 +1,12 @@
 ---
 /**
- * 共通ヘッダー。ロゴ + ピル型ナビ（モバイルは横スクロール）。
+ * 共通ヘッダー。ロゴ(押すとスタートメニュー)+ タスクバー風ナビ(モバイルは横スクロール)。
  * アクティブページは各ページから active プロップで指定する。
  */
 import { getDictionary, defaultLocale } from '../i18n';
-import Butterfly from './deco/Butterfly.astro';
+import Folder from './deco/Folder.astro';
 
-export type NavKey = 'top' | 'news' | 'research' | 'kamo' | 'profile' | 'links';
+export type NavKey = 'top' | 'news' | 'research' | 'kamo' | 'media' | 'profile' | 'links';
 
 interface Props {
   active?: NavKey;
@@ -19,23 +19,64 @@ const items: { key: NavKey; href: string; label: string }[] = [
   { key: 'news', href: '/news/', label: t.nav.news },
   { key: 'research', href: '/research/', label: t.nav.research },
   { key: 'kamo', href: '/kamo/', label: t.nav.kamo },
+  { key: 'media', href: '/media/', label: t.nav.media },
   { key: 'profile', href: '/profile/', label: t.nav.profile },
   { key: 'links', href: '/links/', label: t.nav.links },
 ];
 ---
 
-<header class="sticky top-0 z-40 border-b-2 border-ink bg-cream/95 backdrop-blur-sm">
+<header class="sticky top-0 z-40 border-b-2 border-ink bg-chrome">
   <div class="mx-auto flex max-w-5xl items-end justify-between px-gutter pt-3 pb-2">
-    <a href="/" class="group flex items-end gap-2" aria-label={t.meta.siteName}>
-      <Butterfly
-        class="h-7 w-7 motion-safe:animate-[butterfly-float_3.2s_ease-in-out_infinite]"
-      />
-      <span
-        class="display-type text-2xl leading-none transition-colors group-hover:text-ichigo-deep"
-        >{t.header.logo}</span
+    <div class="relative">
+      <button
+          type="button"
+          id="start-button"
+          class="group flex cursor-pointer items-end gap-2"
+          aria-label={t.fun.startLabel}
+          aria-expanded="false"
+          aria-controls="start-menu"
+        >
+        <Folder
+          class="h-7 w-7 motion-safe:animate-[icon-float_3.2s_ease-in-out_infinite]"
+        />
+        <span
+          class="display-type text-2xl leading-none transition-colors group-hover:text-navy"
+          >{t.header.logo}</span
+        >
+        <span class="pb-0.5 text-xs leading-none text-ink-soft">{t.header.logoSub}</span>
+        </button>
+      <div
+        id="start-menu"
+        hidden
+        class="sticker-card absolute top-full left-0 z-50 mt-2 flex w-64 overflow-hidden shadow-sticker-lg"
       >
-      <span class="pb-0.5 text-xs leading-none text-ink-soft">{t.header.logoSub}</span>
-    </a>
+        <span
+          class="display-type flex w-7 shrink-0 items-end justify-center bg-navy pb-2 text-xs text-paper [writing-mode:vertical-rl]"
+          aria-hidden="true">{t.fun.startBand}</span
+        >
+        <ul class="flex-1 py-1">
+          {
+            items.map((item) => (
+              <li>
+                <a href={item.href} class="display-type block px-3 py-1.5 text-sm hover:bg-navy hover:text-paper">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+          <li class="my-1 border-t-2 border-ink" aria-hidden="true"></li>
+          <li>
+            <button type="button" data-start-action="trash" class="display-type block w-full cursor-pointer px-3 py-1.5 text-left text-sm hover:bg-navy hover:text-paper">{t.fun.startTrash}</button>
+          </li>
+          <li>
+            <button type="button" data-start-action="replay" class="display-type block w-full cursor-pointer px-3 py-1.5 text-left text-sm hover:bg-navy hover:text-paper">{t.fun.startReplay}</button>
+          </li>
+          <li>
+            <button type="button" data-start-action="shutdown" class="display-type block w-full cursor-pointer px-3 py-1.5 text-left text-sm hover:bg-navy hover:text-paper">{t.fun.startShutdown}</button>
+          </li>
+        </ul>
+      </div>
+    </div>
     <span class="display-type hidden text-xs text-ink-soft sm:inline" aria-hidden="true"
       >{t.header.aside}</span
     >
@@ -54,7 +95,7 @@ const items: { key: NavKey; href: string; label: string }[] = [
               class:list={[
                 'display-type block rounded-chip border-2 border-ink px-4 py-1 text-sm whitespace-nowrap transition-transform',
                 'motion-safe:hover:-translate-y-0.5 hover:bg-lemon',
-                active === item.key ? 'bg-ichigo shadow-sticker' : 'bg-milk',
+                active === item.key ? 'bg-amber shadow-sticker' : 'bg-paper',
               ]}
             >
               {item.label}

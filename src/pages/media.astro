@@ -1,0 +1,54 @@
+---
+/** MEDIA — 他媒体での掲載(データ: src/data/media.ts) */
+import Base from '../layouts/Base.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import { getDictionary, defaultLocale } from '../i18n';
+import { mediaItems } from '../data/media';
+
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+
+/* 種別チップの塗り(すべてトークン色) */
+const kindBg: Record<string, string> = {
+  news: 'bg-cyan',
+  profile: 'bg-aqua',
+  article: 'bg-lemon',
+  award: 'bg-amber',
+};
+---
+
+<Base title={t.media.title} active="media">
+  <SectionTitle title={t.media.title} lead={t.media.lead} />
+
+  <ul class="flex flex-col gap-3">
+    {
+      mediaItems.map((item) => (
+        <li>
+          <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="sticker-card flex flex-col gap-1 px-4 py-3 transition-transform hover:bg-aqua motion-safe:hover:-translate-y-0.5 sm:flex-row sm:items-center sm:gap-4"
+          >
+            <span class="flex shrink-0 items-center gap-3 sm:w-64">
+              <span
+                class:list={[
+                  'display-type rounded-chip border border-ink px-2 py-0.5 text-xs',
+                  kindBg[item.kind] ?? 'bg-aqua',
+                ]}
+              >
+                {t.media.kinds[item.kind] ?? item.kind}
+              </span>
+              <span class="display-type text-sm">{item.outlet}</span>
+            </span>
+            <span class="min-w-0 flex-1 font-medium">{item.title}</span>
+            <span class="flex shrink-0 items-center gap-3">
+              {item.when && <span class="display-type text-sm text-ink-soft">{item.when}</span>}
+              <span class="display-type text-navy" aria-hidden="true">↗</span>
+            </span>
+            <span class="sr-only">({t.a11y.externalLink})</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

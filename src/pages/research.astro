@@ -2,6 +2,7 @@
 /** RESEARCH — 論文と発表(データ: src/data/research.ts) */
 import Base from '../layouts/Base.astro';
 import SectionTitle from '../components/SectionTitle.astro';
+import Window from '../components/Window.astro';
 import { getDictionary, defaultLocale } from '../i18n';
 import { publications } from '../data/research';
 
@@ -9,8 +10,8 @@ const t = getDictionary(Astro.currentLocale ?? defaultLocale);
 
 /* 種別チップの塗り(すべてトークン色) */
 const kindBg: Record<string, string> = {
-  POSTER: 'bg-soda-milk',
-  JOURNAL: 'bg-ichigo-milk',
+  POSTER: 'bg-aqua',
+  JOURNAL: 'bg-sky',
   WORKSHOP: 'bg-lemon',
 };
 ---
@@ -21,13 +22,14 @@ const kindBg: Record<string, string> = {
   <div class="flex flex-col gap-5">
     {
       publications.map((pub) => (
-        <article class="sticker-card px-5 py-5 sm:px-7">
+        <article>
+        <Window title={`${pub.id}${t.research.fileExt}`} bodyClass="px-5 py-5 sm:px-7">
           <p class="flex flex-wrap items-center gap-x-3 gap-y-1">
             <span class="display-type text-sm text-ink-soft">{pub.year}</span>
             <span
               class:list={[
                 'display-type rounded-chip border border-ink px-2 py-0.5 text-xs',
-                kindBg[pub.kind] ?? 'bg-soda-milk',
+                kindBg[pub.kind] ?? 'bg-aqua',
               ]}
             >
               {pub.kind}
@@ -39,7 +41,7 @@ const kindBg: Record<string, string> = {
           {pub.notes.length > 0 && (
             <ul class="mt-3 flex flex-wrap gap-2">
               {pub.notes.map((note) => (
-                <li class="rounded-chip bg-cream px-3 py-0.5 text-sm">{note}</li>
+                <li class="rounded-chip bg-desk px-3 py-0.5 text-sm">{note}</li>
               ))}
             </ul>
           )}
@@ -52,7 +54,7 @@ const kindBg: Record<string, string> = {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="display-type inline-block rounded-chip border-2 border-ink bg-milk px-4 py-1.5 text-sm shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-soda-milk"
+                    class="display-type inline-block rounded-chip border-2 border-ink bg-paper px-4 py-1.5 text-sm shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-aqua"
                   >
                     {link.label}
                     <span class="sr-only">({t.a11y.externalLink})</span>
@@ -61,6 +63,7 @@ const kindBg: Record<string, string> = {
               ))}
             </ul>
           )}
+        </Window>
         </article>
       ))
     }

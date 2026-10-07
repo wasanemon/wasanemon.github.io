@@ -5,9 +5,12 @@ import Base from '../layouts/Base.astro';
 import BootOpening from '../components/BootOpening.astro';
 import ImageSlot from '../components/ImageSlot.astro';
 import NewsRow from '../components/NewsRow.astro';
-import Strawberry from '../components/deco/Strawberry.astro';
-import Butterfly from '../components/deco/Butterfly.astro';
-import Receiver from '../components/deco/Receiver.astro';
+import Window from '../components/Window.astro';
+import HobbyIcon from '../components/deco/HobbyIcon.astro';
+import Avatar from '../components/deco/Avatar.astro';
+import Floppy from '../components/deco/Floppy.astro';
+import Folder from '../components/deco/Folder.astro';
+import Cursor from '../components/deco/Cursor.astro';
 import { getDictionary, defaultLocale } from '../i18n';
 import { assetUrl } from '../data/assets';
 
@@ -58,38 +61,48 @@ const jsonLd = {
   <BootOpening slot="overlay" />
 
   <!-- HERO -->
-  <section class="relative grid items-center gap-8 md:grid-cols-2">
+  <section class="relative grid items-center gap-8 md:grid-cols-[1.3fr_1fr]">
     <!-- 装飾レイヤー（情報を持たない） -->
-    <Strawberry class="absolute -top-2 right-0 h-10 w-10 rotate-12 md:right-[-1.5rem]" />
-    <Butterfly
+    <Floppy class="absolute -top-2 right-[-1.5rem] hidden h-10 w-10 rotate-12 md:block" />
+    <Folder
       class="absolute bottom-[-1.75rem] left-[-0.5rem] hidden h-10 w-10 -rotate-6 md:block"
     />
 
-    <div>
-      <p class="display-type text-sm text-ichigo-deep">{t.home.heroRoles}</p>
-      <h1
-        class="display-type mt-2 text-6xl leading-none text-milk sm:text-7xl [-webkit-text-stroke:2.5px_var(--color-ink)] [text-shadow:5px_5px_0_var(--color-ichigo)]"
-      >
-        {t.home.heroLogo}
-      </h1>
-      <p class="display-type mt-2 text-xl">
-        {t.home.heroName} <span class="text-sm text-ink-soft">{t.home.heroReading}</span>
-      </p>
+    <div
+      class="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-x-4 [grid-template-areas:'head_avatar''body_body'] md:[grid-template-areas:'head_avatar''body_avatar']"
+    >
+      <div class="min-w-0 self-start [grid-area:head]">
+        <p class="display-type text-sm text-navy">{t.home.heroRoles}</p>
+        <h1
+          class="display-type mt-2 text-6xl leading-none text-paper sm:text-7xl [-webkit-text-stroke:2.5px_var(--color-ink)] [text-shadow:5px_5px_0_var(--color-amber)]"
+        >
+          {t.home.heroLogo}
+        </h1>
+        <p class="display-type mt-2 text-xl">
+          {t.home.heroName} <span class="text-sm text-ink-soft">{t.home.heroReading}</span>
+        </p>
 
-      <p class="sticker-card mt-6 inline-block rounded-bubble px-5 py-2 text-lg font-bold">
-        {t.home.catchCopy}
-      </p>
-      <p class="mt-3 text-sm text-ink-soft">{t.home.subCopy}</p>
+      </div>
+      <div class="min-w-0 [grid-area:body]">
+        <p class="sticker-card mt-6 inline-block rounded-bubble px-5 py-2 text-lg font-bold whitespace-nowrap">
+          {t.home.catchCopy}
+        </p>
+        <p class="mt-3 text-sm text-ink-soft">{t.home.subCopy}</p>
 
-      <a
-        href="/kamo/"
-        class="group mt-6 inline-flex items-center gap-3 rounded-bubble border-2 border-ink bg-call-green px-6 py-3 font-bold shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
-      >
-        <Receiver
-          class="h-6 w-6 text-call-green-deep motion-safe:group-hover:animate-[receiver-ring_0.8s_ease-in-out_infinite]"
-        />
-        {t.home.cta}
-      </a>
+        <a
+          href="/kamo/"
+          class="group mt-6 inline-flex items-center gap-3 rounded-bubble border-2 border-ink bg-call-green px-6 py-3 font-bold shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
+        >
+          <Cursor
+            class="h-6 w-6 text-call-green-deep motion-safe:group-hover:animate-[icon-wiggle_0.8s_ease-in-out_infinite]"
+          />
+          {t.home.cta}
+        </a>
+      </div>
+      <Avatar
+        label={t.home.avatarLabel}
+        class="[grid-area:avatar] [&_.avatar-svg]:h-44 sm:[&_.avatar-svg]:h-52 md:[&_.avatar-svg]:h-64"
+      />
     </div>
 
     {
@@ -100,22 +113,15 @@ const jsonLd = {
           class="w-full rounded-sticker border-2 border-ink shadow-sticker-lg"
         />
       ) : (
-        /* キービジュアル未投入のあいだは、ガラケー画面風の数値カードを出す */
-        <div class="sticker-card px-6 pt-4 pb-7 shadow-sticker-lg">
-          <p
-            class="display-type flex items-center justify-between border-b-2 border-dotted border-ink-soft pb-2 text-xs text-ink-soft"
-            aria-hidden="true"
-          >
-            <span>▂▄▆█ {t.home.card.statusBar}</span>
-            <span>🔋 {t.home.card.clock}</span>
-          </p>
-          <p class="display-type mt-5 text-sm text-ichigo-deep">{t.home.card.heading}</p>
+        /* キービジュアル未投入のあいだは、ウィンドウ風の数値カードを出す */
+        <Window title={t.home.card.windowTitle} class="shadow-sticker-lg" bodyClass="px-6 pt-5 pb-7">
+          <p class="display-type text-sm text-navy">{t.home.card.heading}</p>
           <dl class="mt-3 flex flex-col gap-4">
             {t.home.card.stats.map((stat, i) => (
               <div
                 class:list={[
                   'rounded-sticker border-2 border-ink px-4 py-3',
-                  i % 2 === 0 ? 'bg-ichigo-milk' : 'bg-soda-milk',
+                  i % 2 === 0 ? 'bg-sky' : 'bg-aqua',
                 ]}
               >
                 <dt class="sr-only">{stat.label}</dt>
@@ -125,7 +131,7 @@ const jsonLd = {
             ))}
           </dl>
           <p class="mt-4 text-sm text-ink-soft">{t.home.card.foot}</p>
-        </div>
+        </Window>
       )
     }
   </section>
@@ -138,7 +144,7 @@ const jsonLd = {
       aria-pressed="false"
       data-label-pause={t.home.tickerPause}
       data-label-play={t.home.tickerPlay}
-      class="display-type shrink-0 rounded-chip border-2 border-ink bg-milk px-3 py-2 text-xs shadow-sticker hover:bg-lemon"
+      class="display-type shrink-0 rounded-chip border-2 border-ink bg-paper px-3 py-2 text-xs shadow-sticker hover:bg-lemon"
       >{t.home.tickerPause}</button
     >
     <div id="ticker" class="ticker min-w-0 flex-1 overflow-hidden rounded-chip border-2 border-ink bg-lemon py-2">
@@ -148,7 +154,7 @@ const jsonLd = {
             <div class:list={[clone && 'ticker-clone']} aria-hidden={clone ? 'true' : undefined}>
               {t.home.ticker.map((item) => (
                 <span class="display-type mx-5 flex items-center gap-2 text-sm">
-                  <Strawberry class="h-4 w-4 shrink-0" />
+                  <Floppy class="h-4 w-4 shrink-0" />
                   {item}
                 </span>
               ))}
@@ -175,45 +181,49 @@ const jsonLd = {
   <div class="mt-14 grid gap-8 md:grid-cols-2">
     <section aria-labelledby="award-heading">
       <h2 id="award-heading" class="display-type text-2xl">{t.home.awardLabel}</h2>
-      <a
+      <Window
+        title={t.home.awardWindow}
         href={t.home.award.href}
-        class="sticker-card mt-4 flex h-[calc(100%-3rem)] items-center gap-5 p-4 transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
+        class="mt-4 h-[calc(100%-3rem)] hover:bg-lemon"
+        bodyClass="flex items-center gap-5 p-4"
       >
-        <Strawberry class="h-14 w-14 shrink-0" />
+        <Floppy class="h-14 w-14 shrink-0" />
         <span>
           <span class="display-type block text-2xl leading-snug">{t.home.award.title}</span>
           <span class="mt-1 block text-sm text-ink-soft">{t.home.award.meta}</span>
           <span
-            class="display-type mt-3 inline-block rounded-chip border-2 border-ink bg-ichigo px-4 py-1 text-sm"
+            class="display-type mt-3 inline-block rounded-chip border-2 border-ink bg-amber px-4 py-1 text-sm"
             >▶ {t.home.award.more}</span
           >
         </span>
-      </a>
+      </Window>
     </section>
 
     <section aria-labelledby="latest-heading">
       <h2 id="latest-heading" class="display-type text-2xl">{t.home.projectLabel}</h2>
-      <a
+      <Window
+        title={t.home.projectWindow}
         href="/kamo/"
-        class="sticker-card mt-4 flex h-[calc(100%-3rem)] items-center gap-5 p-4 transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-ichigo-milk"
+        class="mt-4 h-[calc(100%-3rem)] hover:bg-sky"
+        bodyClass="flex items-center gap-5 p-4"
       >
-        <Butterfly class="h-14 w-14 shrink-0" />
+        <Folder class="h-14 w-14 shrink-0" />
         <span>
           <span class="display-type block text-3xl">{t.home.project.title}</span>
           <span class="mt-1 block text-sm text-ink-soft">{t.home.project.meta}</span>
           <span
-            class="display-type mt-3 inline-block rounded-chip border-2 border-ink bg-soda px-4 py-1 text-sm"
+            class="display-type mt-3 inline-block rounded-chip border-2 border-ink bg-cyan px-4 py-1 text-sm"
             >▶ {t.home.cta}</span
           >
         </span>
-      </a>
+      </Window>
     </section>
   </div>
 
   <!-- NEWS プレビュー -->
   <section class="mt-14" aria-labelledby="news-heading">
     <h2 id="news-heading" class="display-type flex items-center gap-2 text-2xl">
-      <Butterfly class="h-6 w-6" />
+      <Folder class="h-6 w-6" />
       {t.home.newsHeading}
     </h2>
     <div class="mt-4 flex flex-col gap-3">
@@ -231,9 +241,32 @@ const jsonLd = {
     <p class="mt-5 text-right">
       <a
         href="/news/"
-        class="display-type text-sm text-ichigo-deep underline underline-offset-4 hover:text-ink"
+        class="display-type text-sm text-navy underline underline-offset-4 hover:text-ink"
         >{t.home.newsMore} →</a
       >
     </p>
+  </section>
+
+  <!-- FAVORITES: デスクトップに並ぶアイコン -->
+  <section class="mt-14" aria-labelledby="favorites-heading">
+    <h2 id="favorites-heading" class="display-type flex items-baseline gap-3 text-2xl">
+      {t.home.favoritesHeading}
+      <span class="text-sm text-ink-soft">{t.home.favoritesLead}</span>
+    </h2>
+    <ul class="mt-5 grid grid-cols-4 gap-x-1 gap-y-6 sm:grid-cols-5 md:grid-cols-10">
+      {
+        t.home.favorites.map((item) => (
+          <li class="group flex flex-col items-center gap-2 text-center">
+            <HobbyIcon
+              name={item.icon}
+              class="h-12 w-12 motion-safe:group-hover:animate-[icon-bounce_0.6s_ease-in-out]"
+            />
+            <span class="display-type px-1 text-xs leading-snug group-hover:bg-navy group-hover:text-paper">
+              {item.label}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 </Base>

@@ -1,0 +1,297 @@
+---
+/**
+ * デスクトップの遊び。全ページ共通(Base.astro から読み込む)。
+ *  - ウィンドウの「×」で本当に閉じる。閉じるたびに文句のウィンドウ(英語)が出て、だんだん増える
+ *  - 右下のごみ箱アイコン。開くと冗談のファイルが入っている
+ *  - その上のターミナルのアイコン。押すと SQL コンソール(PROFILE)を開く。「×」で閉じたあとも出し直せる
+ *  - スタートメニュー(Header.astro のロゴ)から、ごみ箱・オープニング再生・シャットダウン
+ * いずれも装飾で、閉じたウィンドウは再読み込みか「Put them back」で元に戻る。
+ */
+import { getDictionary, defaultLocale } from '../i18n';
+import Icon from './deco/Icon.astro';
+
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const ink = 'var(--color-ink)';
+---
+
+<div
+  id="fun-root"
+  data-warnings={JSON.stringify(t.fun.warnings)}
+  data-warning-many={t.fun.warningMany}
+  data-warning-popup={t.fun.warningPopup}
+  data-warning-trash={t.fun.warningTrash}
+>
+  <!-- ターミナルのアイコン(PROFILE の SQL コンソールを開く。閉じていたら出し直す) -->
+  <button
+    type="button"
+    id="terminal-button"
+    data-start-action="terminal"
+    class="group fixed right-2 bottom-13 z-20 flex cursor-pointer flex-col items-center gap-1 sm:right-3 sm:bottom-20"
+    aria-label={t.fun.terminalAria}
+  >
+    <svg class="h-8 w-8 opacity-90 motion-safe:group-hover:animate-[icon-bounce_0.6s_ease-in-out] sm:h-10 sm:w-10 sm:opacity-100" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <rect x="4" y="5" width="32" height="30" rx="5" fill="var(--color-coal)" stroke={ink} stroke-width="2" />
+      <path d="M11 14l7 6-7 6" stroke="var(--color-paper)" stroke-width="3" stroke-linecap="square" />
+      <path d="M21 27h9" stroke="var(--color-paper)" stroke-width="3" stroke-linecap="square" />
+    </svg>
+    <span class="display-type hidden px-1 text-xs leading-none group-hover:bg-navy group-hover:text-paper sm:inline">{t.fun.terminalLabel}</span>
+  </button>
+
+  <!-- ごみ箱アイコン -->
+  <button
+    type="button"
+    id="trash-button"
+    class="group fixed right-2 bottom-3 z-20 flex cursor-pointer flex-col items-center gap-1 sm:right-3"
+    aria-haspopup="dialog"
+    aria-controls="trash-window"
+    aria-label={t.fun.trashLabel}
+  >
+    <svg class="h-8 w-8 opacity-90 motion-safe:group-hover:animate-[icon-bounce_0.6s_ease-in-out] sm:h-10 sm:w-10 sm:opacity-100" viewBox="0 0 40 40" fill="none" aria-hidden="true" shape-rendering="crispEdges">
+      <rect x="16" y="3" width="8" height="4" fill="var(--color-chrome)" stroke={ink} stroke-width="2" />
+      <rect x="6" y="7" width="28" height="5" fill="var(--color-chrome)" stroke={ink} stroke-width="2" />
+      <path d="M9 12h22l-2 24H11Z" fill="var(--color-paper)" stroke={ink} stroke-width="2" />
+      <path d="M15 17v14M20 17v14M25 17v14" stroke={ink} stroke-width="2" />
+    </svg>
+    <span class="display-type hidden px-1 text-xs leading-none group-hover:bg-navy group-hover:text-paper sm:inline">{t.fun.trashLabel}</span>
+  </button>
+
+  <!-- ごみ箱のウィンドウ -->
+  <div
+    id="trash-window"
+    hidden
+    role="dialog"
+    aria-label={t.fun.trashLabel}
+    class="sticker-card fixed top-1/2 left-1/2 z-[44] w-[min(92vw,26rem)] -translate-x-1/2 -translate-y-1/2 overflow-hidden shadow-sticker-lg"
+  >
+    <p class="display-type flex items-center justify-between gap-3 border-b-2 border-ink bg-navy px-3 py-1 text-xs text-paper">
+      <span>{t.fun.trashTitle}</span>
+      <button type="button" class="win-btn cursor-pointer hover:bg-amber" data-trash-close aria-label={t.fun.popupClose}>×</button>
+    </p>
+    <ul class="max-h-[50vh] overflow-y-auto">
+      {
+        t.fun.trashItems.map((item) => (
+          <li class="flex items-center gap-3 border-b border-dotted border-ink-soft px-4 py-2">
+            <Icon name="page" class="h-7 w-7 shrink-0" />
+            <span class="display-type min-w-0 text-sm break-all">{item.name}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="flex items-center justify-between gap-3 bg-chrome px-4 py-2">
+      <span class="display-type text-xs text-ink-soft">{t.fun.trashCount}</span>
+      <button type="button" data-trash-empty class="display-type cursor-pointer rounded-chip border-2 border-ink bg-paper px-3 py-1 text-xs shadow-sticker hover:bg-lemon">{t.fun.trashEmpty}</button>
+    </p>
+  </div>
+
+  <!-- 文句のウィンドウ(複製して使う) -->
+  <template id="tpl-warning">
+    <div class="fun-popup sticker-card fixed z-[45] w-72 max-w-[88vw] overflow-hidden shadow-sticker-lg" role="alertdialog" aria-label={t.fun.popupTitle}>
+      <p class="display-type flex items-center justify-between gap-3 border-b-2 border-ink bg-navy px-3 py-1 text-xs text-paper">
+        <span>{t.fun.popupTitle}</span>
+        <button type="button" class="win-btn cursor-pointer hover:bg-amber" data-popup-close aria-label={t.fun.popupClose}>×</button>
+      </p>
+      <div class="flex items-start gap-3 p-4">
+        <span class="display-type flex h-9 w-9 shrink-0 items-center justify-center border-2 border-ink bg-amber text-xl" aria-hidden="true">!</span>
+        <p class="pt-1 text-sm leading-snug" lang="en" data-popup-text></p>
+      </div>
+      <p class="flex justify-end gap-2 px-4 pb-4">
+        <button type="button" data-popup-restore hidden class="display-type cursor-pointer rounded-chip border-2 border-ink bg-paper px-3 py-1 text-xs shadow-sticker hover:bg-lemon">{t.fun.popupRestore}</button>
+        <button type="button" data-popup-ok class="display-type cursor-pointer rounded-chip border-2 border-ink bg-chrome px-4 py-1 text-xs shadow-sticker hover:bg-lemon">{t.fun.popupOk}</button>
+      </p>
+    </div>
+  </template>
+
+  <!-- シャットダウン画面 -->
+  <button
+    type="button"
+    id="shutdown-screen"
+    hidden
+    class="fixed inset-0 z-[60] flex cursor-pointer flex-col items-center justify-center gap-4 bg-ink text-paper"
+  >
+    <span class="display-type text-3xl sm:text-5xl">{t.fun.shutdownText}</span>
+    <span class="display-type text-xs text-cyan motion-safe:animate-[blink-soft_1.6s_step-end_infinite]">{t.fun.shutdownHint}</span>
+  </button>
+</div>
+
+<script is:inline type="module">
+  (function () {
+    var root = document.getElementById('fun-root');
+    if (!root) return;
+
+    var warnings = JSON.parse(root.dataset.warnings || '[]');
+    var tpl = document.getElementById('tpl-warning');
+    var closedCount = 0;
+    var popupCount = 0;
+
+    // ---- 文句のウィンドウ ----
+    function spawnPopup(text) {
+      var node = tpl.content.firstElementChild.cloneNode(true);
+      node.querySelector('[data-popup-text]').textContent = text;
+      var restore = node.querySelector('[data-popup-restore]');
+      if (document.querySelector('[data-win][data-closed]')) restore.hidden = false;
+
+      // 少しずつずらして重ねる
+      var n = popupCount++;
+      var vw = window.innerWidth;
+      var vh = window.innerHeight;
+      var w = Math.min(288, vw * 0.88);
+      var x = Math.max(8, Math.min(vw - w - 8, vw * 0.5 - w / 2 + ((n % 5) - 2) * 28 + (Math.random() * 40 - 20)));
+      var y = Math.max(72, Math.min(vh - 190, vh * 0.3 + (n % 6) * 26 + (Math.random() * 30 - 15)));
+      node.style.left = x + 'px';
+      node.style.top = y + 'px';
+      root.appendChild(node);
+      node.querySelector('[data-popup-ok]').focus({ preventScroll: true });
+    }
+
+    function nextWarning() {
+      if (closedCount <= warnings.length) return warnings[closedCount - 1];
+      return (root.dataset.warningMany || '').replace('{n}', String(closedCount));
+    }
+
+    function restoreWindows() {
+      document.querySelectorAll('[data-win][data-closed]').forEach(function (win) {
+        win.style.visibility = '';
+        win.removeAttribute('data-closed');
+      });
+      document.querySelectorAll('.fun-popup').forEach(function (p) {
+        p.remove();
+      });
+      closedCount = 0;
+      popupCount = 0;
+    }
+
+    // ---- クリックの振り分け(リンクの中にある × も拾うため、キャプチャ段階で見る) ----
+    document.addEventListener(
+      'click',
+      function (e) {
+        var el = e.target instanceof Element ? e.target : null;
+        if (!el) return;
+
+        // ウィンドウの ×
+        var closeBtn = el.closest('[data-win-close]');
+        if (closeBtn) {
+          e.preventDefault();
+          e.stopPropagation();
+          var win = closeBtn.closest('[data-win]');
+          if (win && !win.hasAttribute('data-closed')) {
+            // 場所は空けたまま見えなくする(レイアウトを動かさない)
+            win.style.visibility = 'hidden';
+            win.setAttribute('data-closed', '');
+            closedCount += 1;
+            spawnPopup(nextWarning());
+          }
+          return;
+        }
+
+        // 文句のウィンドウ
+        var popup = el.closest('.fun-popup');
+        if (popup) {
+          if (el.closest('[data-popup-restore]')) {
+            restoreWindows();
+          } else if (el.closest('[data-popup-ok]')) {
+            popup.remove();
+          } else if (el.closest('[data-popup-close]')) {
+            popup.remove();
+            spawnPopup(root.dataset.warningPopup || '');
+          }
+          return;
+        }
+
+        // ごみ箱
+        if (el.closest('#trash-button')) {
+          openTrash();
+          return;
+        }
+        if (el.closest('[data-trash-close]')) {
+          trash.hidden = true;
+          document.getElementById('trash-button').focus({ preventScroll: true });
+          return;
+        }
+        if (el.closest('[data-trash-empty]')) {
+          spawnPopup(root.dataset.warningTrash || '');
+          return;
+        }
+
+        // スタートメニュー
+        var startBtn = el.closest('#start-button');
+        if (startBtn) {
+          setMenu(menu.hidden);
+          return;
+        }
+        var action = el.closest('[data-start-action]');
+        if (action) {
+          setMenu(false);
+          var kind = action.getAttribute('data-start-action');
+          if (kind === 'trash') openTrash();
+          if (kind === 'terminal') openTerminal();
+          if (kind === 'shutdown') shutdown.hidden = false;
+          if (kind === 'replay') {
+            try {
+              localStorage.removeItem('miyazaki:boot-done');
+            } catch (err) {
+              /* 消せない環境では何も起きないだけ */
+            }
+            window.location.href = '/';
+          }
+          return;
+        }
+        // メニューの外を押したら閉じる
+        if (menu && !menu.hidden && !el.closest('#start-menu')) setMenu(false);
+
+        if (el.closest('#shutdown-screen')) shutdown.hidden = true;
+      },
+      true
+    );
+
+    // ---- ターミナル(SQL コンソール) ----
+    function openTerminal() {
+      var input = document.getElementById('sql-input');
+      if (!input) {
+        // このページに無ければ PROFILE のコンソールへ
+        window.location.href = '/profile/#sql-heading';
+        return;
+      }
+      var win = input.closest('[data-win]');
+      if (win && win.hasAttribute('data-closed')) {
+        win.style.visibility = '';
+        win.removeAttribute('data-closed');
+      }
+      var heading = document.getElementById('sql-heading');
+      (heading || input).scrollIntoView({ block: 'start', behavior: 'smooth' });
+      input.focus({ preventScroll: true });
+    }
+
+    // ---- ごみ箱 ----
+    var trash = document.getElementById('trash-window');
+    function openTrash() {
+      trash.hidden = false;
+      trash.querySelector('[data-trash-close]').focus({ preventScroll: true });
+    }
+
+    // ---- スタートメニュー ----
+    var menu = document.getElementById('start-menu');
+    var startButton = document.getElementById('start-button');
+    function setMenu(open) {
+      if (!menu || !startButton) return;
+      menu.hidden = !open;
+      startButton.setAttribute('aria-expanded', String(open));
+    }
+
+    // ---- シャットダウン ----
+    var shutdown = document.getElementById('shutdown-screen');
+
+    document.addEventListener('keydown', function (e) {
+      if (!shutdown.hidden) {
+        shutdown.hidden = true;
+        return;
+      }
+      if (e.key !== 'Escape') return;
+      if (menu && !menu.hidden) {
+        setMenu(false);
+        startButton.focus({ preventScroll: true });
+      } else if (!trash.hidden) {
+        trash.hidden = true;
+      }
+    });
+  })();
+</script>

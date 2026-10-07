@@ -2,53 +2,63 @@
  * デザイントークン — このファイルが唯一の色・フォント・角丸・影・間隔の定義元。
  * ここの値を書き換えるだけでサイト全体のパレットが差し替わる。
  *
- * パレット名は「いちごソーダ」系:
- *   cream  = 背景（生クリーム）      milk   = カード面（ミルク）
- *   ink    = 本文・線（チョコインク） ichigo = 🍓ピンク（装飾用）
- *   soda   = 🦋ソーダブルー（装飾用） lemon  = ハイライト
- *   *-deep = 明るい面の上に置ける文字色（コントラスト比 4.5:1 以上を確認済み）
- *   *-milk = 淡い塗り面
+ * パレットは「レトロPCのデスクトップ」:
+ *   desk   = 背景(デスクトップ)       paper  = ウィンドウの中身
+ *   chrome = ウィンドウ枠・タスクバー   ink    = 本文・線
+ *   navy   = タイトルバー / 文字色      amber  = 差し色(塗り専用。上の文字は ink)
+ *   cyan   = 第二の差し色(塗り専用)   teal   = 明るい面の上に置ける文字色
+ *   sky / aqua / lemon = 淡い塗り面   skin = アバターの肌   ginger = 猫の茶色い模様
  *
  * `--color-*: initial` で Tailwind 標準パレットを無効化しているため、
- * トークン外の色クラス（bg-red-500 等）は生成されず、色のハードコードを防ぐ。
+ * トークン外の色クラス(bg-red-500 等)は生成されず、色のハードコードを防ぐ。
  */
 @theme {
   /* ---- 色 ---- */
   --color-*: initial;
-  --color-cream: #fff8f0;
-  --color-milk: #ffffff;
-  --color-ink: #33202b;
-  --color-ink-soft: #6e5560;
-  --color-ichigo: #ff5e97;
-  --color-ichigo-deep: #c21f5b;
-  --color-ichigo-milk: #ffe3ee;
-  --color-soda: #6fd9ee;
-  --color-soda-deep: #0f7a94;
-  --color-soda-milk: #e1f6fb;
-  --color-lemon: #ffe59a;
+  --color-desk: #b5d6d2;
+  --color-desk-deep: #9fc6c1;
+  --color-paper: #ffffff;
+  --color-chrome: #dfe3ea;
+  --color-ink: #15151c;
+  --color-ink-soft: #454957;
+  --color-navy: #1c2a9c;
+  --color-sky: #dbe4ff;
+  --color-amber: #ffb81c;
+  --color-cyan: #62d2e8;
+  --color-teal: #0a5b66;
+  --color-aqua: #dff4f4;
+  --color-lemon: #ffe98a;
+  --color-skin: #f2c9a1;
+  --color-ginger: #e2964a;
+  /* アバターの服 */
+  --color-coal: #2c2c38;
+  --color-denim: #5b86c5;
+  --color-indigo: #2b3f7a;
+  --color-cream: #eadfc6;
+  --color-grey: #8b909c;
   --color-call-green: #45e07a;
   --color-call-green-deep: #17803d;
   --color-call-red: #ff5a5a;
 
   /* ---- フォント ---- */
-  /* display: ガラケー液晶風ドット文字 / body: 丸ゴシック */
+  /* display: ドット文字(液晶・ビットマップフォント風) / body: 角ゴシック */
   --font-display: "DotGothic16", "Hiragino Kaku Gothic ProN", sans-serif;
-  --font-body: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Sans", sans-serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
 
-  /* ---- 角丸 ---- */
-  --radius-sticker: 14px; /* ステッカー・カード */
-  --radius-bubble: 22px;  /* 吹き出し・ボタン */
-  --radius-chip: 999px;   /* ピル型ナビ */
+  /* ---- 角丸(ウィンドウ・ボタンはほぼ直角) ---- */
+  --radius-sticker: 4px; /* ウィンドウ・カード */
+  --radius-bubble: 4px;  /* ボタン */
+  --radius-chip: 3px;    /* タスクバーのボタン・チップ */
 
-  /* ---- 影（ハードシャドウ = ステッカー感。ぼかし影は使わない） ---- */
+  /* ---- 影(ハードシャドウ。ぼかし影は使わない) ---- */
   --shadow-sticker: 3px 3px 0 0 var(--color-ink);
   --shadow-sticker-lg: 5px 5px 0 0 var(--color-ink);
-  --shadow-sticker-pink: 3px 3px 0 0 var(--color-ichigo);
+  --shadow-sticker-pink: 3px 3px 0 0 var(--color-amber);
 
   /* ---- 線 ---- */
   --border-width-sticker: 2px;
 
-  /* ---- スペーシング（Tailwind標準の4pxスケールを継承しつつ、要所を命名） ---- */
-  --spacing-gutter: 1.25rem;   /* ページ左右余白（375px基準） */
+  /* ---- スペーシング ---- */
+  --spacing-gutter: 1.25rem;   /* ページ左右余白(375px基準) */
   --spacing-section: 4rem;     /* セクション間 */
 }

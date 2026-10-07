@@ -20,7 +20,7 @@ const sections: { heading: string; items: ExternalLink[] }[] = [
   {
     sections.map((section) => (
       <section class="mb-10">
-        <h2 class="display-type mb-4 text-xl text-ichigo-deep">{section.heading}</h2>
+        <h2 class="display-type mb-4 text-xl text-navy">{section.heading}</h2>
         <ul class="grid gap-3 sm:grid-cols-2">
           {section.items.map((link) => (
             <li>
@@ -29,7 +29,7 @@ const sections: { heading: string; items: ExternalLink[] }[] = [
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="sticker-card flex items-center gap-4 px-4 py-3 transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-soda-milk"
+                  class="sticker-card flex items-center gap-4 px-4 py-3 transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-aqua"
                 >
                   <Icon name={link.icon} class="h-10 w-10 shrink-0" />
                   <span class="min-w-0">
@@ -38,13 +38,13 @@ const sections: { heading: string; items: ExternalLink[] }[] = [
                       <span class="block truncate text-xs text-ink-soft">{link.handle}</span>
                     )}
                   </span>
-                  <span class="display-type ml-auto shrink-0 text-ichigo-deep" aria-hidden="true">
+                  <span class="display-type ml-auto shrink-0 text-navy" aria-hidden="true">
                     ↗
                   </span>
                   <span class="sr-only">（{t.a11y.externalLink}）</span>
                 </a>
               ) : (
-                <div class="sticker-card flex items-center gap-4 bg-cream px-4 py-3">
+                <div class="sticker-card flex items-center gap-4 bg-desk px-4 py-3">
                   <Icon name={link.icon} class="h-10 w-10 shrink-0" />
                   <span class="min-w-0">
                     <span class="display-type block">{link.platform}</span>
@@ -64,13 +64,13 @@ const sections: { heading: string; items: ExternalLink[] }[] = [
     ))
   }
 
-  <p class="sticker-card bg-cream px-4 py-3 text-sm">
+  <p class="sticker-card bg-desk px-4 py-3 text-sm">
     {t.links.contact}
     <a
       href={t.links.contactUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-ichigo-deep underline underline-offset-4 hover:text-ink">{t.links.contactLabel}</a
+      class="text-navy underline underline-offset-4 hover:text-ink">{t.links.contactLabel}</a
     >
   </p>
 </Base>

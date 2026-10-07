@@ -9,13 +9,15 @@
   html {
     font-family: var(--font-body);
     color: var(--color-ink);
-    background-color: var(--color-cream);
-    /* 🍓ドット水玉(装飾レイヤー: ごく淡くして本文の可読性を守る) */
-    background-image: radial-gradient(
-      color-mix(in srgb, var(--color-ichigo) 14%, transparent) 2px,
-      transparent 2.5px
+    background-color: var(--color-desk);
+    /* 市松のディザ模様(昔のOSのデスクトップ風。ごく淡くして本文の可読性を守る) */
+    background-image: conic-gradient(
+      var(--color-desk-deep) 25%,
+      transparent 0 50%,
+      var(--color-desk-deep) 0 75%,
+      transparent 0
     );
-    background-size: 26px 26px;
+    background-size: 4px 4px;
     line-height: 1.8;
     -webkit-text-size-adjust: 100%;
   }
@@ -26,12 +28,12 @@
   }
 
   ::selection {
-    background-color: var(--color-ichigo-milk);
-    color: var(--color-ichigo-deep);
+    background-color: var(--color-sky);
+    color: var(--color-navy);
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-soda-deep);
+    outline: 3px solid var(--color-teal);
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -52,12 +54,26 @@
  * 共通コンポーネントクラス
  * ============================================================ */
 @layer components {
-  /* ステッカー風カード(白ベタ+インク縁+ハードシャドウ) */
+  /* ウィンドウ風カード(白ベタ+インク縁+ハードシャドウ) */
   .sticker-card {
-    background-color: var(--color-milk);
+    background-color: var(--color-paper);
     border: var(--border-width-sticker) solid var(--color-ink);
     border-radius: var(--radius-sticker);
     box-shadow: var(--shadow-sticker);
+  }
+
+  /* タイトルバーのボタン(_ □ ×) */
+  .win-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    background-color: var(--color-chrome);
+    color: var(--color-ink);
+    border: 1.5px solid var(--color-ink);
+    font-size: 0.65rem;
+    line-height: 1;
   }
 
   /* ドット文字見出し */
@@ -156,13 +172,13 @@
  * キーフレーム(マイクロインタラクション用)
  * prefers-reduced-motion 時は一括停止する
  * ============================================================ */
-@keyframes ichigo-bounce {
+@keyframes icon-bounce {
   0%, 100% { transform: translateY(0); }
   40%      { transform: translateY(-6px) rotate(-8deg); }
   70%      { transform: translateY(-2px) rotate(4deg); }
 }
 
-@keyframes receiver-ring {
+@keyframes icon-wiggle {
   0%, 100% { transform: rotate(0deg); }
   10% { transform: rotate(-14deg); }
   20% { transform: rotate(12deg); }
@@ -171,7 +187,7 @@
   50% { transform: rotate(0deg); }
 }
 
-@keyframes butterfly-float {
+@keyframes icon-float {
   0%, 100% { transform: translateY(0) rotate(-3deg); }
   50%      { transform: translateY(-8px) rotate(5deg); }
 }

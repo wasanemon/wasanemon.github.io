@@ -1,0 +1,23 @@
+---
+/** フロッピーディスクのドット絵風アイコン。装飾専用(aria-hidden) */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 40 40"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  shape-rendering="crispEdges"
+>
+  <path d="M5 5h24l6 6v24H5Z" fill="var(--color-navy)" stroke="var(--color-ink)" stroke-width="2" />
+  <rect x="11" y="5" width="15" height="10" fill="var(--color-chrome)" stroke="var(--color-ink)" stroke-width="2" />
+  <rect x="20" y="7" width="3" height="6" fill="var(--color-ink)" />
+  <rect x="10" y="21" width="20" height="14" fill="var(--color-paper)" stroke="var(--color-ink)" stroke-width="2" />
+  <rect x="13" y="25" width="14" height="2" fill="var(--color-amber)" />
+  <rect x="13" y="29" width="9" height="2" fill="var(--color-ink-soft)" />
+</svg>

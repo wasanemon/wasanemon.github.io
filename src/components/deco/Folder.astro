@@ -1,0 +1,20 @@
+---
+/** フォルダのドット絵風アイコン。装飾専用(aria-hidden) */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 44 40"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  shape-rendering="crispEdges"
+>
+  <path d="M4 8h14l4 5h18v21H4Z" fill="var(--color-amber)" stroke="var(--color-ink)" stroke-width="2" />
+  <path d="M4 17h36v17H4Z" fill="var(--color-lemon)" stroke="var(--color-ink)" stroke-width="2" />
+  <rect x="9" y="22" width="12" height="2" fill="var(--color-ink)" />
+</svg>

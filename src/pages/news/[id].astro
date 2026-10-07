@@ -2,6 +2,7 @@
 /** NEWS 詳細 — Markdown 本文を表示 */
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Window from '../../components/Window.astro';
 import { getDictionary, defaultLocale } from '../../i18n';
 import { formatDate } from '../../utils/format';
 
@@ -25,20 +26,20 @@ const t = getDictionary(Astro.currentLocale ?? defaultLocale);
         datetime={entry.data.date.toISOString().slice(0, 10)}
         class="display-type text-sm text-ink-soft">{formatDate(entry.data.date)}</time
       >
-      <span class="display-type rounded-chip border border-ink bg-ichigo-milk px-2 py-0.5 text-xs"
+      <span class="display-type rounded-chip border border-ink bg-sky px-2 py-0.5 text-xs"
         >{t.news.categories[entry.data.category] ?? entry.data.category}</span
       >
     </p>
     <h1 class="mt-3 text-2xl leading-snug font-bold">{entry.data.title}</h1>
 
-    <div class="news-body sticker-card mt-6 px-5 py-6 sm:px-8">
+    <Window title={t.news.window} class="news-body mt-6" bodyClass="px-5 py-6 sm:px-8">
       <Content />
-    </div>
+    </Window>
 
     <p class="mt-8">
       <a
         href="/news/"
-        class="display-type text-sm text-ichigo-deep underline underline-offset-4 hover:text-ink"
+        class="display-type text-sm text-navy underline underline-offset-4 hover:text-ink"
         >← {t.news.backToList}</a
       >
     </p>
@@ -51,7 +52,7 @@ const t = getDictionary(Astro.currentLocale ?? defaultLocale);
     margin-top: 1em;
   }
   .news-body :global(a) {
-    color: var(--color-ichigo-deep);
+    color: var(--color-navy);
     text-decoration: underline;
     text-underline-offset: 4px;
   }

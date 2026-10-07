@@ -1,0 +1,402 @@
+---
+/**
+ * 本人のアバター(ドット絵風の全身)。坊主・長身・細身。足元に猫。
+ * 矢印ボタンで着せ替えができる: 画面の外へ歩いて行き、着替えて戻ってくる。
+ * 服は下の outfits に矩形と線の並びで定義する(色はすべてトークン)。
+ * 服の名前は辞書の home.outfits と同じ順番で対応する。
+ */
+import { getDictionary, defaultLocale } from '../../i18n';
+
+interface Props {
+  label: string;
+  class?: string;
+}
+const { label, class: className } = Astro.props;
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+
+const ink = 'var(--color-ink)';
+const c = {
+  coal: 'var(--color-coal)',
+  navy: 'var(--color-navy)',
+  sky: 'var(--color-sky)',
+  denim: 'var(--color-denim)',
+  indigo: 'var(--color-indigo)',
+  cream: 'var(--color-cream)',
+  grey: 'var(--color-grey)',
+  red: 'var(--color-call-red)',
+  paper: 'var(--color-paper)',
+  skin: 'var(--color-skin)',
+  ink,
+};
+
+type Shape =
+  | { x: number; y: number; w: number; h: number; fill: string; sw: number }
+  | { d: string; fill?: string; stroke?: string; sw?: number };
+
+/** 縁取りつきの矩形 */
+const R = (x: number, y: number, w: number, h: number, fill: string, sw = 1.4): Shape => ({ x, y, w, h, fill, sw });
+/** 縁取りなしの矩形(模様・差し色) */
+const F = (x: number, y: number, w: number, h: number, fill: string): Shape => ({ x, y, w, h, fill, sw: 0 });
+/** 線 */
+const L = (d: string, sw = 1.2, stroke = ink): Shape => ({ d, stroke, sw });
+
+const hands = [R(27.5, 73, 3, 5, c.skin, 1.2), R(49.5, 73, 3, 5, c.skin, 1.2)];
+const blackShoes = [R(30.5, 123, 9, 6, c.coal), R(40.5, 123, 9, 6, c.coal)];
+
+interface Outfit {
+  /** 頭より下に描く(服・腕・脚) */
+  body: Shape[];
+  /** 頭より上に描く(帽子など) */
+  top?: Shape[];
+}
+
+const outfits: Outfit[] = [
+  // 1. 黒のロングコート + 黒デニム + 黒い革靴 + 黒いバッグ
+  {
+    body: [
+      R(33, 84, 6, 40, c.coal),
+      R(41, 84, 6, 40, c.coal),
+      ...blackShoes,
+      R(26, 33, 5, 42, c.coal),
+      R(49, 33, 5, 42, c.coal),
+      R(30, 31, 20, 73, c.coal),
+      { d: 'M36.5 31.5h7l-3.5 10Z', fill: c.skin, stroke: ink, sw: 1 },
+      L('M40 42v62'),
+      L('M22 71v8M29 71v8'),
+      R(19, 79, 12, 13, c.coal),
+    ],
+  },
+  // 2. 水色のシャツ + 紺のニットポロ(襟は片方だけ出す、腕まくり) + ブルーデニム + 黒い革靴
+  {
+    body: [
+      R(33, 70, 6, 54, c.denim),
+      R(41, 70, 6, 54, c.denim),
+      ...blackShoes,
+      R(27.5, 54, 3, 20, c.skin, 1.2),
+      R(49.5, 54, 3, 20, c.skin, 1.2),
+      ...hands,
+      R(27, 33, 4, 17, c.navy),
+      R(49, 33, 4, 17, c.navy),
+      R(26.5, 49, 5, 5, c.sky, 1.2),
+      R(48.5, 49, 5, 5, c.sky, 1.2),
+      R(32, 70, 16, 5, c.sky, 1.2),
+      R(31, 31, 18, 41, c.navy),
+      { d: 'M36 31h8l-4 5Z', fill: c.skin, stroke: ink, sw: 1 },
+      { d: 'M34 30h5l-1 6-4-2Z', fill: c.sky, stroke: ink, sw: 1 },
+      L('M40 36v12'),
+      F(39.3, 39, 1.4, 1.4, c.sky),
+      F(39.3, 44, 1.4, 1.4, c.sky),
+    ],
+  },
+  // 3. 赤い半袖の上にクリーム色の半袖(襟と袖から赤が見える) + 黒のストレートスラックス
+  {
+    body: [
+      R(32.5, 72, 7, 52, c.coal),
+      R(40.5, 72, 7, 52, c.coal),
+      ...blackShoes,
+      R(27.5, 46, 3, 28, c.skin, 1.2),
+      R(49.5, 46, 3, 28, c.skin, 1.2),
+      ...hands,
+      R(27, 33, 4, 12, c.cream),
+      R(49, 33, 4, 12, c.cream),
+      F(27, 45, 4, 1.6, c.red),
+      F(49, 45, 4, 1.6, c.red),
+      R(31, 31, 18, 44, c.cream),
+      F(36, 30.5, 8, 2, c.red),
+      F(31.7, 73.4, 16.6, 1.6, c.red),
+    ],
+  },
+  // 4. クリーム色のハイネックのジップアップ + 同じ色のワイドパンツ(丈長め) + 黒い革靴
+  {
+    body: [
+      R(30, 124, 10, 5, c.coal),
+      R(40, 124, 10, 5, c.coal),
+      R(30.5, 76, 9.5, 50, c.cream),
+      R(40, 76, 9.5, 50, c.cream),
+      R(24.5, 33, 6, 44, c.cream),
+      R(49.5, 33, 6, 44, c.cream),
+      R(29, 30, 22, 49, c.cream),
+      R(36, 25.5, 8, 6, c.cream),
+      L('M40 26v53'),
+      L('M31 66h6M43 66h6', 1),
+      L('M33 79v7M47 79v7', 1),
+    ],
+  },
+  // 5. チェックシャツ + 黒のレザージャケット + 黒デニム + 黒いスニーカー
+  {
+    body: [
+      R(33, 74, 6, 50, c.coal),
+      R(41, 74, 6, 50, c.coal),
+      ...blackShoes,
+      F(31.5, 127.4, 7, 1, c.paper),
+      F(41.5, 127.4, 7, 1, c.paper),
+      ...hands,
+      R(32, 31, 16, 47, c.paper),
+      L('M36 31v47M40 31v47M44 31v47', 0.5, c.grey),
+      L('M32 40h16M32 50h16M32 60h16M32 70h16', 0.5, c.grey),
+      { d: 'M36.5 31h7l-3.5 5Z', fill: c.skin, stroke: ink, sw: 1 },
+      R(26, 33, 5, 42, c.coal),
+      R(49, 33, 5, 42, c.coal),
+      R(30, 31, 7, 38, c.coal),
+      R(43, 31, 7, 38, c.coal),
+      { d: 'M30 31h7l-2 7-5-3Z', fill: c.coal, stroke: ink, sw: 1 },
+      { d: 'M50 31h-7l2 7 5-3Z', fill: c.coal, stroke: ink, sw: 1 },
+    ],
+  },
+  // 6. 牛みたいな柄のカーディガン + デニム + 黒い革靴 + ストローつきの飲み物
+  {
+    body: [
+      R(32.5, 76, 7, 48, c.indigo),
+      R(40.5, 76, 7, 48, c.indigo),
+      ...blackShoes,
+      ...hands,
+      R(25, 33, 5.5, 44, c.paper),
+      R(49.5, 33, 5.5, 44, c.paper),
+      R(29, 31, 22, 51, c.paper),
+      { d: 'M36.5 31h7l-3.5 8Z', fill: c.skin, stroke: ink, sw: 1 },
+      L('M40 39v43', 1),
+      F(31, 36, 5, 4, c.coal),
+      F(44, 44, 5, 6, c.coal),
+      F(32, 54, 4, 7, c.coal),
+      F(43, 64, 6, 4, c.coal),
+      F(33, 72, 5, 5, c.coal),
+      F(44, 73, 4, 6, c.coal),
+      F(26, 42, 3, 5, c.coal),
+      F(51, 56, 3, 6, c.coal),
+      F(26, 62, 3, 4, c.coal),
+      R(52.5, 70, 5, 8, c.paper, 1.2),
+      L('M55.5 70l2-7'),
+    ],
+  },
+  // 7. 深めのキャップ + ブルーデニムのジャケット + 7分丈のグレーデニム + 黒い靴下 + ローファー
+  {
+    body: [
+      R(34.5, 102, 4.5, 22, c.coal),
+      R(41, 102, 4.5, 22, c.coal),
+      ...blackShoes,
+      R(31, 62, 9, 42, c.grey),
+      R(40, 62, 9, 42, c.grey),
+      ...hands,
+      R(26, 33, 5, 40, c.denim),
+      R(49, 33, 5, 40, c.denim),
+      R(30, 31, 20, 33, c.denim),
+      { d: 'M36.5 31h7l-3.5 5Z', fill: c.skin, stroke: ink, sw: 1 },
+      L('M40 36v28', 1),
+      R(32, 41, 6, 5, c.denim, 1),
+      R(42, 41, 6, 5, c.denim, 1),
+      L('M30 60h20', 1),
+    ],
+    top: [R(33, 10, 14, 6.5, c.coal), R(32, 15.5, 16, 2.5, c.coal)],
+  },
+  // 8. 黒のタンクトップ + インディゴのデニム + ローファー
+  {
+    body: [
+      R(32.5, 72, 7, 52, c.indigo),
+      R(40.5, 72, 7, 52, c.indigo),
+      ...blackShoes,
+      // 腕は肩から出す(胴にぴったり付ける)
+      R(28.5, 32, 4, 42, c.skin, 1.2),
+      R(47.5, 32, 4, 42, c.skin, 1.2),
+      R(29, 73, 3, 5, c.skin, 1.2),
+      R(48, 73, 3, 5, c.skin, 1.2),
+      R(32.5, 31, 15, 43, c.coal),
+      { d: 'M36.5 31h7v2.5l-3.5 3.5-3.5-3.5Z', fill: c.skin, stroke: ink, sw: 1 },
+    ],
+  },
+];
+---
+
+<div class:list={['avatar flex shrink-0 flex-col items-center gap-2', className]} data-avatar>
+  <svg
+    class="avatar-svg w-auto"
+    viewBox="4 8 56 126"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label={label}
+    shape-rendering="crispEdges"
+  >
+    {/* 影 */}
+    <rect x="6" y="129" width="49" height="3" fill="var(--color-desk-deep)" />
+
+    {/* 人物(歩いて出入りする) */}
+    <g class="avatar-walk">
+      <g class="avatar-bob">
+        {
+          outfits.map((outfit, i) => (
+            <g data-outfit={i} style={i === 0 ? undefined : 'display:none'}>
+              {outfit.body.map((s) =>
+                'd' in s ? (
+                  <path d={s.d} fill={s.fill ?? 'none'} stroke={s.stroke} stroke-width={s.sw} />
+                ) : (
+                  <rect x={s.x} y={s.y} width={s.w} height={s.h} fill={s.fill} stroke={s.sw ? ink : undefined} stroke-width={s.sw || undefined} />
+                )
+              )}
+            </g>
+          ))
+        }
+
+        {/* 首と頭(坊主) */}
+        <rect x="38" y="26" width="4" height="4" fill="var(--color-skin)" data-neck />
+        <rect x="34" y="13" width="12" height="14" fill="var(--color-skin)" stroke={ink} stroke-width="1.6" />
+        <rect x="35" y="14" width="10" height="3" fill="var(--color-ink-soft)" opacity="0.5" />
+        <rect x="35" y="17" width="1.5" height="3" fill="var(--color-ink-soft)" opacity="0.5" />
+        <rect x="43.5" y="17" width="1.5" height="3" fill="var(--color-ink-soft)" opacity="0.5" />
+        <rect x="37" y="20" width="2" height="2" fill={ink} />
+        <rect x="41" y="20" width="2" height="2" fill={ink} />
+        <rect x="39" y="24" width="2" height="1" fill="var(--color-ink-soft)" />
+
+        {
+          outfits.map((outfit, i) => (
+            <g data-outfit-top={i} style={i === 0 ? undefined : 'display:none'}>
+              {(outfit.top ?? []).map((s) =>
+                'd' in s ? (
+                  <path d={s.d} fill={s.fill ?? 'none'} stroke={s.stroke} stroke-width={s.sw} />
+                ) : (
+                  <rect x={s.x} y={s.y} width={s.w} height={s.h} fill={s.fill} stroke={s.sw ? ink : undefined} stroke-width={s.sw || undefined} />
+                )
+              )}
+            </g>
+          ))
+        }
+      </g>
+    </g>
+
+    {/* 足元に座る猫(白地に茶のぶち、脚の短いマンチカン)。着替えのあいだも座って待つ */}
+    <rect x="22" y="124.5" width="4.5" height="2.5" fill="var(--color-ginger)" stroke={ink} stroke-width="1" />
+    <rect x="9" y="118" width="14" height="11" fill="var(--color-paper)" stroke={ink} stroke-width="1.4" />
+    <rect x="9.7" y="118.7" width="5" height="6" fill="var(--color-ginger)" />
+    <rect x="18" y="123" width="4.3" height="5.3" fill="var(--color-ginger)" />
+    <rect x="11" y="127" width="3.5" height="2.5" fill="var(--color-paper)" stroke={ink} stroke-width="1" />
+    <rect x="17.5" y="127" width="3.5" height="2.5" fill="var(--color-paper)" stroke={ink} stroke-width="1" />
+    <path d="M10 109.5l1.5-4 3 4ZM22 109.5l-1.5-4-3 4Z" fill="var(--color-ginger)" stroke={ink} stroke-width="1" />
+    <rect x="9.5" y="109" width="13" height="10" fill="var(--color-paper)" stroke={ink} stroke-width="1.4" />
+    <rect x="10.2" y="109.7" width="4.5" height="3.3" fill="var(--color-ginger)" />
+    <rect x="17.3" y="109.7" width="4.5" height="3.3" fill="var(--color-ginger)" />
+    <rect x="12.3" y="113.5" width="1.5" height="2" fill={ink} />
+    <rect x="18.2" y="113.5" width="1.5" height="2" fill={ink} />
+    <rect x="15.3" y="116" width="1.4" height="1" fill="var(--color-call-red)" />
+  </svg>
+
+  <!-- 着せ替えの操作 -->
+  <div class="flex items-center gap-2">
+    <button
+      type="button"
+      data-avatar-prev
+      aria-label={t.home.outfitPrev}
+      class="display-type flex h-7 w-7 cursor-pointer items-center justify-center rounded-chip border-2 border-ink bg-paper text-xs shadow-sticker hover:bg-lemon"
+      >◀</button
+    >
+    <span class="display-type w-10 text-center text-xs text-ink-soft" aria-hidden="true" data-avatar-count
+      >1/{outfits.length}</span
+    >
+    <button
+      type="button"
+      data-avatar-next
+      aria-label={t.home.outfitNext}
+      class="display-type flex h-7 w-7 cursor-pointer items-center justify-center rounded-chip border-2 border-ink bg-paper text-xs shadow-sticker hover:bg-lemon"
+      >▶</button
+    >
+  </div>
+  <p
+    class="sr-only"
+    aria-live="polite"
+    data-avatar-name
+    data-names={JSON.stringify(t.home.outfits)}
+  >
+    {t.home.outfits[0]}
+  </p>
+</div>
+
+<style is:global>
+  .avatar-walk {
+    transition: transform 0.55s linear;
+  }
+  /* 画面の外(右)へ歩いて出た位置 */
+  .avatar.is-away .avatar-walk {
+    transform: translateX(36px);
+  }
+  /* 歩いているあいだは上下に小さく揺らす */
+  .avatar.is-walking .avatar-bob {
+    animation: avatar-bob 0.22s steps(2, end) infinite;
+  }
+  @keyframes avatar-bob {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-1.5px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .avatar-walk { transition: none; }
+  }
+</style>
+
+<script is:inline type="module">
+  document.querySelectorAll('[data-avatar]').forEach(function (root) {
+    var bodies = root.querySelectorAll('[data-outfit]');
+    var tops = root.querySelectorAll('[data-outfit-top]');
+    var walk = root.querySelector('.avatar-walk');
+    var nameEl = root.querySelector('[data-avatar-name]');
+    var countEl = root.querySelector('[data-avatar-count]');
+    var names = JSON.parse(nameEl.dataset.names || '[]');
+    var total = bodies.length;
+    var current = 0;
+    var busy = false;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(i) {
+      current = (i + total) % total;
+      bodies.forEach(function (g, n) {
+        g.style.display = n === current ? '' : 'none';
+      });
+      tops.forEach(function (g, n) {
+        g.style.display = n === current ? '' : 'none';
+      });
+      nameEl.textContent = names[current] || '';
+      countEl.textContent = current + 1 + '/' + total;
+      try {
+        sessionStorage.setItem('miyazaki:outfit', String(current));
+      } catch (e) {
+        /* 保存できなくても動作には影響しない */
+      }
+    }
+
+    // 歩いて出る → 着替える → 歩いて戻る
+    function change(next) {
+      if (busy) return;
+      if (reduce) return show(next);
+      busy = true;
+      root.classList.add('is-walking', 'is-away');
+      var stage = 0;
+      function onEnd(e) {
+        if (e.target !== walk || e.propertyName !== 'transform') return;
+        if (stage === 0) {
+          stage = 1;
+          show(next);
+          // 少し間を置いてから戻ってくる(着替えている時間)
+          setTimeout(function () {
+            root.classList.remove('is-away');
+          }, 350);
+        } else {
+          walk.removeEventListener('transitionend', onEnd);
+          root.classList.remove('is-walking');
+          busy = false;
+        }
+      }
+      walk.addEventListener('transitionend', onEnd);
+    }
+
+    root.querySelector('[data-avatar-next]').addEventListener('click', function () {
+      change(current + 1);
+    });
+    root.querySelector('[data-avatar-prev]').addEventListener('click', function () {
+      change(current - 1);
+    });
+
+    // 前に選んだ服を引き継ぐ
+    try {
+      var saved = parseInt(sessionStorage.getItem('miyazaki:outfit') || '', 10);
+      if (!isNaN(saved) && saved > 0 && saved < total) show(saved);
+    } catch (e) {
+      /* 読めない環境では最初の服から */
+    }
+  });
+</script>

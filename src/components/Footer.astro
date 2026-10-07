@@ -1,22 +1,22 @@
 ---
 /** 共通フッター */
 import { getDictionary, defaultLocale } from '../i18n';
-import Strawberry from './deco/Strawberry.astro';
-import Butterfly from './deco/Butterfly.astro';
-import Receiver from './deco/Receiver.astro';
+import Floppy from './deco/Floppy.astro';
+import Folder from './deco/Folder.astro';
+import Cursor from './deco/Cursor.astro';
 
 const t = getDictionary(Astro.currentLocale ?? defaultLocale);
 ---
 
-<footer class="mt-section border-t-2 border-ink bg-milk">
+<footer class="mt-section border-t-2 border-ink bg-chrome">
   <div class="mx-auto max-w-5xl px-gutter py-10 text-center">
     <div class="group flex items-center justify-center gap-4" aria-hidden="true">
-      <Strawberry class="h-6 w-6 motion-safe:group-hover:animate-[ichigo-bounce_0.6s_ease-in-out]" />
-      <Receiver
-        class="h-6 w-6 text-ichigo motion-safe:group-hover:animate-[receiver-ring_0.8s_ease-in-out]"
+      <Floppy class="h-6 w-6 motion-safe:group-hover:animate-[icon-bounce_0.6s_ease-in-out]" />
+      <Cursor
+        class="h-6 w-6 text-amber motion-safe:group-hover:animate-[icon-wiggle_0.8s_ease-in-out]"
       />
-      <Butterfly
-        class="h-6 w-6 motion-safe:group-hover:animate-[butterfly-float_1.2s_ease-in-out]"
+      <Folder
+        class="h-6 w-6 motion-safe:group-hover:animate-[icon-float_1.2s_ease-in-out]"
       />
     </div>
     <p class="display-type mt-4 text-sm">{t.footer.copyright}</p>

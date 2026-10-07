@@ -14,9 +14,9 @@ const t = getDictionary(Astro.currentLocale ?? defaultLocale);
 
 /* カテゴリ別チップの塗り（すべてトークン色） */
 const chipBg: Record<string, string> = {
-  info: 'bg-soda-milk',
-  award: 'bg-ichigo-milk',
-  paper: 'bg-soda',
+  info: 'bg-aqua',
+  award: 'bg-sky',
+  paper: 'bg-cyan',
   media: 'bg-lemon',
   event: 'bg-call-green',
 };
@@ -24,7 +24,7 @@ const chipBg: Record<string, string> = {
 
 <a
   href={`/news/${id}/`}
-  class="sticker-card flex flex-col gap-1 px-4 py-3 transition-transform hover:bg-cream motion-safe:hover:-translate-y-0.5 sm:flex-row sm:items-center sm:gap-4"
+  class="sticker-card flex flex-col gap-1 px-4 py-3 transition-transform hover:bg-desk motion-safe:hover:-translate-y-0.5 sm:flex-row sm:items-center sm:gap-4"
 >
   <span class="flex shrink-0 items-center gap-3">
     <time datetime={date.toISOString().slice(0, 10)} class="display-type text-sm text-ink-soft"
@@ -33,7 +33,7 @@ const chipBg: Record<string, string> = {
     <span
       class:list={[
         'display-type rounded-chip border border-ink px-2 py-0.5 text-xs',
-        chipBg[category] ?? 'bg-soda-milk',
+        chipBg[category] ?? 'bg-aqua',
       ]}>{t.news.categories[category] ?? category}</span
     >
   </span>

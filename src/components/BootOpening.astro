@@ -45,7 +45,7 @@ const t = getDictionary(Astro.currentLocale ?? defaultLocale);
   <button
     type="button"
     id="boot-skip"
-    class="display-type absolute top-4 right-4 rounded-chip border-2 border-ink bg-milk px-4 py-1.5 text-sm shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
+    class="display-type absolute top-4 right-4 rounded-chip border-2 border-ink bg-paper px-4 py-1.5 text-sm shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
   >
     {t.boot.skip} ▸▸
   </button>
@@ -54,24 +54,24 @@ const t = getDictionary(Astro.currentLocale ?? defaultLocale);
   <div class="sticker-card w-full max-w-xl overflow-hidden shadow-sticker-lg">
     <!-- タイトルバー -->
     <p
-      class="display-type flex items-center gap-2 border-b-2 border-ink bg-ichigo-milk px-3 py-2 text-xs"
+      class="display-type flex items-center gap-2 border-b-2 border-ink bg-navy px-3 py-2 text-xs text-paper"
       aria-hidden="true"
     >
-      <span class="h-3 w-3 rounded-full border-2 border-ink bg-ichigo"></span>
+      <span class="h-3 w-3 rounded-full border-2 border-ink bg-amber"></span>
       <span class="h-3 w-3 rounded-full border-2 border-ink bg-lemon"></span>
       <span class="h-3 w-3 rounded-full border-2 border-ink bg-call-green"></span>
       <span class="ml-2">{t.boot.windowTitle}</span>
     </p>
 
     <!-- 画面 -->
-    <div class="boot-screen display-type bg-ink px-5 py-5 text-sm leading-relaxed text-milk sm:text-base">
+    <div class="boot-screen display-type bg-ink px-5 py-5 text-sm leading-relaxed text-paper sm:text-base">
       {
         t.boot.lines.map((line) => (
           <div class="boot-line" data-cmd={line.cmd} data-out={line.out}>
             <p>
               <span class="text-call-green">$</span> <span class="boot-cmd">{line.cmd}</span>
             </p>
-            {line.out && <p class="boot-out text-soda">{line.out}</p>}
+            {line.out && <p class="boot-out text-cyan">{line.out}</p>}
           </div>
         ))
       }
@@ -92,9 +92,9 @@ const t = getDictionary(Astro.currentLocale ?? defaultLocale);
 <style is:global>
   /* オーバーレイ背景(背面ページを完全に隠す。トークン色のみ使用) */
   #boot-opening {
-    background-color: var(--color-cream);
+    background-color: var(--color-desk);
     background-image: radial-gradient(
-      color-mix(in srgb, var(--color-soda) 22%, transparent) 2px,
+      color-mix(in srgb, var(--color-desk-deep) 100%, transparent) 2px,
       transparent 2.5px
     );
     background-size: 22px 22px;
@@ -118,7 +118,7 @@ const t = getDictionary(Astro.currentLocale ?? defaultLocale);
   }
   #boot-opening .boot-cursor {
     display: inline-block;
-    color: var(--color-ichigo);
+    color: var(--color-amber);
   }
   @media (prefers-reduced-motion: no-preference) {
     #boot-opening .boot-cursor {

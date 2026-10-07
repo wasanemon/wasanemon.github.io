@@ -1,0 +1,169 @@
+---
+/**
+ * SQLで自己紹介 — MySQL風のコンソール。決まった問いにだけ結果の表を返す。
+ * 本物のデータベースではなく、ビルド時に埋め込んだ表を照合しているだけ。
+ * papers は src/data/research.ts、favorites は辞書の home.favorites から作る。
+ */
+import { getDictionary, defaultLocale } from '../i18n';
+import { publications } from '../data/research';
+import Window from './Window.astro';
+
+const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+
+const data = {
+  tables: ['yusuke', 'favorites', 'papers', 'awards', 'cat'],
+  hungry: t.sql.hungry,
+  hungryNote: t.sql.hungryNote,
+  self: t.sql.self,
+  favorites: t.home.favorites.map((f, i) => ({ id: String(i + 1), name: f.label })),
+  papers: publications.map((p) => ({ year: p.year, venue: p.venue, title: p.title })),
+  awards: t.sql.awards,
+  cat: t.sql.cat,
+  rows: t.sql.rows,
+  denied: t.sql.denied,
+  unknown: t.sql.unknown,
+};
+---
+
+<Window title={t.sql.windowTitle} tone="ink" class="sql-console shadow-sticker-lg" bodyClass="bg-ink text-paper">
+  <span class="sql-out display-type block max-h-80 overflow-auto px-4 pt-4 text-sm" id="sql-out" aria-live="polite">
+    <span class="block text-cyan">{t.sql.welcome}</span>
+  </span>
+  <form id="sql-form" class="display-type flex items-center gap-2 px-4 py-3 text-sm">
+    <label for="sql-input" class="shrink-0 text-call-green">{t.sql.prompt}</label>
+    <input
+      id="sql-input"
+      type="text"
+      value={t.sql.initial}
+      aria-label={t.sql.inputLabel}
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+      class="min-w-0 flex-1 border-b-2 border-ink-soft bg-ink py-1 text-paper outline-none focus:border-cyan"
+    />
+    <button type="submit" class="shrink-0 cursor-pointer rounded-chip border-2 border-paper bg-call-green px-3 py-1 text-xs text-ink hover:bg-lemon">
+      {t.sql.run}
+    </button>
+  </form>
+  <span class="flex flex-wrap gap-2 border-t-2 border-ink-soft px-4 py-3">
+    {
+      t.sql.presets.map((q) => (
+        <button
+          type="button"
+          data-sql-preset={q}
+          class="display-type cursor-pointer rounded-chip border border-ink-soft px-2 py-0.5 text-left text-xs text-cyan hover:bg-paper hover:text-ink"
+        >
+          {q}
+        </button>
+      ))
+    }
+  </span>
+</Window>
+<script type="application/json" id="sql-data" set:html={JSON.stringify(data)} />
+
+<style is:global>
+  .sql-out table {
+    margin: 0.4rem 0;
+    border-collapse: collapse;
+  }
+  .sql-out th,
+  .sql-out td {
+    border: 1px solid var(--color-ink-soft);
+    padding: 0.1rem 0.6rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .sql-out th {
+    color: var(--color-lemon);
+    font-weight: 400;
+  }
+  .sql-out .sql-echo {
+    margin-top: 0.6rem;
+    color: var(--color-paper);
+  }
+  .sql-out .sql-note {
+    color: var(--color-cyan);
+  }
+  .sql-out .sql-error {
+    color: var(--color-call-red);
+  }
+</style>
+
+<script is:inline type="module">
+  (function () {
+    var out = document.getElementById('sql-out');
+    var form = document.getElementById('sql-form');
+    var input = document.getElementById('sql-input');
+    var raw = document.getElementById('sql-data');
+    if (!out || !form || !input || !raw) return;
+    var db = JSON.parse(raw.textContent || '{}');
+
+    function line(text, cls) {
+      var el = document.createElement('span');
+      el.className = 'block ' + (cls || '');
+      el.textContent = text;
+      out.appendChild(el);
+    }
+    function table(rows, note) {
+      if (!rows.length) return line('Empty set', 'sql-note');
+      var cols = Object.keys(rows[0]);
+      var tbl = document.createElement('table');
+      var head = tbl.insertRow();
+      cols.forEach(function (c) {
+        var th = document.createElement('th');
+        th.textContent = c;
+        head.appendChild(th);
+      });
+      rows.forEach(function (r) {
+        var tr = tbl.insertRow();
+        cols.forEach(function (c) {
+          tr.insertCell().textContent = r[c];
+        });
+      });
+      out.appendChild(tbl);
+      line(rows.length + ' ' + db.rows + (note ? ' ' + note : ''), 'sql-note');
+    }
+
+    function run(query) {
+      var q = query.trim();
+      if (!q) return;
+      line('mysql> ' + q, 'sql-echo');
+      var n = q.toLowerCase().replace(/;+\s*$/, '').replace(/\s+/g, ' ');
+
+      if (/^(drop|delete|truncate|update|insert|alter|create|grant)\b/.test(n)) {
+        line(db.denied, 'sql-error');
+      } else if (n === 'show tables') {
+        table(
+          db.tables.map(function (name) {
+            return { Tables_in_yusuke_db: name };
+          })
+        );
+      } else if (/^select .+ from yusuke\b/.test(n)) {
+        if (n.indexOf('空腹') !== -1) table(db.hungry, db.hungryNote);
+        else table(db.self);
+      } else if (/^select .+ from favorites\b/.test(n)) {
+        table(db.favorites);
+      } else if (/^select .+ from papers\b/.test(n)) {
+        table(db.papers);
+      } else if (/^select .+ from awards\b/.test(n)) {
+        table(db.awards);
+      } else if (/^select .+ from cat\b/.test(n)) {
+        table(db.cat);
+      } else {
+        line(db.unknown, 'sql-error');
+      }
+      out.scrollTop = out.scrollHeight;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      run(input.value);
+    });
+    document.querySelectorAll('[data-sql-preset]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        input.value = btn.getAttribute('data-sql-preset') || '';
+        run(input.value);
+      });
+    });
+  })();
+</script>

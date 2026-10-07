@@ -1,0 +1,305 @@
+---
+/**
+ * サイト内をうろつく猫と、そのうしろをついて歩くカモ(Kamo)。
+ *  - マウスのある環境: カーソルを追いかけ、近くまで来ると座る
+ *  - カーソルが止まったまま、またはタッチ環境: 画面内を気ままに歩き回る
+ *  - prefers-reduced-motion: 表示しない
+ * 装飾専用(aria-hidden、クリックや選択の邪魔をしない)。色はすべてトークン。
+ */
+const ink = 'var(--color-ink)';
+---
+
+<div id="roaming-cat" class="roaming-cat" aria-hidden="true">
+  <svg viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+    {/* しっぽ */}
+    <g class="cat-tail">
+      <rect x="1.5" y="6" width="2.5" height="7" fill="var(--color-ginger)" stroke={ink} stroke-width="1" />
+    </g>
+    <rect x="1.5" y="12" width="5" height="2.5" fill="var(--color-ginger)" stroke={ink} stroke-width="1" />
+    {/* 脚(マンチカンなので短い。2コマを交互に出して歩かせる) */}
+    <g class="cat-legs-a">
+      <rect x="6" y="19" width="3" height="3" fill="var(--color-paper)" stroke={ink} stroke-width="1" />
+      <rect x="17.5" y="19" width="3" height="3" fill="var(--color-paper)" stroke={ink} stroke-width="1" />
+    </g>
+    <g class="cat-legs-b">
+      <rect x="9.5" y="19" width="3" height="3" fill="var(--color-paper)" stroke={ink} stroke-width="1" />
+      <rect x="14" y="19" width="3" height="3" fill="var(--color-paper)" stroke={ink} stroke-width="1" />
+    </g>
+    {/* 胴(白地に茶のぶち。脚が短いぶん胴を長く低く) */}
+    <rect x="5" y="11" width="17" height="8.5" fill="var(--color-paper)" stroke={ink} stroke-width="1" />
+    <rect x="5.5" y="11.5" width="5" height="4" fill="var(--color-ginger)" />
+    <rect x="13" y="11.5" width="5.5" height="3" fill="var(--color-ginger)" />
+    <rect x="9" y="16" width="4" height="3" fill="var(--color-ginger)" />
+    {/* 頭と耳 */}
+    <path d="M19 5.5l1-4 3 4ZM25 5.5l2-4 2 4Z" fill="var(--color-ginger)" stroke={ink} stroke-width="1" />
+    <rect x="18" y="5" width="11.5" height="9.5" fill="var(--color-paper)" stroke={ink} stroke-width="1" />
+    <rect x="18.5" y="5.5" width="4" height="3" fill="var(--color-ginger)" />
+    <rect x="25" y="5.5" width="4" height="3" fill="var(--color-ginger)" />
+    <rect x="21.5" y="8.5" width="1.5" height="2.5" fill={ink} />
+    <rect x="26" y="8.5" width="1.5" height="2.5" fill={ink} />
+    <rect x="24" y="11.5" width="1.5" height="1" fill="var(--color-call-red)" />
+  </svg>
+</div>
+
+<div id="roaming-duck" class="roaming-cat roaming-duck" aria-hidden="true">
+  <svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+    {/* 脚(2コマ) */}
+    <g class="cat-legs-a">
+      <rect x="9" y="19" width="2" height="3" fill="var(--color-amber)" stroke={ink} stroke-width="0.8" />
+      <rect x="8" y="21.5" width="4" height="1.5" fill="var(--color-amber)" stroke={ink} stroke-width="0.8" />
+    </g>
+    <g class="cat-legs-b">
+      <rect x="13" y="19" width="2" height="3" fill="var(--color-amber)" stroke={ink} stroke-width="0.8" />
+      <rect x="12" y="21.5" width="4" height="1.5" fill="var(--color-amber)" stroke={ink} stroke-width="0.8" />
+    </g>
+    {/* 尾と胴 */}
+    <path d="M2 10l4 2v4H2Z" fill="var(--color-ink-soft)" stroke={ink} stroke-width="1" />
+    <rect x="5" y="11" width="15" height="8.5" fill="var(--color-chrome)" stroke={ink} stroke-width="1" />
+    <rect x="8" y="13" width="8" height="4" fill="var(--color-paper)" />
+    <rect x="16" y="11.5" width="3.5" height="7.5" fill="var(--color-ginger)" />
+    {/* 首輪、頭、くちばし */}
+    <rect x="16" y="9.5" width="6" height="2" fill="var(--color-paper)" stroke={ink} stroke-width="0.8" />
+    <rect x="16" y="2.5" width="7" height="7.5" fill="var(--color-call-green-deep)" stroke={ink} stroke-width="1" />
+    <rect x="19.5" y="4.5" width="1.5" height="2" fill="var(--color-paper)" />
+    <rect x="23" y="6" width="4" height="2.5" fill="var(--color-amber)" stroke={ink} stroke-width="1" />
+  </svg>
+</div>
+
+<style is:global>
+  .roaming-cat {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    width: 44px;
+    height: 33px;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    will-change: transform;
+  }
+  .roaming-cat.is-ready {
+    opacity: 1;
+  }
+  .roaming-cat svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  /* 左へ進むときは絵を反転 */
+  .roaming-cat.is-left svg {
+    transform: scaleX(-1);
+  }
+
+  /* 止まっているときは脚を1コマだけ出し、しっぽをゆっくり振る */
+  .roaming-cat .cat-legs-b {
+    visibility: hidden;
+  }
+  .roaming-cat .cat-tail {
+    transform-origin: 3px 12px;
+    animation: cat-tail 1.6s steps(2, end) infinite;
+  }
+  /* 歩いているときは脚の2コマを交互に切り替える */
+  .roaming-cat.is-walking .cat-legs-a {
+    animation: cat-step 0.3s steps(1, end) infinite;
+  }
+  .roaming-cat.is-walking .cat-legs-b {
+    animation: cat-step 0.3s steps(1, end) infinite reverse;
+  }
+  @keyframes cat-step {
+    0%, 49% { visibility: visible; }
+    50%, 100% { visibility: hidden; }
+  }
+  @keyframes cat-tail {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-22deg); }
+  }
+
+  .roaming-duck {
+    width: 34px;
+    height: 29px;
+    z-index: 29;
+  }
+  /* カモはよちよち歩き */
+  .roaming-duck.is-walking svg {
+    animation: duck-waddle 0.3s steps(2, end) infinite;
+  }
+  .roaming-duck.is-walking.is-left svg {
+    animation-name: duck-waddle-left;
+  }
+  @keyframes duck-waddle {
+    0% { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+  }
+  @keyframes duck-waddle-left {
+    0% { transform: scaleX(-1) rotate(-5deg); }
+    100% { transform: scaleX(-1) rotate(5deg); }
+  }
+
+  /* 動きを減らす設定、印刷時、起動オープニング中は出さない */
+  @media (prefers-reduced-motion: reduce) {
+    .roaming-cat { display: none; }
+  }
+  @media print {
+    .roaming-cat { display: none; }
+  }
+  html.call-open .roaming-cat {
+    display: none;
+  }
+</style>
+
+<script is:inline type="module">
+  (function () {
+    var cat = document.getElementById('roaming-cat');
+    if (!cat) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var W = 44;
+    var H = 33;
+    var CHASE_SPEED = 170; // px/秒: カーソルを追うとき
+    var STROLL_SPEED = 70; // px/秒: 気ままに歩くとき
+    var STOP_DISTANCE = 46; // カーソルのこの距離まで来たら座る
+    var IDLE_BEFORE_STROLL = 5000; // カーソルが止まってから歩き出すまで
+
+    var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    // 位置は前のページから引き継ぐ(ページ移動のたびに飛ばないように)
+    var pos = { x: 24, y: window.innerHeight - H - 24 };
+    try {
+      var saved = JSON.parse(sessionStorage.getItem('miyazaki:cat') || 'null');
+      if (saved && typeof saved.x === 'number' && typeof saved.y === 'number') pos = saved;
+    } catch (e) {
+      /* 保存できない環境では毎回左下から */
+    }
+
+    var target = { x: pos.x, y: pos.y };
+    var mode = 'stroll'; // 'chase' | 'stroll'
+    var lastPointer = 0;
+    var restUntil = 0;
+    var facingLeft = false;
+
+    function clamp(v, lo, hi) {
+      return Math.max(lo, Math.min(hi, v));
+    }
+    function pickStrollTarget() {
+      var margin = 16;
+      target.x = margin + Math.random() * (window.innerWidth - W - margin * 2);
+      target.y = margin + 70 + Math.random() * (window.innerHeight - H - margin * 2 - 70);
+    }
+
+    if (canHover) {
+      window.addEventListener(
+        'pointermove',
+        function (e) {
+          if (e.pointerType && e.pointerType !== 'mouse') return;
+          mode = 'chase';
+          lastPointer = performance.now();
+          target.x = e.clientX - W / 2;
+          target.y = e.clientY - H / 2;
+        },
+        { passive: true }
+      );
+    }
+
+    function render(walking) {
+      cat.style.transform = 'translate(' + Math.round(pos.x) + 'px,' + Math.round(pos.y) + 'px)';
+      cat.classList.toggle('is-walking', walking);
+      cat.classList.toggle('is-left', facingLeft);
+    }
+
+    // カモ: 猫のうしろを少し離れてついて歩く
+    var duck = document.getElementById('roaming-duck');
+    var DUCK_W = 34;
+    var DUCK_H = 29;
+    var DUCK_SPEED = 150;
+    var DUCK_GAP = 40; // 猫とのあいだ
+    var duckPos = { x: pos.x - 50, y: pos.y + 4 };
+    var duckLeft = false;
+    try {
+      var savedDuck = JSON.parse(sessionStorage.getItem('miyazaki:duck') || 'null');
+      if (savedDuck && typeof savedDuck.x === 'number' && typeof savedDuck.y === 'number') duckPos = savedDuck;
+    } catch (e) {
+      /* 保存できない環境では猫のうしろから */
+    }
+    function moveDuck(dt) {
+      if (!duck) return;
+      var tx = pos.x + (W - DUCK_W) / 2;
+      var ty = pos.y + (H - DUCK_H);
+      var ddx = tx - duckPos.x;
+      var ddy = ty - duckPos.y;
+      var d = Math.sqrt(ddx * ddx + ddy * ddy);
+      var moving = false;
+      if (d > DUCK_GAP) {
+        var s = Math.min(d - DUCK_GAP, DUCK_SPEED * dt);
+        duckPos.x += (ddx / d) * s;
+        duckPos.y += (ddy / d) * s;
+        if (Math.abs(ddx) > 1) duckLeft = ddx < 0;
+        moving = true;
+      }
+      duckPos.x = clamp(duckPos.x, 0, window.innerWidth - DUCK_W);
+      duckPos.y = clamp(duckPos.y, 0, window.innerHeight - DUCK_H);
+      duck.style.transform = 'translate(' + Math.round(duckPos.x) + 'px,' + Math.round(duckPos.y) + 'px)';
+      duck.classList.toggle('is-walking', moving);
+      duck.classList.toggle('is-left', duckLeft);
+    }
+
+    var prev = performance.now();
+    function frame(now) {
+      var dt = Math.min(0.05, (now - prev) / 1000);
+      prev = now;
+
+      if (mode === 'chase' && now - lastPointer > IDLE_BEFORE_STROLL) {
+        mode = 'stroll';
+        restUntil = now + 800;
+        pickStrollTarget();
+      }
+
+      var dx = target.x - pos.x;
+      var dy = target.y - pos.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var stop = mode === 'chase' ? STOP_DISTANCE : 2;
+      var walking = false;
+
+      if (mode === 'stroll' && now < restUntil) {
+        /* ひと休み中 */
+      } else if (dist > stop) {
+        var speed = mode === 'chase' ? CHASE_SPEED : STROLL_SPEED;
+        var step = Math.min(dist - stop, speed * dt);
+        pos.x += (dx / dist) * step;
+        pos.y += (dy / dist) * step;
+        if (Math.abs(dx) > 1) facingLeft = dx < 0;
+        walking = true;
+      } else if (mode === 'stroll') {
+        // 着いたらしばらく座って、次の行き先を決める
+        restUntil = now + 2500 + Math.random() * 4000;
+        pickStrollTarget();
+      }
+
+      pos.x = clamp(pos.x, 0, window.innerWidth - W);
+      pos.y = clamp(pos.y, 0, window.innerHeight - H);
+      render(walking);
+      moveDuck(dt);
+      requestAnimationFrame(frame);
+    }
+
+    window.addEventListener('pagehide', function () {
+      try {
+        sessionStorage.setItem('miyazaki:cat', JSON.stringify(pos));
+        sessionStorage.setItem('miyazaki:duck', JSON.stringify(duckPos));
+      } catch (e) {
+        /* 保存できなくても動作には影響しない */
+      }
+    });
+
+    pickStrollTarget();
+    restUntil = performance.now() + 1500;
+    render(false);
+    cat.classList.add('is-ready');
+    if (duck) {
+      moveDuck(0);
+      duck.classList.add('is-ready');
+    }
+    requestAnimationFrame(frame);
+  })();
+</script>

@@ -1,0 +1,45 @@
+---
+/**
+ * レトロOS風のウィンドウ。タイトルバー + 中身。
+ * href を渡すとウィンドウ全体がリンクになる。
+ * 「×」は本当に効く(閉じると文句のウィンドウが出る。制御は Desktop.astro)。
+ */
+interface Props {
+  /** タイトルバーの文字(ファイル名風) */
+  title: string;
+  href?: string;
+  class?: string;
+  /** 中身の余白など */
+  bodyClass?: string;
+  /** タイトルバーの色 */
+  tone?: 'navy' | 'ink';
+}
+const { title, href, class: className, bodyClass = 'p-4', tone = 'navy' } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  href={href}
+  data-win
+  class:list={[
+    'sticker-card block overflow-hidden',
+    href && 'transition-transform motion-safe:hover:-translate-y-0.5',
+    className,
+  ]}
+>
+  <span
+    class:list={[
+      'display-type flex items-center justify-between gap-3 border-b-2 border-ink px-3 py-1 text-xs text-paper',
+      tone === 'navy' ? 'bg-navy' : 'bg-ink',
+    ]}
+    aria-hidden="true"
+  >
+    <span class="truncate">{title}</span>
+    <span class="flex shrink-0 gap-1">
+      <span class="win-btn">_</span>
+      <span class="win-btn">□</span>
+      <span class="win-btn cursor-pointer hover:bg-amber" data-win-close>×</span>
+    </span>
+  </span>
+  <span class:list={['block', bodyClass]}><slot /></span>
+</Tag>
