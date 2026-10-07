@@ -1,0 +1,347 @@
+/**
+ * 英語辞書 — /en/ 配下のページで使う。キー構造は ja.ts と同じ(型 Dictionary で揃える)。
+ * 日本語側の文言を変えたら、ここの同じキーも合わせて直す。
+ */
+import type { Dictionary } from '../index';
+
+export const en: Dictionary = {
+  meta: {
+    siteName: 'Yusuke Miyazaki',
+    description:
+      'Official site of Yusuke Miyazaki (宮﨑祐介), a database systems researcher at the Graduate School of Media and Governance, Keio University. MITOU Super Creator (FY2025). Developer of Kamo, a high-performance, fault-tolerant MySQL-compatible DBMS.',
+  },
+
+  a11y: {
+    skipToContent: 'Skip to content',
+    mainNav: 'Main navigation',
+    externalLink: 'opens an external site',
+  },
+
+  header: {
+    logo: 'yusuke',
+    logoSub: 'Yusuke Miyazaki',
+    aside: 'C:\\> BEGIN; … COMMIT;',
+    langSwitch: '日本語',
+    langSwitchLabel: '日本語版',
+  },
+
+  nav: {
+    top: 'TOP',
+    news: 'NEWS',
+    research: 'RESEARCH',
+    kamo: 'KAMO',
+    media: 'MEDIA',
+    profile: 'PROFILE',
+    links: 'LINKS',
+  },
+
+  boot: {
+    windowTitle: 'terminal — yusuke@keio',
+    label: 'Booting the site',
+    lines: [
+      { cmd: 'whoami', out: 'yusuke miyazaki / 宮﨑祐介' },
+      { cmd: 'cat role.txt', out: 'database systems researcher' },
+      { cmd: './kamo --bench tpcc', out: '18.7x faster … OK' },
+      { cmd: 'open ./site', out: '' },
+    ],
+    enter: 'ENTER ⏎ Open the site',
+    skip: 'Skip',
+    hint: 'You can also press Enter',
+  },
+
+  home: {
+    heroRoles: '> DATABASE RESEARCHER_',
+    heroLogo: 'yusuke',
+    heroName: 'Yusuke Miyazaki',
+    heroReading: '(宮﨑祐介)',
+    catchCopy: 'Brawn. Belly. Hustle. Buzz cut.',
+    subCopy: ['Database systems researcher', 'MITOU Super Creator, FY2025'],
+    affiliations: ['Keio University', 'model agency friday'],
+    cta: 'See Kamo',
+    avatarLabel:
+      'Avatar of Yusuke Miyazaki: tall and slim with a buzz cut. A white and ginger cat sits at his feet. Use the arrows to change his outfit',
+    outfitPrev: 'Previous outfit',
+    outfitNext: 'Next outfit',
+    outfits: [
+      'Navy knit polo',
+      'Black long coat',
+      'Cream T-shirt',
+      'Cream two-piece',
+      'Leather jacket',
+      'Cow-print cardigan',
+      'Cap and denim jacket',
+      'Black tank top',
+    ],
+    card: {
+      windowTitle: 'kamo_bench.exe',
+      heading: 'RESULT',
+      stats: [
+        { value: '18.7×', label: 'Throughput gain on TPC-C at 144 threads' },
+        { value: '0s', label: 'Effective downtime on automatic failover' },
+      ],
+      foot: 'A high-performance, fault-tolerant MySQL-compatible DBMS',
+    },
+    awardLabel: 'AWARD',
+    awardWindow: 'award.txt',
+    projectWindow: 'kamo.app',
+    award: {
+      title: 'MITOU Super Creator',
+      meta: 'FY2025 ・ METI / IPA ・ Certified June 2026',
+      more: 'Read more',
+      href: '/news/2026-06-04-super-creator/',
+    },
+    projectLabel: 'LATEST PROJECT',
+    project: {
+      title: 'Kamo',
+      meta: 'MySQL-compatible DBMS ・ MITOU IT Program FY2025',
+    },
+    favoritesHeading: 'FAVORITES',
+    favoritesLead: 'Things I like',
+    favorites: [
+      { icon: 'insect', label: 'Insects' },
+      { icon: 'cat', label: 'Cats' },
+      { icon: 'outdoor', label: 'Outdoors' },
+      { icon: 'sports', label: 'Sports' },
+      { icon: 'kebab', label: 'Kebab' },
+      { icon: 'taco', label: 'Tacos' },
+      { icon: 'naan', label: 'Cheese naan' },
+      { icon: 'eating', label: 'Big eating' },
+      { icon: 'sake', label: 'Sake' },
+      { icon: 'shochu', label: 'Shochu' },
+      { icon: 'dj', label: 'DJing' },
+      { icon: 'music', label: 'Music' },
+      { icon: 'club', label: 'Small clubs' },
+      { icon: 'cafe', label: 'Cafes' },
+      { icon: 'drawing', label: 'Drawing' },
+      { icon: 'fashion', label: 'Fashion' },
+      { icon: 'walk', label: 'Walks' },
+      { icon: 'drive', label: 'Driving' },
+      { icon: 'rain', label: 'Rain' },
+      { icon: 'grass', label: 'Meadows' },
+    ],
+    newsHeading: 'NEWS',
+    newsMore: 'More news',
+    ticker: [
+      'MITOU Super Creator, FY2025',
+      'Two posters accepted to SC26',
+      'Paper accepted to IPSJ Transactions (ACS)',
+      'Kamo: 18.7× on TPC-C',
+    ],
+    tickerPause: 'STOP ⏸',
+    tickerPlay: 'PLAY ▶',
+    tickerLabel: 'Topics',
+  },
+
+  news: {
+    title: 'NEWS',
+    lead: 'Awards, papers and talks',
+    window: 'news.txt',
+    empty: 'No news yet',
+    backToList: 'Back to NEWS',
+    categories: {
+      info: 'INFO',
+      award: 'AWARD',
+      paper: 'PAPER',
+      media: 'MEDIA',
+      event: 'EVENT',
+    },
+  },
+
+  research: {
+    title: 'RESEARCH',
+    lead: 'Papers and presentations',
+    fileExt: '.pdf',
+    translatedNote: 'In Japanese (title translated)',
+    linksHeading: 'Links',
+  },
+
+  media: {
+    title: 'MEDIA',
+    lead: 'Coverage elsewhere',
+    langNote: 'JA',
+    kinds: {
+      news: 'NEWS',
+      profile: 'PROFILE',
+      article: 'ARTICLE',
+      award: 'AWARD',
+    },
+  },
+
+  kamo: {
+    title: 'KAMO',
+    lead: 'A high-performance, fault-tolerant MySQL-compatible DBMS',
+    name: 'Kamo',
+    kind: 'PROJECT ・ MITOU IT Program FY2025',
+    body: [
+      'Kamo integrates the transaction engine LineairDB into the pluggable storage engine layer of MySQL. It keeps MySQL compatibility while raising performance on many-core machines.',
+      'It was developed under the MITOU IT Program FY2025 project "Development of a High-Performance, Fault-Tolerant MySQL". The project manager was Kunihiro Tanaka.',
+    ],
+    statsHeading: 'RESULT',
+    statsWindow: 'kamo_bench.exe',
+    stats: [
+      { value: '18.7×', label: 'Throughput gain on TPC-C at 144 threads' },
+      { value: '0s', label: 'Effective downtime on automatic failover' },
+    ],
+    teamHeading: 'TEAM',
+    team: ['Yusuke Miyazaki (lead)', 'Tatsuhiro Nakamori', 'Tony Li'],
+    linksHeading: 'LINKS',
+    links: [
+      { label: 'GitHub', url: 'https://github.com/mitou-Kamo/LineairDB-storage-engine' },
+      { label: 'Article (Sakura Knowledge, in Japanese)', url: 'https://knowledge.sakura.ad.jp/50280/' },
+      { label: 'LineairDB', url: 'https://github.com/LineairDB/LineairDB' },
+      { label: 'IPA project report (in Japanese)', url: 'https://www.ipa.go.jp/jinzai/mitou/it/2025/seika.html' },
+    ],
+  },
+
+  profile: {
+    title: 'PROFILE',
+    name: 'Yusuke Miyazaki',
+    reading: '宮﨑祐介',
+    roles: 'Database systems researcher',
+    facts: [
+      { label: 'Born', value: '2002' },
+      { label: 'From', value: 'Gunma, Japan' },
+      { label: 'Affiliation', value: "Master's program, Graduate School of Media and Governance, Keio University" },
+      { label: 'Lab', value: 'Hideyuki Kawashima Laboratory' },
+      { label: 'Research', value: 'Transaction processing / concurrency control' },
+      {
+        label: 'Likes',
+        value:
+          'Insects / cats / outdoors / sports / kebab / tacos / cheese naan / big eating / sake / shochu / DJing / music / small clubs / cafes / drawing / fashion / walks / driving / rain / meadows',
+      },
+    ],
+    bio: [
+      'I am a database systems researcher. I study transaction processing and concurrency control in the Hideyuki Kawashima Laboratory at the Graduate School of Media and Governance, Keio University.',
+      'I started learning computer science from scratch in the spring of my third undergraduate year, and my first first-author paper was accepted to an international conference workshop.',
+      'In FY2025 I was selected for the MITOU IT Program, where I led the development of Kamo, a high-performance, fault-tolerant MySQL-compatible DBMS. I was certified as a MITOU Super Creator in June 2026.',
+    ],
+    en: '',
+    highlightsHeading: 'AWARDS',
+    highlights: [
+      '2026 — MITOU Super Creator, MITOU IT Program (METI / IPA)',
+      '2025 — Selected for the MITOU IT Program as project lead: "Development of a High-Performance, Fault-Tolerant MySQL"',
+      'AY2025 Fall — Outstanding Graduation Project (Keio University SFC)',
+    ],
+    historyHeading: 'HISTORY',
+    history: [
+      { year: '2026', text: "Entered the master's program, Graduate School of Media and Governance, Keio University" },
+      { year: '2026', text: 'Graduated from the Faculty of Policy Management, Keio University' },
+      { year: '2021', text: 'Graduated from Gunma Prefectural Takasaki High School' },
+      { year: '2002', text: 'Born in Gunma, Japan' },
+    ],
+    modelHeading: 'MODEL',
+    model: 'I have also joined model agency friday and am starting out as a model.',
+    modelLinks: [
+      { label: 'Profile', url: 'https://fridayfarm.net/yusuke-miyazaki/' },
+      { label: 'Instagram', url: 'https://www.instagram.com/wasanemon/' },
+    ],
+  },
+
+  placeholder: {
+    preparingSuffix: '(coming soon)',
+    statusBar: '▂▄▆█ MIYAZAKI MOBILE',
+    keyVisual: 'KEY VISUAL',
+    comingSoon: 'COMING SOON…',
+    jacket: 'IMAGE COMING SOON',
+    photo: 'PHOTO COMING SOON',
+    rec: '● REC',
+  },
+
+  links: {
+    title: 'LINKS',
+    lead: 'Social accounts and related pages (see MEDIA for coverage elsewhere)',
+    snsHeading: 'SNS',
+    pagesHeading: 'PAGES',
+    preparing: 'Coming soon',
+    contact: 'For modeling inquiries, please contact model agency friday. ',
+    contactLabel: 'Contact page',
+    contactUrl: 'https://fridayfarm.net/contact/',
+  },
+
+  fun: {
+    startLabel: 'Open the start menu',
+    startBand: 'yusuke 98',
+    startTrash: 'Open the trash',
+    startReplay: 'Replay the opening',
+    startShutdown: 'Shut down',
+    shutdownText: 'Good night',
+    shutdownHint: 'Click to restart',
+    terminalLabel: 'terminal',
+    terminalAria: 'Open the terminal (self-introduction in SQL)',
+    trashLabel: 'trash',
+    trashTitle: 'trash',
+    trashItems: [
+      { name: 'paper_final_final_v7_really_final.pdf' },
+      { name: 'days_i_ate_too_much.csv' },
+      { name: 'plan_to_wake_up_early.txt' },
+      { name: 'hairstyle_catalog.pdf' },
+      { name: 'diet.exe' },
+      { name: 'cheese_naan_seconds.log' },
+    ],
+    trashCount: '6 items',
+    trashEmpty: 'Empty the trash',
+    popupTitle: 'warning.exe',
+    popupOk: 'OK',
+    popupRestore: 'Put them back',
+    popupClose: 'Close',
+    warnings: [
+      "Please don't close that.",
+      'I worked hard on that window.',
+      'Seriously. Stop.',
+      'That one had my research in it.',
+      'Fine. Close everything. See if I care.',
+      '...I do care. Please stop.',
+      'The cat is judging you.',
+    ],
+    warningMany: 'You have closed {n} windows. There is nothing left to prove.',
+    warningPopup: "Closing me won't help.",
+    warningTrash: 'Access denied. These files are load-bearing.',
+  },
+
+  sql: {
+    heading: 'QUERY',
+    windowTitle: 'mysql — yusuke_db',
+    prompt: 'mysql>',
+    run: 'RUN',
+    inputLabel: 'Enter SQL',
+    hungryKey: 'hungry',
+    initial: "SELECT * FROM yusuke WHERE mood = 'hungry';",
+    presets: [
+      "SELECT * FROM yusuke WHERE mood = 'hungry';",
+      'SHOW TABLES;',
+      'SELECT * FROM favorites;',
+      'SELECT * FROM papers;',
+      'SELECT * FROM awards;',
+      'SELECT * FROM cat;',
+      'DROP TABLE yusuke;',
+    ],
+    welcome: 'Welcome to yusuke_db. Use the buttons below, or run your own SQL.',
+    rows: 'rows in set',
+    denied: "ERROR 1142 (42000): command denied to user 'guest'@'wasanemon.github.io'",
+    unknown: 'ERROR 1064 (42000): That query is not implemented yet. Try SHOW TABLES;',
+    hungry: [
+      { id: '1', food: 'kebab', status: 'wanted' },
+      { id: '2', food: 'cheese naan', status: 'wanted' },
+      { id: '3', food: 'tacos', status: 'wanted' },
+    ],
+    hungryNote: '(still hungry)',
+    self: [{ name: 'Yusuke Miyazaki', role: 'database systems researcher', hair: 'buzz cut', mood: 'hungry' }],
+    cat: [{ breed: 'munchkin', color: 'white and ginger', legs: 'short', status: 'asleep' }],
+    awards: [
+      { year: '2026', award: 'MITOU Super Creator (MITOU IT Program)' },
+      { year: '2025', award: 'Selected for the MITOU IT Program' },
+      { year: '2025', award: 'Outstanding Graduation Project (Keio University SFC)' },
+    ],
+  },
+
+  notFound: {
+    title: '404',
+    message: 'The page you are looking for could not be found.',
+    back: 'Back to TOP',
+  },
+
+  footer: {
+    copyright: '© 2026 yusuke miyazaki',
+    staging: '',
+  },
+};

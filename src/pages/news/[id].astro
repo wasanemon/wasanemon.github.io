@@ -3,7 +3,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Window from '../../components/Window.astro';
-import { getDictionary, defaultLocale } from '../../i18n';
+import { getDictionary, defaultLocale, localizePath } from '../../i18n';
 import { formatDate } from '../../utils/format';
 
 export async function getStaticPaths() {
@@ -16,7 +16,8 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const locale = Astro.currentLocale ?? defaultLocale;
+const t = getDictionary(locale);
 ---
 
 <Base title={entry.data.title} active="news">
@@ -38,7 +39,7 @@ const t = getDictionary(Astro.currentLocale ?? defaultLocale);
 
     <p class="mt-8">
       <a
-        href="/news/"
+        href={localizePath('/news/', locale)}
         class="display-type text-sm text-navy underline underline-offset-4 hover:text-ink"
         >← {t.news.backToList}</a
       >

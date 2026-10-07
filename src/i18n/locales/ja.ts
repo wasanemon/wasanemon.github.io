@@ -22,6 +22,9 @@ export const ja = {
     logo: 'yusuke',
     logoSub: '宮﨑祐介',
     aside: 'C:\\> BEGIN; … COMMIT;',
+    /** 言語切り替え(相手の言語の表示名) */
+    langSwitch: 'EN',
+    langSwitchLabel: 'English version',
   },
 
   nav: {
@@ -150,12 +153,16 @@ export const ja = {
     title: 'RESEARCH',
     lead: '論文と発表',
     fileExt: '.pdf',
+    /** 英語版で、日本語の題名を訳して載せた業績に付ける注記(ja では使わない) */
+    translatedNote: '',
     linksHeading: 'リンク',
   },
 
   media: {
     title: 'MEDIA',
     lead: '他の媒体での掲載',
+    /** 英語版で、日本語のページへのリンクに付ける注記(ja では使わない) */
+    langNote: '',
     kinds: {
       news: 'NEWS',
       profile: 'PROFILE',
@@ -304,6 +311,8 @@ export const ja = {
     prompt: 'mysql>',
     run: 'RUN',
     inputLabel: 'SQL を入力',
+    /** この語がクエリに含まれると hungry の表を返す */
+    hungryKey: '空腹',
     initial: "SELECT * FROM yusuke WHERE mood = '空腹';",
     presets: [
       "SELECT * FROM yusuke WHERE mood = '空腹';",

@@ -11,11 +11,10 @@ export default defineConfig({
   // 公開URL(canonical / OGP / sitemap の基準)
   site: 'https://wasanemon.github.io',
 
-  // i18n: 日本語がデフォルト。将来 'ko' / 'en' を locales に追加し、
-  // src/i18n/locales/ に辞書を足すだけで多言語ページを増やせる構造。
+  // i18n: 日本語がデフォルト(接頭辞なし)。英語は /en/ 配下(src/pages/en/)。
   i18n: {
     defaultLocale: 'ja',
-    locales: ['ja'],
+    locales: ['ja', 'en'],
     routing: {
       prefixDefaultLocale: false,
     },

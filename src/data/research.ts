@@ -19,6 +19,10 @@ export interface Publication {
   kind: string;
   /** 補足(著者順、状態など) */
   notes: string[];
+  /** 英語版の表記。titleEn があるのは題名が日本語の業績で、訳であることを注記して出す */
+  titleEn?: string;
+  venueEn?: string;
+  notesEn?: string[];
   links: PublicationLink[];
 }
 
@@ -30,6 +34,7 @@ export const publications: Publication[] = [
     venue: 'SC26',
     kind: 'POSTER',
     notes: ['第一著者', '2026年11月発表予定'],
+    notesEn: ['First author', 'To be presented in November 2026'],
     links: [],
   },
   {
@@ -39,6 +44,7 @@ export const publications: Publication[] = [
     venue: 'SC26',
     kind: 'POSTER',
     notes: ['Co-first author', '2026年11月発表予定'],
+    notesEn: ['Co-first author', 'To be presented in November 2026'],
     links: [],
   },
   {
@@ -48,6 +54,8 @@ export const publications: Publication[] = [
     venue: '情報処理学会論文誌 コンピューティングシステム(ACS)91号',
     kind: 'JOURNAL',
     notes: ['採録決定'],
+    venueEn: 'IPSJ Transactions on Advanced Computing Systems (ACS), No. 91',
+    notesEn: ['Accepted'],
     links: [],
   },
   {
@@ -57,6 +65,8 @@ export const publications: Publication[] = [
     venue: 'xSIG 2026',
     kind: 'POSTER',
     notes: ['第一著者'],
+    titleEn: 'Design of a High-Performance, Fault-Tolerant MySQL-Compatible DBMS for Large-Scale Data Processing',
+    notesEn: ['First author'],
     links: [{ label: 'xSIG 2026', url: 'https://xsig.ipsj.or.jp/2026/' }],
   },
   {
@@ -64,6 +74,8 @@ export const publications: Publication[] = [
     title: '高性能かつ耐故障なデータベースシステムの設計',
     year: '2025',
     venue: 'ComSys 2025(コンピュータシステム・シンポジウム)',
+    titleEn: 'Design of a High-Performance, Fault-Tolerant Database System',
+    venueEn: 'ComSys 2025 (Computer System Symposium)',
     kind: 'POSTER',
     notes: [],
     links: [],
@@ -75,6 +87,7 @@ export const publications: Publication[] = [
     venue: 'IPDPS 2024 Workshops',
     kind: 'WORKSHOP',
     notes: ['第一著者', '口頭発表'],
+    notesEn: ['First author', 'Oral presentation'],
     links: [{ label: 'IEEE Xplore', url: 'https://ieeexplore.ieee.org/document/10596429' }],
   },
 ];

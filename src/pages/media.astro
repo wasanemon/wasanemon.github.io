@@ -2,10 +2,11 @@
 /** MEDIA — 他媒体での掲載(データ: src/data/media.ts) */
 import Base from '../layouts/Base.astro';
 import SectionTitle from '../components/SectionTitle.astro';
-import { getDictionary, defaultLocale } from '../i18n';
+import { getDictionary, defaultLocale, pick } from '../i18n';
 import { mediaItems } from '../data/media';
 
-const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const locale = Astro.currentLocale ?? defaultLocale;
+const t = getDictionary(locale);
 
 /* 種別チップの塗り(すべてトークン色) */
 const kindBg: Record<string, string> = {
@@ -38,11 +39,18 @@ const kindBg: Record<string, string> = {
               >
                 {t.media.kinds[item.kind] ?? item.kind}
               </span>
-              <span class="display-type text-sm">{item.outlet}</span>
+              <span class="display-type text-sm">{pick(locale, item.outlet, item.outletEn)}</span>
             </span>
-            <span class="min-w-0 flex-1 font-medium">{item.title}</span>
+            <span class="min-w-0 flex-1 font-medium">{pick(locale, item.title, item.titleEn)}</span>
             <span class="flex shrink-0 items-center gap-3">
-              {item.when && <span class="display-type text-sm text-ink-soft">{item.when}</span>}
+              {item.when && (
+                <span class="display-type text-sm text-ink-soft">{pick(locale, item.when, item.whenEn)}</span>
+              )}
+              {t.media.langNote && (
+                <span class="display-type rounded-chip border border-ink-soft px-1.5 text-xs text-ink-soft">
+                  {t.media.langNote}
+                </span>
+              )}
               <span class="display-type text-navy" aria-hidden="true">↗</span>
             </span>
             <span class="sr-only">({t.a11y.externalLink})</span>

@@ -3,10 +3,11 @@
 import Base from '../layouts/Base.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import Icon from '../components/deco/Icon.astro';
-import { getDictionary, defaultLocale } from '../i18n';
+import { getDictionary, defaultLocale, pick } from '../i18n';
 import { snsLinks, pageLinks, type ExternalLink } from '../data/links';
 
-const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const locale = Astro.currentLocale ?? defaultLocale;
+const t = getDictionary(locale);
 
 const sections: { heading: string; items: ExternalLink[] }[] = [
   { heading: t.links.snsHeading, items: snsLinks },
@@ -35,7 +36,7 @@ const sections: { heading: string; items: ExternalLink[] }[] = [
                   <span class="min-w-0">
                     <span class="display-type block">{link.platform}</span>
                     {link.handle && (
-                      <span class="block truncate text-xs text-ink-soft">{link.handle}</span>
+                      <span class="block truncate text-xs text-ink-soft">{pick(locale, link.handle, link.handleEn)}</span>
                     )}
                   </span>
                   <span class="display-type ml-auto shrink-0 text-navy" aria-hidden="true">
@@ -49,7 +50,7 @@ const sections: { heading: string; items: ExternalLink[] }[] = [
                   <span class="min-w-0">
                     <span class="display-type block">{link.platform}</span>
                     {link.handle && (
-                      <span class="block truncate text-xs text-ink-soft">{link.handle}</span>
+                      <span class="block truncate text-xs text-ink-soft">{pick(locale, link.handle, link.handleEn)}</span>
                     )}
                   </span>
                   <span class="display-type ml-auto shrink-0 rounded-chip border border-ink bg-lemon px-2 py-0.5 text-xs">

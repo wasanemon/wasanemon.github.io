@@ -12,6 +12,8 @@ export interface ExternalLink {
   platform: string;
   /** アカウント名等の補足(未定なら空でOK・表示されない) */
   handle: string;
+  /** 英語版の補足(無ければ handle をそのまま使う) */
+  handleEn?: string;
   /** 実URL。空なら「準備中」表示 */
   url: string;
   icon: IconName;
@@ -36,6 +38,7 @@ export const pageLinks: ExternalLink[] = [
     id: 'friday',
     platform: 'model agency friday',
     handle: 'モデル プロフィール',
+    handleEn: 'Model profile',
     url: 'https://fridayfarm.net/yusuke-miyazaki/',
     icon: 'page',
   },

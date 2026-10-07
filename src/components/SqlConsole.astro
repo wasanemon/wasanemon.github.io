@@ -4,19 +4,25 @@
  * 本物のデータベースではなく、ビルド時に埋め込んだ表を照合しているだけ。
  * papers は src/data/research.ts、favorites は辞書の home.favorites から作る。
  */
-import { getDictionary, defaultLocale } from '../i18n';
+import { getDictionary, defaultLocale, pick } from '../i18n';
 import { publications } from '../data/research';
 import Window from './Window.astro';
 
-const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const locale = Astro.currentLocale ?? defaultLocale;
+const t = getDictionary(locale);
 
 const data = {
   tables: ['yusuke', 'favorites', 'papers', 'awards', 'cat'],
+  hungryKey: t.sql.hungryKey,
   hungry: t.sql.hungry,
   hungryNote: t.sql.hungryNote,
   self: t.sql.self,
   favorites: t.home.favorites.map((f, i) => ({ id: String(i + 1), name: f.label })),
-  papers: publications.map((p) => ({ year: p.year, venue: p.venue, title: p.title })),
+  papers: publications.map((p) => ({
+    year: p.year,
+    venue: pick(locale, p.venue, p.venueEn),
+    title: pick(locale, p.title, p.titleEn),
+  })),
   awards: t.sql.awards,
   cat: t.sql.cat,
   rows: t.sql.rows,
@@ -139,7 +145,7 @@ const data = {
           })
         );
       } else if (/^select .+ from yusuke\b/.test(n)) {
-        if (n.indexOf('空腹') !== -1) table(db.hungry, db.hungryNote);
+        if (db.hungryKey && n.indexOf(String(db.hungryKey).toLowerCase()) !== -1) table(db.hungry, db.hungryNote);
         else table(db.self);
       } else if (/^select .+ from favorites\b/.test(n)) {
         table(db.favorites);

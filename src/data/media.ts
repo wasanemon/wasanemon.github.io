@@ -13,6 +13,10 @@ export interface MediaItem {
   title: string;
   /** 掲載時期(表示用。不明なら空) */
   when: string;
+  /** 英語版の表記(掲載先のページ自体は日本語) */
+  outletEn?: string;
+  titleEn?: string;
+  whenEn?: string;
   kind: MediaKind;
   url: string;
 }
@@ -23,6 +27,8 @@ export const mediaItems: MediaItem[] = [
     outlet: '慶應義塾',
     title: 'SFC生が独立行政法人情報処理推進機構「未踏IT人材発掘・育成事業」で活躍(2025・2026年度)',
     when: '2026.07',
+    outletEn: 'Keio University',
+    titleEn: 'SFC students take part in the IPA MITOU IT Program (FY2025 and FY2026)',
     kind: 'news',
     url: 'https://www.keio.ac.jp/ja/sfc-pem/news/20260713/',
   },
@@ -31,6 +37,8 @@ export const mediaItems: MediaItem[] = [
     outlet: '経済産業省',
     title: '2025年度未踏IT人材発掘・育成事業スーパークリエータを認定しました',
     when: '2026.06',
+    outletEn: 'METI',
+    titleEn: 'Press release: MITOU Super Creators certified for FY2025',
     kind: 'news',
     url: 'https://www.meti.go.jp/press/2026/06/20260604002/20260604002.html',
   },
@@ -39,6 +47,8 @@ export const mediaItems: MediaItem[] = [
     outlet: 'IPA(情報処理推進機構)',
     title: '2025年度 未踏スーパークリエータ 紹介ページ',
     when: '2026.06',
+    outletEn: 'IPA',
+    titleEn: 'FY2025 MITOU Super Creator profile',
     kind: 'profile',
     url: 'https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html',
   },
@@ -47,6 +57,8 @@ export const mediaItems: MediaItem[] = [
     outlet: 'さくらのナレッジ',
     title: '高性能で耐故障なMySQL互換DBMS「Kamo」の開発(寄稿)',
     when: '2026.04',
+    outletEn: 'Sakura Knowledge',
+    titleEn: 'Developing Kamo, a high-performance, fault-tolerant MySQL-compatible DBMS (contributed article)',
     kind: 'article',
     url: 'https://knowledge.sakura.ad.jp/50280/',
   },
@@ -55,6 +67,9 @@ export const mediaItems: MediaItem[] = [
     outlet: '慶應義塾大学SFC',
     title: '優秀卒業プロジェクト(2025年度 秋学期)「高性能かつ耐故障なデータベースシステムの設計」',
     when: '2025年度',
+    outletEn: 'Keio University SFC',
+    titleEn: 'Outstanding Graduation Project (AY2025 Fall): "Design of a High-Performance, Fault-Tolerant Database System"',
+    whenEn: 'AY2025',
     kind: 'award',
     url: 'https://www.sfc.keio.ac.jp/doc/sotsupuro.pdf',
   },
@@ -63,6 +78,8 @@ export const mediaItems: MediaItem[] = [
     outlet: '未踏名鑑',
     title: '宮崎 祐介(2025年度 未踏IT クリエータ)',
     when: '',
+    outletEn: 'MITOU Meikan',
+    titleEn: 'Yusuke Miyazaki (MITOU IT creator, FY2025)',
     kind: 'profile',
     url: 'https://scrapbox.io/mitou-meikan/%E5%AE%AE%E5%B4%8E_%E7%A5%90%E4%BB%8B',
   },
@@ -71,6 +88,8 @@ export const mediaItems: MediaItem[] = [
     outlet: '風の谷 A Worthy Tomorrow',
     title: 'メンバー紹介(学生メンバー)',
     when: '',
+    outletEn: 'A Worthy Tomorrow',
+    titleEn: 'Members (student member)',
     kind: 'profile',
     url: 'https://aworthytomorrow.org/people/',
   },

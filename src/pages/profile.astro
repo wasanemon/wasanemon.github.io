@@ -48,7 +48,7 @@ const hasPortrait = assetUrl('portrait') !== null;
 
       <div class="prose-jp mt-6">
         {t.profile.bio.map((paragraph) => <p class="text-sm leading-loose">{paragraph}</p>)}
-        <p lang="en" class="text-sm leading-relaxed text-ink-soft">{t.profile.en}</p>
+        {t.profile.en && <p lang="en" class="text-sm leading-relaxed text-ink-soft">{t.profile.en}</p>}
       </div>
 
       <h3 class="display-type mt-8 flex items-center gap-2 text-xl">

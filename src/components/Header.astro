@@ -3,7 +3,7 @@
  * 共通ヘッダー。ロゴ(押すとスタートメニュー)+ タスクバー風ナビ(モバイルは横スクロール)。
  * アクティブページは各ページから active プロップで指定する。
  */
-import { getDictionary, defaultLocale } from '../i18n';
+import { getDictionary, defaultLocale, localizePath, stripLocale } from '../i18n';
 import Folder from './deco/Folder.astro';
 
 export type NavKey = 'top' | 'news' | 'research' | 'kamo' | 'media' | 'profile' | 'links';
@@ -12,7 +12,11 @@ interface Props {
   active?: NavKey;
 }
 const { active } = Astro.props;
-const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const locale = Astro.currentLocale ?? defaultLocale;
+const t = getDictionary(locale);
+/* 言語切り替え: 同じページの、もう一方の言語へ */
+const otherLocale = locale === 'en' ? 'ja' : 'en';
+const otherHref = localizePath(stripLocale(Astro.url.pathname), otherLocale);
 
 const items: { key: NavKey; href: string; label: string }[] = [
   { key: 'top', href: '/', label: t.nav.top },
@@ -22,7 +26,7 @@ const items: { key: NavKey; href: string; label: string }[] = [
   { key: 'media', href: '/media/', label: t.nav.media },
   { key: 'profile', href: '/profile/', label: t.nav.profile },
   { key: 'links', href: '/links/', label: t.nav.links },
-];
+].map((item) => ({ ...item, href: localizePath(item.href, locale) }));
 ---
 
 <header class="sticky top-0 z-40 border-b-2 border-ink bg-chrome">
@@ -77,9 +81,19 @@ const items: { key: NavKey; href: string; label: string }[] = [
         </ul>
       </div>
     </div>
-    <span class="display-type hidden text-xs text-ink-soft sm:inline" aria-hidden="true"
-      >{t.header.aside}</span
-    >
+    <div class="flex items-center gap-3">
+      <span class="display-type hidden text-xs text-ink-soft sm:inline" aria-hidden="true"
+        >{t.header.aside}</span
+      >
+      <a
+        href={otherHref}
+        hreflang={otherLocale}
+        lang={otherLocale}
+        aria-label={t.header.langSwitchLabel}
+        class="display-type rounded-chip border-2 border-ink bg-paper px-2 py-0.5 text-xs whitespace-nowrap hover:bg-lemon"
+        >{t.header.langSwitch}</a
+      >
+    </div>
   </div>
 
   <nav aria-label={t.a11y.mainNav}>

@@ -3,10 +3,21 @@
 import Base from '../layouts/Base.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import Window from '../components/Window.astro';
-import { getDictionary, defaultLocale } from '../i18n';
+import { getDictionary, defaultLocale, pick } from '../i18n';
 import { publications } from '../data/research';
 
-const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const locale = Astro.currentLocale ?? defaultLocale;
+const isEn = locale === 'en';
+const t = getDictionary(locale);
+/* 英語版では英語表記に差し替える。題名を訳した業績には、その旨の注記を足す */
+const pubs = publications.map((pub) => ({
+  ...pub,
+  title: pick(locale, pub.title, pub.titleEn),
+  venue: pick(locale, pub.venue, pub.venueEn),
+  notes: isEn
+    ? [...(pub.notesEn ?? []), ...(pub.titleEn && t.research.translatedNote ? [t.research.translatedNote] : [])]
+    : pub.notes,
+}));
 
 /* 種別チップの塗り(すべてトークン色) */
 const kindBg: Record<string, string> = {
@@ -21,7 +32,7 @@ const kindBg: Record<string, string> = {
 
   <div class="flex flex-col gap-5">
     {
-      publications.map((pub) => (
+      pubs.map((pub) => (
         <article>
         <Window title={`${pub.id}${t.research.fileExt}`} bodyClass="px-5 py-5 sm:px-7">
           <p class="flex flex-wrap items-center gap-x-3 gap-y-1">

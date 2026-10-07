@@ -1,15 +1,14 @@
 ---
 /** NEWS 一覧 — src/content/news/ の Markdown を日付降順で表示 */
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
 import NewsRow from '../../components/NewsRow.astro';
 import { getDictionary, defaultLocale } from '../../i18n';
+import { getNews } from '../../utils/news';
 
-const t = getDictionary(Astro.currentLocale ?? defaultLocale);
-const entries = (await getCollection('news')).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
+const locale = Astro.currentLocale ?? defaultLocale;
+const t = getDictionary(locale);
+const entries = await getNews(locale);
 ---
 
 <Base title={t.news.title} active="news">

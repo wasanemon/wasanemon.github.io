@@ -1,0 +1,17 @@
+---
+/** 英語版の NEWS 詳細 — 記事は src/content/news-en/、表示は日本語のページをそのまま使う */
+import { getCollection } from 'astro:content';
+import Page from '../../news/[id].astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('newsEn');
+  return entries.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<Page entry={entry} />

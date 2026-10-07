@@ -1,6 +1,5 @@
 ---
 /** TOP — HERO + 受賞・プロジェクト導線 + NEWSプレビュー */
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import BootOpening from '../components/BootOpening.astro';
 import ImageSlot from '../components/ImageSlot.astro';
@@ -11,40 +10,56 @@ import Avatar from '../components/deco/Avatar.astro';
 import Floppy from '../components/deco/Floppy.astro';
 import Folder from '../components/deco/Folder.astro';
 import Cursor from '../components/deco/Cursor.astro';
-import { getDictionary, defaultLocale } from '../i18n';
+import { getDictionary, defaultLocale, localizePath } from '../i18n';
+import { getNews } from '../utils/news';
 import { assetUrl } from '../data/assets';
 
-const t = getDictionary(Astro.currentLocale ?? defaultLocale);
-const news = (await getCollection('news'))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+const locale = Astro.currentLocale ?? defaultLocale;
+const isEn = locale === 'en';
+const t = getDictionary(locale);
+const news = (await getNews(locale)).slice(0, 3);
 const hasKeyVisual = assetUrl('keyVisual') !== null;
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
   dateModified: '2026-10-07',
-  inLanguage: 'ja',
+  inLanguage: locale,
   mainEntity: {
     '@type': 'Person',
     '@id': 'https://wasanemon.github.io/#person',
-    name: '宮﨑祐介',
-    alternateName: ['宮崎祐介', 'Yusuke Miyazaki', 'みやざき ゆうすけ'],
+    name: isEn ? 'Yusuke Miyazaki' : '宮﨑祐介',
+    alternateName: isEn ? ['宮﨑祐介', '宮崎祐介'] : ['宮崎祐介', 'Yusuke Miyazaki', 'みやざき ゆうすけ'],
     url: 'https://wasanemon.github.io/',
-    birthPlace: { '@type': 'Place', name: '群馬県' },
+    birthPlace: { '@type': 'Place', name: isEn ? 'Gunma, Japan' : '群馬県' },
     alumniOf: [
-      { '@type': 'EducationalOrganization', name: '群馬県立高崎高等学校' },
-      { '@type': 'CollegeOrUniversity', name: '慶應義塾大学 総合政策学部' },
+      {
+        '@type': 'EducationalOrganization',
+        name: isEn ? 'Gunma Prefectural Takasaki High School' : '群馬県立高崎高等学校',
+      },
+      {
+        '@type': 'CollegeOrUniversity',
+        name: isEn ? 'Faculty of Policy Management, Keio University' : '慶應義塾大学 総合政策学部',
+      },
     ],
     affiliation: [
-      { '@type': 'CollegeOrUniversity', name: '慶應義塾大学大学院 政策・メディア研究科' },
+      {
+        '@type': 'CollegeOrUniversity',
+        name: isEn
+          ? 'Graduate School of Media and Governance, Keio University'
+          : '慶應義塾大学大学院 政策・メディア研究科',
+      },
       { '@type': 'Organization', name: 'model agency friday', url: 'https://fridayfarm.net/' },
     ],
-    award: [
-      '2025年度 未踏IT人材発掘・育成事業 スーパークリエータ認定(経済産業省・IPA)',
-      '2025年度 未踏IT人材発掘・育成事業 採択(IPA)',
-    ],
-    knowsAbout: ['データベースシステム', 'トランザクション処理', '並行性制御', 'MySQL'],
+    award: isEn
+      ? ['MITOU Super Creator, MITOU IT Program FY2025 (METI / IPA)', 'Selected for the MITOU IT Program FY2025 (IPA)']
+      : [
+          '2025年度 未踏IT人材発掘・育成事業 スーパークリエータ認定(経済産業省・IPA)',
+          '2025年度 未踏IT人材発掘・育成事業 採択(IPA)',
+        ],
+    knowsAbout: isEn
+      ? ['Database systems', 'Transaction processing', 'Concurrency control', 'MySQL']
+      : ['データベースシステム', 'トランザクション処理', '並行性制御', 'MySQL'],
     jobTitle: 'Researcher',
     sameAs: [
       'https://www.ipa.go.jp/jinzai/mitou/koubo/career/2025/2025-supercreator-22.html',
@@ -79,7 +94,7 @@ const jsonLd = {
           {t.home.heroLogo}
         </h1>
         <p class="display-type mt-2 text-xl">
-          {t.home.heroName} <span class="text-sm text-ink-soft">{t.home.heroReading}</span>
+          {t.home.heroName} <span class="inline-block text-sm whitespace-nowrap text-ink-soft">{t.home.heroReading}</span>
         </p>
 
       </div>
@@ -93,7 +108,7 @@ const jsonLd = {
         </p>
 
         <a
-          href="/kamo/"
+          href={localizePath('/kamo/', locale)}
           class="group mt-6 inline-flex items-center gap-3 rounded-bubble border-2 border-ink bg-call-green px-6 py-3 font-bold shadow-sticker transition-transform motion-safe:hover:-translate-y-0.5 hover:bg-lemon"
         >
           <Cursor
@@ -186,7 +201,7 @@ const jsonLd = {
       <h2 id="award-heading" class="display-type text-2xl">{t.home.awardLabel}</h2>
       <Window
         title={t.home.awardWindow}
-        href={t.home.award.href}
+        href={localizePath(t.home.award.href, locale)}
         class="mt-4 h-[calc(100%-3rem)] hover:bg-lemon"
         bodyClass="flex items-center gap-5 p-4"
       >
@@ -206,7 +221,7 @@ const jsonLd = {
       <h2 id="latest-heading" class="display-type text-2xl">{t.home.projectLabel}</h2>
       <Window
         title={t.home.projectWindow}
-        href="/kamo/"
+        href={localizePath('/kamo/', locale)}
         class="mt-4 h-[calc(100%-3rem)] hover:bg-sky"
         bodyClass="flex items-center gap-5 p-4"
       >
@@ -243,7 +258,7 @@ const jsonLd = {
     </div>
     <p class="mt-5 text-right">
       <a
-        href="/news/"
+        href={localizePath('/news/', locale)}
         class="display-type text-sm text-navy underline underline-offset-4 hover:text-ink"
         >{t.home.newsMore} →</a
       >

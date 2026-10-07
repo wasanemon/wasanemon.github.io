@@ -3,7 +3,7 @@
  * 共通レイアウト — 全ページはこのレイアウトを使う。
  */
 import '../styles/global.css';
-import { getDictionary, defaultLocale } from '../i18n';
+import { getDictionary, defaultLocale, locales, localizePath, stripLocale } from '../i18n';
 import Header, { type NavKey } from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import RoamingCat from '../components/RoamingCat.astro';
@@ -22,6 +22,10 @@ const t = getDictionary(locale);
 const { title, description = t.meta.description, active } = Astro.props;
 const pageTitle = title ? `${title} | ${t.meta.siteName}` : t.meta.siteName;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+/* 同じページの各言語版(hreflang)。404 のように片方しか無いページでは出さない */
+const basePath = stripLocale(Astro.url.pathname);
+const alternates = locales.map((l) => ({ lang: l, href: new URL(localizePath(basePath, l), Astro.site).href }));
+const hasAlternates = !basePath.startsWith('/404');
 ---
 
 <!doctype html>
@@ -33,12 +37,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
+    {hasAlternates && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    {hasAlternates && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
     <meta property="og:type" content="profile" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={t.meta.siteName} />
-    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale" content={locale === 'en' ? 'en_US' : 'ja_JP'} />
     <meta name="twitter:card" content="summary" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

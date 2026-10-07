@@ -7,15 +7,18 @@
  *  - スタートメニュー(Header.astro のロゴ)から、ごみ箱・オープニング再生・シャットダウン
  * いずれも装飾で、閉じたウィンドウは再読み込みか「Put them back」で元に戻る。
  */
-import { getDictionary, defaultLocale } from '../i18n';
+import { getDictionary, defaultLocale, localizePath } from '../i18n';
 import Icon from './deco/Icon.astro';
 
-const t = getDictionary(Astro.currentLocale ?? defaultLocale);
+const locale = Astro.currentLocale ?? defaultLocale;
+const t = getDictionary(locale);
 const ink = 'var(--color-ink)';
 ---
 
 <div
   id="fun-root"
+  data-home={localizePath('/', locale)}
+  data-profile={localizePath('/profile/', locale)}
   data-warnings={JSON.stringify(t.fun.warnings)}
   data-warning-many={t.fun.warningMany}
   data-warning-popup={t.fun.warningPopup}
@@ -231,7 +234,7 @@ const ink = 'var(--color-ink)';
             } catch (err) {
               /* 消せない環境では何も起きないだけ */
             }
-            window.location.href = '/';
+            window.location.href = root.dataset.home || '/';
           }
           return;
         }
@@ -248,7 +251,7 @@ const ink = 'var(--color-ink)';
       var input = document.getElementById('sql-input');
       if (!input) {
         // このページに無ければ PROFILE のコンソールへ
-        window.location.href = '/profile/#sql-heading';
+        window.location.href = (root.dataset.profile || '/profile/') + '#sql-heading';
         return;
       }
       var win = input.closest('[data-win]');
