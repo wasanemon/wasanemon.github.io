@@ -87,7 +87,10 @@ const jsonLd = {
         <p class="sticker-card mt-6 inline-block rounded-bubble px-5 py-2 text-lg font-bold whitespace-nowrap">
           {t.home.catchCopy}
         </p>
-        <p class="mt-3 text-sm text-ink-soft">{t.home.subCopy}</p>
+        <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+          <span class="block">{t.home.affiliations.join(' ・ ')}</span>
+          {t.home.subCopy.map((item) => <span class="block">{item}</span>)}
+        </p>
 
         <a
           href="/kamo/"
