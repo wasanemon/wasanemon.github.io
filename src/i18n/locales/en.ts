@@ -39,7 +39,7 @@ export const en: Dictionary = {
     heroRoles: '> DATABASE RESEARCHER_',
     heroLogo: 'yusuke',
     heroName: 'Yusuke Miyazaki',
-    heroReading: '(宮﨑祐介)',
+    heroReading: '(宮﨑祐介 / 宮崎祐介)',
     subCopy: ['Database systems researcher', 'MITOU Super Creator, FY2025'],
     affiliations: [
       { label: 'Keio University', url: 'https://www.keio.ac.jp/en/' },

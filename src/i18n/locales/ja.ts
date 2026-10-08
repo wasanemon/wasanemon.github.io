@@ -41,7 +41,7 @@ export const ja = {
     heroRoles: '> DATABASE RESEARCHER_',
     heroLogo: 'yusuke',
     heroName: '宮﨑祐介',
-    heroReading: '(みやざき ゆうすけ)',
+    heroReading: '(宮崎祐介 / みやざき ゆうすけ)',
     subCopy: ['データベースシステム研究者', '2025年度 未踏ITスーパークリエータ'],
     /** 所属のラベル(それぞれの公式サイトへのリンク) */
     affiliations: [
